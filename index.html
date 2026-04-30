@@ -26,8 +26,9 @@
         <div class="flex gap-6">
           <button onclick="setTab('overview')" data-tab="overview" class="tab-btn pb-2 text-sm font-semibold transition-all border-b-2 border-rose-500 text-gray-900 -mb-[13px]">Key Insights</button>
           <button onclick="setTab('analysis')" data-tab="analysis" class="tab-btn pb-2 text-sm font-semibold transition-all border-b-2 border-transparent text-gray-400 hover:text-gray-600 -mb-[13px]">Text Analysis</button>
-          <button onclick="setTab('amenities')" data-tab="amenities" class="tab-btn pb-2 text-sm font-semibold transition-all border-b-2 border-transparent text-gray-400 hover:text-gray-600 -mb-[13px]">Amenities</button>
+          <button onclick="setTab('questions')" data-tab="questions" class="tab-btn pb-2 text-sm font-semibold transition-all border-b-2 border-transparent text-gray-400 hover:text-gray-600 -mb-[13px]">Analysis Questions</button>
           <button onclick="setTab('conclusion')" data-tab="conclusion" class="tab-btn pb-2 text-sm font-semibold transition-all border-b-2 border-transparent text-gray-400 hover:text-gray-600 -mb-[13px]">Conclusion & Summary</button>
+          <button onclick="setTab('amenities')" data-tab="amenities" class="tab-btn pb-2 text-sm font-semibold transition-all border-b-2 border-transparent text-gray-400 hover:text-gray-600 -mb-[13px]">Amenities</button>
           <button onclick="setTab('trends')" data-tab="trends" class="tab-btn pb-2 text-sm font-semibold transition-all border-b-2 border-transparent text-gray-400 hover:text-gray-600 -mb-[13px]">More Interesting Findings</button>
         </div>
         <div class="bg-white p-1.5 rounded-xl shadow-sm border border-gray-200 flex items-center">
@@ -131,29 +132,86 @@
 
       <!-- More Interesting Findings Tab -->
       <div id="tab-trends" class="hidden flex flex-col gap-4 md:gap-8 pb-20">
+      </div>
+
+      <!-- Analysis Questions Tab -->
+      <div id="tab-questions" class="hidden flex flex-col gap-4 md:gap-8 pb-20">
+        <!-- Characteristics Questions -->
         <div class="bg-white p-4 md:p-8 rounded-2xl border border-gray-100 shadow-sm">
           <div class="flex items-center gap-3 mb-4 md:mb-8">
             <div class="p-1.5 bg-[#FF5A5F] rounded-lg text-white shadow-md">
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
             </div>
-            <h3 class="font-bold text-gray-800 text-base tracking-tight">Smoking Allowed</h3>
+            <h3 class="font-bold text-gray-800 text-base tracking-tight">Characteristics Questions</h3>
           </div>
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-            <div class="bg-gray-50 rounded-xl p-5 text-center">
-              <p class="text-3xl font-black text-[#FF5A5F]">613</p>
-              <p class="text-xs font-bold text-gray-400 mt-1 uppercase">Listings allow smoking</p>
+          <div class="space-y-6">
+            <div class="flex flex-col gap-3">
+              <div class="flex items-center gap-2 text-[#FF5A5F]">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                <p class="text-[11px] font-black uppercase tracking-widest">Success Factors</p>
+              </div>
+              <p class="text-[15px] font-bold text-gray-900 leading-snug">What are the characteristics that determine whether a given listing is successful?</p>
+              <div class="text-sm text-gray-500 italic bg-gray-50 rounded-xl p-4"><ul class="list-disc pl-4 space-y-1"><li>Success is driven by review volume: listings with more reviews earn higher annual revenue</li><li>Ratings stay consistent (~4.77) regardless of review count, but revenue increases</li><li>Metric: estimated annual revenue</li></ul></div>
+              <div class="bg-emerald-50 rounded-xl p-4"><p class="text-[10px] font-black uppercase tracking-widest text-emerald-600 mb-1">Implication of Result</p><p class="text-sm text-emerald-800">New hosts should prioritize getting early bookings and reviews over perfecting their rating. Consider competitive pricing or promotions initially to build review volume, as this is the strongest predictor of long-term revenue growth.</p></div>
             </div>
-            <div class="bg-gray-50 rounded-xl p-5 text-center">
-              <p class="text-3xl font-black text-gray-900">115</p>
-              <p class="text-xs font-bold text-gray-400 mt-1 uppercase">Neighborhoods</p>
+            <div class="flex flex-col gap-3">
+              <div class="flex items-center gap-2 text-[#FF5A5F]">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
+                <p class="text-[11px] font-black uppercase tracking-widest">Regional Observation</p>
+              </div>
+              <p class="text-[15px] font-bold text-gray-900 leading-snug">What are the top amenity characteristics for listings in different regions?</p>
+              <div class="text-sm text-gray-500 italic bg-gray-50 rounded-xl p-4"><ul class="list-disc pl-4 space-y-1"><li>Berlin top 3: Free washer, Children's dinnerware, Free dryer</li><li>Munich top 3: Free washer, Private entrance, Portable fans</li><li>Metric: avg rating >= 4.8, ranked by avg revenue</li></ul></div>
+              <div class="bg-emerald-50 rounded-xl p-4"><p class="text-[10px] font-black uppercase tracking-widest text-emerald-600 mb-1">Implication of Result</p><p class="text-sm text-emerald-800">Amenity investment should be city-specific. Berlin guests value home comforts (laundry, family items), while Munich guests lean toward independence and comfort (private entrance, climate control). A one-size-fits-all approach across markets may underperform.</p></div>
             </div>
-            <div class="bg-gray-50 rounded-xl p-5 text-center">
-              <p class="text-3xl font-black text-[#00A699]">~Same</p>
-              <p class="text-xs font-bold text-gray-400 mt-1 uppercase">Avg rating vs non-smoking</p>
+            <div class="flex flex-col gap-3">
+              <div class="flex items-center gap-2 text-[#FF5A5F]">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+                <p class="text-[11px] font-black uppercase tracking-widest">Interesting Trend</p>
+              </div>
+              <p class="text-[15px] font-bold text-gray-900 leading-snug">How do top characteristics vary between specific neighborhoods in Berlin?</p>
+              <div class="text-sm text-gray-500 italic bg-gray-50 rounded-xl p-4"><ul class="list-disc pl-4 space-y-1"><li>Tempelhofer Vorstadt #1: "55 inch HDTV"</li><li>Südliche Luisenstadt #1: "Noise decibel monitors"</li><li>Top characteristics vary by neighborhood</li><li>Metric: avg rating >= 4.8, ranked by avg revenue</li></ul></div>
+              <div class="bg-emerald-50 rounded-xl p-4"><p class="text-[10px] font-black uppercase tracking-widest text-emerald-600 mb-1">Implication of Result</p><p class="text-sm text-emerald-800">Hosts should research their specific neighborhood's top performers before investing in amenities. Entertainment amenities (HDTV) work in some areas while safety features (noise monitors) work in others. Copying a successful listing from a different neighborhood may not translate.</p></div>
             </div>
           </div>
-          <p class="text-sm text-gray-500 italic mb-6">Guests who book smoking-allowed listings appear to do so intentionally. Ratings are nearly identical to non-smoking listings.</p>
-          <div class="h-48 md:h-56"><canvas id="chart-smoking-rating"></canvas></div>
+        </div>
+
+        <!-- Text Questions -->
+        <div class="bg-white p-4 md:p-8 rounded-2xl border border-gray-100 shadow-sm">
+          <div class="flex items-center gap-3 mb-4 md:mb-8">
+            <div class="p-1.5 bg-[#FF5A5F] rounded-lg text-white shadow-md">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+            </div>
+            <h3 class="font-bold text-gray-800 text-base tracking-tight">Text Questions</h3>
+          </div>
+          <div class="space-y-6">
+            <div class="flex flex-col gap-3">
+              <div class="flex items-center gap-2 text-[#FF5A5F]">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                <p class="text-[11px] font-black uppercase tracking-widest">Wording Impact</p>
+              </div>
+              <p class="text-[15px] font-bold text-gray-900 leading-snug">How does the wording of a listing impact the number of visitors to that listing?</p>
+              <p class="text-sm text-gray-500 italic bg-gray-50 rounded-xl p-4">Detailed descriptions (100+ words) and descriptive neighborhood overviews lead to higher estimated annual revenue.</p>
+              <div class="bg-emerald-50 rounded-xl p-4"><p class="text-[10px] font-black uppercase tracking-widest text-emerald-600 mb-1">Implication of Result</p><p class="text-sm text-emerald-800">Hosts with short or empty descriptions are leaving revenue on the table. Investing time in writing a thorough description (at least 100 words) and a neighborhood overview is one of the lowest-cost, highest-impact improvements a host can make.</p></div>
+            </div>
+            <div class="flex flex-col gap-3">
+              <div class="flex items-center gap-2 text-[#FF5A5F]">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+                <p class="text-[11px] font-black uppercase tracking-widest">Satisfaction Trend</p>
+              </div>
+              <p class="text-[15px] font-bold text-gray-900 leading-snug">Is there a correlation between neighborhood detail and guest ratings?</p>
+              <p class="text-sm text-gray-500 italic bg-gray-50 rounded-xl p-4">Yes, brief or minimal neighborhood overviews (0-10 words) correlate with lower average review scores compared to moderate detail.</p>
+              <div class="bg-emerald-50 rounded-xl p-4"><p class="text-[10px] font-black uppercase tracking-widest text-emerald-600 mb-1">Implication of Result</p><p class="text-sm text-emerald-800">Guests who feel informed about the neighborhood before arrival tend to rate higher, likely because expectations are set accurately. Hosts should include local tips, transit info, and nearby attractions to reduce surprises and improve satisfaction.</p></div>
+            </div>
+            <div class="flex flex-col gap-3">
+              <div class="flex items-center gap-2 text-[#FF5A5F]">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                <p class="text-[11px] font-black uppercase tracking-widest">Optimal Length</p>
+              </div>
+              <p class="text-[15px] font-bold text-gray-900 leading-snug">What is the ideal word count for listing titles?</p>
+              <p class="text-sm text-gray-500 italic bg-gray-50 rounded-xl p-4">Titles with 11-15 words achieve peak satisfaction ratings with an average rating of 4.9 or higher.</p>
+              <div class="bg-emerald-50 rounded-xl p-4"><p class="text-[10px] font-black uppercase tracking-widest text-emerald-600 mb-1">Implication of Result</p><p class="text-sm text-emerald-800">Very short titles (1-3 words) miss the opportunity to set expectations. Hosts should aim for descriptive titles that include the property type, key feature, and location. Going beyond 15 words shows diminishing returns.</p></div>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -313,6 +371,31 @@
               </table>
             </div>
           </div>
+        </div>
+        <hr class="border-gray-200">
+        <div class="bg-white p-4 md:p-8 rounded-2xl border border-gray-100 shadow-sm">
+          <div class="flex items-center gap-3 mb-4 md:mb-8">
+            <div class="p-1.5 bg-[#FF5A5F] rounded-lg text-white shadow-md">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+            </div>
+            <h3 class="font-bold text-gray-800 text-base tracking-tight">Smoking Allowed</h3>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+            <div class="bg-gray-50 rounded-xl p-5 text-center">
+              <p class="text-3xl font-black text-[#FF5A5F]">613</p>
+              <p class="text-xs font-bold text-gray-400 mt-1 uppercase">Listings allow smoking</p>
+            </div>
+            <div class="bg-gray-50 rounded-xl p-5 text-center">
+              <p class="text-3xl font-black text-gray-900">115</p>
+              <p class="text-xs font-bold text-gray-400 mt-1 uppercase">Neighborhoods</p>
+            </div>
+            <div class="bg-gray-50 rounded-xl p-5 text-center">
+              <p class="text-3xl font-black text-[#00A699]">~Same</p>
+              <p class="text-xs font-bold text-gray-400 mt-1 uppercase">Avg rating vs non-smoking</p>
+            </div>
+          </div>
+          <p class="text-sm text-gray-500 italic mb-6">Guests who book smoking-allowed listings appear to do so intentionally. Ratings are nearly identical to non-smoking listings.</p>
+          <div class="h-48 md:h-56"><canvas id="chart-smoking-amenities"></canvas></div>
         </div>
       </div>
 
@@ -721,9 +804,10 @@ function setTab(tab) {
   document.getElementById('tab-amenities').classList.toggle('hidden', tab !== 'amenities');
   document.getElementById('tab-analysis').classList.toggle('hidden', tab !== 'analysis');
   document.getElementById('tab-trends').classList.toggle('hidden', tab !== 'trends');
+  document.getElementById('tab-questions').classList.toggle('hidden', tab !== 'questions');
   document.getElementById('tab-conclusion').classList.toggle('hidden', tab !== 'conclusion');
-  document.getElementById('secondary-filters').classList.toggle('hidden', tab === 'overview' || tab === 'trends' || tab === 'conclusion');
-  document.getElementById('kpi-cards').classList.toggle('hidden', tab === 'trends' || tab === 'conclusion');
+  document.getElementById('secondary-filters').classList.toggle('hidden', tab === 'overview' || tab === 'trends' || tab === 'conclusion' || tab === 'questions');
+  document.getElementById('kpi-cards').classList.toggle('hidden', tab === 'trends' || tab === 'conclusion' || tab === 'questions');
   if (tab === 'overview') {
     roomTypeFilter = 'All'; bedroomFilter = 'All'; bathroomFilter = 'All'; neighborhoodFilter = 'All';
   }
@@ -900,10 +984,9 @@ function renderAll() {
     renderRecommendationCharts();
   } else if (activeTab === 'amenities') {
     renderAmenitiesTab();
+    renderTrendsTab();
   } else if (activeTab === 'analysis') {
     renderAnalysisTab();
-  } else if (activeTab === 'trends') {
-    renderTrendsTab();
   }
 }
 
@@ -923,7 +1006,7 @@ function renderTrendsTab() {
   var nsAvgReviews = noSmoking.length ? Math.round(noSmoking.reduce(function(a,d){return a+(d.number_of_reviews||0);},0) / noSmoking.length) : 0;
 
   destroyChart('smoking-rating');
-  charts['smoking-rating'] = new Chart(document.getElementById('chart-smoking-rating'), {
+  charts['smoking-rating'] = new Chart(document.getElementById('chart-smoking-amenities'), {
     type: 'bar',
     data: {
       labels: ['Smoking Allowed (' + smoking.length + ')', 'No Smoking (' + noSmoking.length.toLocaleString() + ')'],

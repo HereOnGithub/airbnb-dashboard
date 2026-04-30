@@ -11,53 +11,56 @@
 <body class="bg-gray-50">
   <!-- Dashboard -->
   <div id="dashboard" class="min-h-screen bg-gray-50 pb-20">
-    <div class="sticky top-0 z-50 bg-gray-50/95 backdrop-blur-md border-b border-gray-200 px-4 md:px-8 py-4 shadow-sm">
-      <div class="max-w-7xl mx-auto space-y-6">
-        <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4">
-          <div>
-            <h1 class="text-2xl font-bold text-gray-900">Airbnb Market Dashboard</h1>
-            <div id="dataset-tags" class="flex items-center gap-2 mt-1 flex-wrap"></div>
-          </div>
-          <div class="flex bg-white rounded-lg p-1 shadow-sm border border-gray-200">
-            <button onclick="setTab('overview')" data-tab="overview" class="tab-btn px-3 py-1.5 rounded-md text-xs font-semibold transition-all flex items-center gap-2 bg-rose-500 text-white shadow-sm">Overview</button>
-            <button onclick="setTab('analysis')" data-tab="analysis" class="tab-btn px-3 py-1.5 rounded-md text-xs font-semibold transition-all flex items-center gap-2 text-gray-500 hover:bg-gray-50">Text Analysis</button>
-          </div>
+    <!-- Sticky nav: title + tabs only -->
+    <div class="sticky top-0 z-50 bg-gray-50/95 backdrop-blur-md border-b border-gray-200 px-4 md:px-8 py-3 shadow-sm">
+      <div class="max-w-7xl mx-auto flex justify-between items-center gap-3">
+        <div class="flex items-center gap-3 min-w-0">
+          <h1 class="text-lg md:text-2xl font-bold text-gray-900 truncate">Airbnb Market Dashboard</h1>
+          <div id="dataset-tags" class="hidden md:flex items-center gap-2 flex-wrap"></div>
         </div>
-        <div id="kpi-cards" class="grid grid-cols-2 lg:grid-cols-4 gap-4"></div>
-        <div class="flex flex-col md:flex-row items-center justify-between gap-4 pt-2 border-t border-gray-100">
-          <div class="flex items-center gap-3">
-            <div class="bg-rose-500 p-2 rounded-lg shadow-sm">
-              <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
-            </div>
-            <h2 id="tab-title" class="text-xl font-bold text-gray-900 uppercase tracking-tight">Overview</h2>
+        <div class="flex bg-white rounded-lg p-1 shadow-sm border border-gray-200 shrink-0">
+          <button onclick="setTab('overview')" data-tab="overview" class="tab-btn px-2 md:px-3 py-1.5 rounded-md text-xs font-semibold transition-all flex items-center gap-1 md:gap-2 bg-rose-500 text-white shadow-sm">Overview</button>
+          <button onclick="setTab('analysis')" data-tab="analysis" class="tab-btn px-2 md:px-3 py-1.5 rounded-md text-xs font-semibold transition-all flex items-center gap-1 md:gap-2 text-gray-500 hover:bg-gray-50">Text Analysis</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scrollable controls area -->
+    <div class="max-w-7xl mx-auto px-4 md:px-8 pt-4 md:pt-6 space-y-4 md:space-y-6">
+      <div id="kpi-cards" class="grid grid-cols-2 lg:grid-cols-4 gap-2 md:gap-4"></div>
+      <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 pt-2 border-t border-gray-100">
+        <div class="flex items-center gap-3">
+          <div class="bg-rose-500 p-2 rounded-lg shadow-sm">
+            <svg class="w-4 h-4 md:w-5 md:h-5 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
           </div>
-          <div class="flex items-center gap-3 flex-wrap">
-            <div class="bg-white p-1 rounded-xl shadow-sm border border-gray-100 flex items-center">
-              <div class="px-3 py-2 text-gray-400 border-r border-gray-100 mr-1">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
-              </div>
-              <button onclick="setCityFilter('All')" data-city="All" class="city-btn px-4 py-1.5 rounded-lg text-xs font-bold transition-all bg-gray-900 text-white shadow-sm">All</button>
-              <button onclick="setCityFilter('Berlin')" data-city="Berlin" class="city-btn px-4 py-1.5 rounded-lg text-xs font-bold transition-all text-gray-500 hover:bg-gray-50">Berlin</button>
-              <button onclick="setCityFilter('Munich')" data-city="Munich" class="city-btn px-4 py-1.5 rounded-lg text-xs font-bold transition-all text-gray-500 hover:bg-gray-50">Munich</button>
+          <h2 id="tab-title" class="text-base md:text-xl font-bold text-gray-900 uppercase tracking-tight">Overview</h2>
+        </div>
+        <div class="flex items-center gap-2 md:gap-3 flex-wrap w-full sm:w-auto">
+          <div class="bg-white p-1 rounded-xl shadow-sm border border-gray-100 flex items-center">
+            <div class="px-2 md:px-3 py-2 text-gray-400 border-r border-gray-100 mr-1">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
             </div>
-            <div class="bg-white p-1 rounded-xl shadow-sm border border-gray-200 flex items-center min-w-[200px]">
-              <div class="px-3 py-2 text-gray-400 border-r border-gray-100 mr-1">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
-              </div>
-              <select id="neighborhood-select" onchange="setNeighborhoodFilter(this.value)" class="w-full pr-3 py-1.5 rounded-lg text-xs font-bold text-gray-600 appearance-none focus:outline-none cursor-pointer bg-transparent">
-                <option value="All">All Neighborhoods</option>
-              </select>
+            <button onclick="setCityFilter('All')" data-city="All" class="city-btn px-3 md:px-4 py-1.5 rounded-lg text-xs font-bold transition-all bg-gray-900 text-white shadow-sm">All</button>
+            <button onclick="setCityFilter('Berlin')" data-city="Berlin" class="city-btn px-3 md:px-4 py-1.5 rounded-lg text-xs font-bold transition-all text-gray-500 hover:bg-gray-50">Berlin</button>
+            <button onclick="setCityFilter('Munich')" data-city="Munich" class="city-btn px-3 md:px-4 py-1.5 rounded-lg text-xs font-bold transition-all text-gray-500 hover:bg-gray-50">Munich</button>
+          </div>
+          <div class="bg-white p-1 rounded-xl shadow-sm border border-gray-200 flex items-center flex-1 sm:flex-none sm:min-w-[200px]">
+            <div class="px-2 md:px-3 py-2 text-gray-400 border-r border-gray-100 mr-1">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
             </div>
+            <select id="neighborhood-select" onchange="setNeighborhoodFilter(this.value)" class="w-full pr-3 py-1.5 rounded-lg text-xs font-bold text-gray-600 appearance-none focus:outline-none cursor-pointer bg-transparent">
+              <option value="All">All Neighborhoods</option>
+            </select>
           </div>
         </div>
       </div>
     </div>
 
-    <div class="max-w-7xl mx-auto px-4 md:px-8 mt-8">
+    <div class="max-w-7xl mx-auto px-4 md:px-8 mt-4 md:mt-8">
       <!-- Overview Tab -->
-      <div id="tab-overview" class="flex flex-col gap-8 pb-20">
-        <div class="bg-white p-6 md:p-8 rounded-2xl border border-gray-100 shadow-sm">
-          <div class="flex items-center gap-3 mb-8">
+      <div id="tab-overview" class="flex flex-col gap-4 md:gap-8 pb-20">
+        <div class="bg-white p-4 md:p-8 rounded-2xl border border-gray-100 shadow-sm">
+          <div class="flex items-center gap-3 mb-4 md:mb-8">
             <div class="p-1.5 bg-[#FF5A5F] rounded-lg text-white shadow-md">
               <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="9" y1="18" x2="15" y2="18"/><line x1="12" y1="2" x2="12" y2="8"/><path d="M12 8a4 4 0 100 8 4 4 0 000-8z"/></svg>
             </div>
@@ -90,15 +93,15 @@
             </div>
           </div>
         </div>
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
-          <div class="lg:col-span-8 space-y-8">
-            <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
-              <h3 class="font-bold text-lg mb-6 text-gray-800">Top 5 Amenities by Revenue</h3>
-              <div class="h-72"><canvas id="chart-amenities"></canvas></div>
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 md:gap-8">
+          <div class="lg:col-span-8 space-y-4 md:space-y-8">
+            <div class="bg-white p-4 md:p-6 rounded-2xl shadow-sm border border-gray-100">
+              <h3 class="font-bold text-base md:text-lg mb-4 md:mb-6 text-gray-800">Top 5 Amenities by Revenue</h3>
+              <div class="h-56 md:h-72"><canvas id="chart-amenities"></canvas></div>
             </div>
             <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
-              <div class="p-6 border-b border-gray-100 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-                <h3 class="font-bold text-lg text-gray-800">Top Rated Listings</h3>
+              <div class="p-4 md:p-6 border-b border-gray-100 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+                <h3 class="font-bold text-base md:text-lg text-gray-800">Top Rated Listings</h3>
                 <div class="relative w-full sm:w-64">
                   <svg class="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
                   <input type="text" id="search-input" placeholder="Search name..." class="w-full pl-9 pr-4 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none" oninput="renderListingsTable()" />
@@ -108,10 +111,10 @@
                 <table class="w-full text-left">
                   <thead class="bg-gray-50/50">
                     <tr>
-                      <th class="px-6 py-4 text-[10px] font-black text-gray-400 uppercase">Market</th>
-                      <th class="px-6 py-4 text-[10px] font-black text-gray-400 uppercase">Listing</th>
-                      <th class="px-6 py-4 text-[10px] font-black text-gray-400 uppercase text-right">Price</th>
-                      <th class="px-6 py-4 text-[10px] font-black text-gray-400 uppercase text-center">Rating</th>
+                      <th class="px-3 md:px-6 py-3 md:py-4 text-[10px] font-black text-gray-400 uppercase">Market</th>
+                      <th class="px-3 md:px-6 py-3 md:py-4 text-[10px] font-black text-gray-400 uppercase">Listing</th>
+                      <th class="px-3 md:px-6 py-3 md:py-4 text-[10px] font-black text-gray-400 uppercase text-right">Price</th>
+                      <th class="px-3 md:px-6 py-3 md:py-4 text-[10px] font-black text-gray-400 uppercase text-center">Rating</th>
                     </tr>
                   </thead>
                   <tbody id="listings-tbody" class="divide-y divide-gray-50"></tbody>
@@ -119,10 +122,10 @@
               </div>
             </div>
           </div>
-          <div class="lg:col-span-4 space-y-6">
-            <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
-              <h3 class="font-bold text-sm text-gray-400 uppercase tracking-widest mb-6">Volume Comparison</h3>
-              <div class="h-64"><canvas id="chart-volume"></canvas></div>
+          <div class="lg:col-span-4 space-y-4 md:space-y-6">
+            <div class="bg-white p-4 md:p-6 rounded-2xl shadow-sm border border-gray-100">
+              <h3 class="font-bold text-sm text-gray-400 uppercase tracking-widest mb-4 md:mb-6">Volume Comparison</h3>
+              <div class="h-52 md:h-64"><canvas id="chart-volume"></canvas></div>
             </div>
           </div>
         </div>
@@ -164,18 +167,18 @@
             </div>
           </div>
         </div>
-        <div class="space-y-12">
-          <div class="bg-white p-8 rounded-2xl border border-gray-100 shadow-sm">
-            <h2 class="text-2xl font-bold text-gray-900 mb-4">Listing Title</h2>
-            <div class="h-72 bg-gray-50 p-4 rounded-xl border border-gray-100"><canvas id="chart-title"></canvas></div>
+        <div class="space-y-6 md:space-y-12">
+          <div class="bg-white p-4 md:p-8 rounded-2xl border border-gray-100 shadow-sm">
+            <h2 class="text-xl md:text-2xl font-bold text-gray-900 mb-3 md:mb-4">Listing Title</h2>
+            <div class="h-56 md:h-72 bg-gray-50 p-2 md:p-4 rounded-xl border border-gray-100"><canvas id="chart-title"></canvas></div>
           </div>
-          <div class="bg-white p-8 rounded-2xl border border-gray-100 shadow-sm">
-            <h2 class="text-2xl font-bold text-gray-900 mb-4">Listing Description</h2>
-            <div class="h-72 bg-gray-50 p-4 rounded-xl border border-gray-100"><canvas id="chart-description"></canvas></div>
+          <div class="bg-white p-4 md:p-8 rounded-2xl border border-gray-100 shadow-sm">
+            <h2 class="text-xl md:text-2xl font-bold text-gray-900 mb-3 md:mb-4">Listing Description</h2>
+            <div class="h-56 md:h-72 bg-gray-50 p-2 md:p-4 rounded-xl border border-gray-100"><canvas id="chart-description"></canvas></div>
           </div>
-          <div class="bg-white p-8 rounded-2xl border border-gray-100 shadow-sm">
-            <h2 class="text-2xl font-bold text-gray-900 mb-4">Neighborhood Description</h2>
-            <div class="h-72 bg-gray-50 p-4 rounded-xl border border-gray-100"><canvas id="chart-neighborhood"></canvas></div>
+          <div class="bg-white p-4 md:p-8 rounded-2xl border border-gray-100 shadow-sm">
+            <h2 class="text-xl md:text-2xl font-bold text-gray-900 mb-3 md:mb-4">Neighborhood Description</h2>
+            <div class="h-56 md:h-72 bg-gray-50 p-2 md:p-4 rounded-xl border border-gray-100"><canvas id="chart-neighborhood"></canvas></div>
           </div>
         </div>
       </div>
@@ -320,10 +323,10 @@ function renderListingsTable() {
     .slice(0, 5);
   document.getElementById('listings-tbody').innerHTML = top.map(function(l) {
     return '<tr class="hover:bg-gray-50/50">' +
-      '<td class="px-6 py-4"><span class="px-2 py-0.5 bg-rose-50 text-rose-600 rounded text-[10px] font-black uppercase">' + l.cityName + '</span></td>' +
-      '<td class="px-6 py-4 text-sm font-semibold truncate max-w-[200px]">' + l.name + '</td>' +
-      '<td class="px-6 py-4 text-sm font-bold text-right">&euro;' + l.price_num + '</td>' +
-      '<td class="px-6 py-4 text-center">&star;' + l.rating + '</td></tr>';
+      '<td class="px-3 md:px-6 py-3 md:py-4"><span class="px-2 py-0.5 bg-rose-50 text-rose-600 rounded text-[10px] font-black uppercase">' + l.cityName + '</span></td>' +
+      '<td class="px-3 md:px-6 py-3 md:py-4 text-xs md:text-sm font-semibold truncate max-w-[120px] md:max-w-[200px]">' + l.name + '</td>' +
+      '<td class="px-3 md:px-6 py-3 md:py-4 text-xs md:text-sm font-bold text-right">&euro;' + l.price_num + '</td>' +
+      '<td class="px-3 md:px-6 py-3 md:py-4 text-center text-xs md:text-sm">&star;' + l.rating + '</td></tr>';
   }).join('');
 }
 

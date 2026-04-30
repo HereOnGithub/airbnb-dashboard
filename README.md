@@ -2,7 +2,7 @@
 
 An interactive analytics dashboard that visualizes Airbnb listing data across Berlin and Munich markets. Built as a single-page static site — no server, no build step, no dependencies to install.
 
-**Live site:** [hereongithub.github.io/test_airbnb-dashboard](https://hereongithub.github.io/test_airbnb-dashboard/)
+**Live site:** [hereongithub.github.io/airbnb-dashboard-2026](https://hereongithub.github.io/airbnb-dashboard-2026/)
 
 ## What it does
 

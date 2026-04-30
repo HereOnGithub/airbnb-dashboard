@@ -29,7 +29,6 @@
           <button onclick="setTab('questions')" data-tab="questions" class="tab-btn pb-2 text-sm font-semibold transition-all border-b-2 border-transparent text-gray-400 hover:text-gray-600 -mb-[13px]">Analysis Questions</button>
           <button onclick="setTab('conclusion')" data-tab="conclusion" class="tab-btn pb-2 text-sm font-semibold transition-all border-b-2 border-transparent text-gray-400 hover:text-gray-600 -mb-[13px]">Conclusion & Summary</button>
           <button onclick="setTab('amenities')" data-tab="amenities" class="tab-btn pb-2 text-sm font-semibold transition-all border-b-2 border-transparent text-gray-400 hover:text-gray-600 -mb-[13px]">Amenities</button>
-          <button onclick="setTab('trends')" data-tab="trends" class="tab-btn pb-2 text-sm font-semibold transition-all border-b-2 border-transparent text-gray-400 hover:text-gray-600 -mb-[13px]">More Interesting Findings</button>
         </div>
         <div class="bg-white p-1.5 rounded-xl shadow-sm border border-gray-200 flex items-center">
           <div class="px-3 py-2 text-gray-400 border-r border-gray-100 mr-1">
@@ -130,9 +129,6 @@
       </div>
 
 
-      <!-- More Interesting Findings Tab -->
-      <div id="tab-trends" class="hidden flex flex-col gap-4 md:gap-8 pb-20">
-      </div>
 
       <!-- Analysis Questions Tab -->
       <div id="tab-questions" class="hidden flex flex-col gap-4 md:gap-8 pb-20">
@@ -373,6 +369,7 @@
           </div>
         </div>
         <hr class="border-gray-200">
+        <h2 class="text-lg md:text-xl font-bold text-gray-900 tracking-tight">Interesting Findings About Amenities</h2>
         <div class="bg-white p-4 md:p-8 rounded-2xl border border-gray-100 shadow-sm">
           <div class="flex items-center gap-3 mb-4 md:mb-8">
             <div class="p-1.5 bg-[#FF5A5F] rounded-lg text-white shadow-md">
@@ -803,11 +800,10 @@ function setTab(tab) {
   document.getElementById('tab-overview').classList.toggle('hidden', tab !== 'overview');
   document.getElementById('tab-amenities').classList.toggle('hidden', tab !== 'amenities');
   document.getElementById('tab-analysis').classList.toggle('hidden', tab !== 'analysis');
-  document.getElementById('tab-trends').classList.toggle('hidden', tab !== 'trends');
   document.getElementById('tab-questions').classList.toggle('hidden', tab !== 'questions');
   document.getElementById('tab-conclusion').classList.toggle('hidden', tab !== 'conclusion');
-  document.getElementById('secondary-filters').classList.toggle('hidden', tab === 'overview' || tab === 'trends' || tab === 'conclusion' || tab === 'questions');
-  document.getElementById('kpi-cards').classList.toggle('hidden', tab === 'trends' || tab === 'conclusion' || tab === 'questions');
+  document.getElementById('secondary-filters').classList.toggle('hidden', tab === 'overview' || tab === 'conclusion' || tab === 'questions');
+  document.getElementById('kpi-cards').classList.toggle('hidden', tab === 'conclusion' || tab === 'questions');
   if (tab === 'overview') {
     roomTypeFilter = 'All'; bedroomFilter = 'All'; bathroomFilter = 'All'; neighborhoodFilter = 'All';
   }

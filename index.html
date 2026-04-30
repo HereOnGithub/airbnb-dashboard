@@ -132,23 +132,25 @@
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="listings-tables"></div>
         </div>
         <div class="bg-white p-4 md:p-6 rounded-2xl shadow-sm border border-gray-100">
-          <h3 class="font-bold text-sm text-gray-400 uppercase tracking-widest mb-4">Revenue & Rating by Number of Reviews</h3>
-          <div class="h-56 md:h-64"><canvas id="chart-success-other"></canvas></div>
-        </div>
-        <div class="bg-white p-4 md:p-6 rounded-2xl shadow-sm border border-gray-100">
-          <h3 class="font-bold text-sm text-gray-400 uppercase tracking-widest mb-1">Top 5 Amenities: Berlin vs Munich</h3>
+          <h3 class="font-bold text-sm text-gray-400 uppercase tracking-widest mb-1">Top Amenities</h3>
           <p class="text-[11px] text-gray-400 mb-4">Avg rating >= 4.8, ranked by avg revenue</p>
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="regional-tables-other"></div>
         </div>
         <div class="bg-white p-4 md:p-6 rounded-2xl shadow-sm border border-gray-100">
-          <h3 class="font-bold text-sm text-gray-400 uppercase tracking-widest mb-1">Top 5 Amenities by Neighborhood: Berlin</h3>
+          <h3 class="font-bold text-sm text-gray-400 uppercase tracking-widest mb-1">Top Amenities by Neighborhood</h3>
           <p class="text-[11px] text-gray-400 mb-4">Avg rating >= 4.8, ranked by avg revenue</p>
+          <div class="flex items-center gap-3 mb-4 flex-wrap">
+            <div class="bg-gray-50 p-1 rounded-lg border border-gray-200 flex items-center min-w-[180px]">
+              <div class="w-3 h-3 rounded-full bg-[#00A699] ml-2 mr-2 shrink-0"></div>
+              <select id="hood-compare-1" onchange="renderOtherHoodTables()" class="w-full px-1 py-1.5 rounded-lg text-xs font-bold text-gray-600 appearance-none focus:outline-none cursor-pointer bg-transparent"></select>
+            </div>
+            <span class="text-xs font-bold text-gray-400">vs</span>
+            <div class="bg-gray-50 p-1 rounded-lg border border-gray-200 flex items-center min-w-[180px]">
+              <div class="w-3 h-3 rounded-full bg-[#FF5A5F] ml-2 mr-2 shrink-0"></div>
+              <select id="hood-compare-2" onchange="renderOtherHoodTables()" class="w-full px-1 py-1.5 rounded-lg text-xs font-bold text-gray-600 appearance-none focus:outline-none cursor-pointer bg-transparent"></select>
+            </div>
+          </div>
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="trend-tables-berlin-other"></div>
-        </div>
-        <div class="bg-white p-4 md:p-6 rounded-2xl shadow-sm border border-gray-100">
-          <h3 class="font-bold text-sm text-gray-400 uppercase tracking-widest mb-1">Top 5 Amenities by Neighborhood: Munich</h3>
-          <p class="text-[11px] text-gray-400 mb-4">Avg rating >= 4.8, ranked by avg revenue</p>
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="trend-tables-munich-other"></div>
         </div>
       </div>
 
@@ -689,12 +691,60 @@ function renderOtherCharts() {
   document.getElementById('regional-tables-other').innerHTML =
     makeTableOther('Berlin', getTopAmenitiesOther(berlinData, 5), 'bg-[#00A699]') +
     makeTableOther('Munich', getTopAmenitiesOther(munichData, 5), 'bg-[#FF5A5F]');
+
+  // Populate hood comparison dropdowns
+  var hoodCounts = {};
+  data.forEach(function(d) {
+    var h = d.neighbourhood_cleansed;
+    if (h) hoodCounts[h] = (hoodCounts[h] || 0) + 1;
+  });
+  var validHoods = Object.keys(hoodCounts).filter(function(h) { return hoodCounts[h] >= 30; }).sort();
+  var sel1 = document.getElementById('hood-compare-1');
+  var sel2 = document.getElementById('hood-compare-2');
+  var cur1 = sel1.value || 'Tempelhofer Vorstadt';
+  var cur2 = sel2.value || 'südliche Luisenstadt';
+  if (validHoods.indexOf(cur1) === -1 && validHoods.length > 0) cur1 = validHoods[0];
+  if (validHoods.indexOf(cur2) === -1 && validHoods.length > 1) cur2 = validHoods[1];
+  sel1.innerHTML = validHoods.map(function(h) { return '<option value="' + h + '"' + (h === cur1 ? ' selected' : '') + '>' + h + '</option>'; }).join('');
+  sel2.innerHTML = validHoods.map(function(h) { return '<option value="' + h + '"' + (h === cur2 ? ' selected' : '') + '>' + h + '</option>'; }).join('');
+
+  renderOtherHoodTables();
+}
+
+function renderOtherHoodTables() {
+  var data = getActiveData();
+  var amenList = window._amenList;
+  function getHoodTop(hoodName, n) {
+    var hoodData = data.filter(function(d) { return d.neighbourhood_cleansed === hoodName; });
+    var stats = {};
+    hoodData.forEach(function(d) {
+      if (!d.amenities_idx || !d.amenities_idx.length) return;
+      d.amenities_idx.forEach(function(idx) {
+        var a = amenList[idx];
+        if (!a) return;
+        if (!stats[a]) stats[a] = { name: a, rev: 0, rat: 0, count: 0, ratCount: 0 };
+        stats[a].rev += d.revenue_num || 0;
+        stats[a].count += 1;
+        if (d.rating > 0) { stats[a].rat += d.rating; stats[a].ratCount += 1; }
+      });
+    });
+    return Object.values(stats)
+      .filter(function(a) { return a.count >= 5 && a.count < hoodData.length * 0.5 && a.ratCount > 0 && (a.rat / a.ratCount) >= 4.8; })
+      .map(function(a) { return { name: a.name, avg: Math.round(a.rev / a.count), avgRat: (a.rat / a.ratCount).toFixed(2) }; })
+      .sort(function(a,b) { return b.avg - a.avg; })
+      .slice(0, n);
+  }
+  function makeTable(label, top, color) {
+    var rows = top.map(function(a, i) {
+      return '<tr class="border-t border-gray-100"><td class="py-2 pr-2 text-xs text-gray-400 font-bold">#' + (i+1) + '</td><td class="py-2 text-sm font-semibold text-gray-800">' + a.name + '</td><td class="py-2 pl-2 text-sm font-bold text-center text-amber-500">' + a.avgRat + '</td><td class="py-2 pl-2 text-sm font-bold text-right text-gray-600">&euro;' + a.avg.toLocaleString() + '</td></tr>';
+    }).join('');
+    return '<div><div class="flex items-center gap-2 mb-3"><div class="w-3 h-3 rounded-full ' + color + '"></div><p class="text-xs font-black uppercase tracking-widest text-gray-600">' + label + '</p></div><table class="w-full"><thead><tr><th class="text-left text-[10px] font-black text-gray-400 uppercase pb-2 pr-2">#</th><th class="text-left text-[10px] font-black text-gray-400 uppercase pb-2">Amenity</th><th class="text-center text-[10px] font-black text-gray-400 uppercase pb-2 pl-2">Avg Rating</th><th class="text-right text-[10px] font-black text-gray-400 uppercase pb-2 pl-2">Avg Revenue</th></tr></thead><tbody>' + rows + '</tbody></table></div>';
+  }
+  var hood1 = document.getElementById('hood-compare-1').value;
+  var hood2 = document.getElementById('hood-compare-2').value;
   document.getElementById('trend-tables-berlin-other').innerHTML =
-    makeTableOther('Tempelhofer Vorstadt', getHoodTopAmenitiesOther('Tempelhofer Vorstadt', 5), 'bg-[#00A699]') +
-    makeTableOther('südliche Luisenstadt', getHoodTopAmenitiesOther('südliche Luisenstadt', 5), 'bg-[#FF5A5F]');
-  document.getElementById('trend-tables-munich-other').innerHTML =
-    makeTableOther('Ludwigsvorstadt-Isarvorstadt', getHoodTopAmenitiesOther('Ludwigsvorstadt-Isarvorstadt', 5), 'bg-[#00A699]') +
-    makeTableOther('Schwabing-West', getHoodTopAmenitiesOther('Schwabing-West', 5), 'bg-[#FF5A5F]');
+    makeTable(hood1, getHoodTop(hood1, 5), 'bg-[#00A699]') +
+    makeTable(hood2, getHoodTop(hood2, 5), 'bg-[#FF5A5F]');
 }
 
 function renderAll() {

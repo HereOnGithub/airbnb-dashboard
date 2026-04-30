@@ -81,7 +81,7 @@
                 <p class="text-[11px] font-black uppercase tracking-widest">Regional Observation</p>
               </div>
               <p class="text-[15px] font-bold text-gray-900 leading-snug">What are the top amenity characteristics for listings in different regions?</p>
-              <div class="text-sm text-gray-500 italic bg-gray-50 rounded-xl p-4"><ul class="list-disc pl-4 space-y-1"><li>Berlin top 3: Blender, Board games, Free dryer</li><li>Munich top 3: Paid street parking, Board games, Books and reading material</li><li>Metric: avg rating, with avg revenue as tiebreaker</li></ul></div>
+              <div class="text-sm text-gray-500 italic bg-gray-50 rounded-xl p-4"><ul class="list-disc pl-4 space-y-1"><li>Berlin top 3: Free washer, Children's dinnerware, Free dryer</li><li>Munich top 3: Free washer, Private entrance, Portable fans</li><li>Metric: avg rating >= 4.8, ranked by avg revenue</li></ul></div>
             </div>
             <div class="flex flex-col gap-4">
               <div class="flex items-center gap-2 text-[#FF5A5F]">
@@ -89,7 +89,7 @@
                 <p class="text-[11px] font-black uppercase tracking-widest">Interesting Trend</p>
               </div>
               <p class="text-[15px] font-bold text-gray-900 leading-snug">How do top characteristics vary between specific neighborhoods in Berlin?</p>
-              <div class="text-sm text-gray-500 italic bg-gray-50 rounded-xl p-4"><ul class="list-disc pl-4 space-y-1"><li>Tempelhof #1: "Sound system" (4.94 avg rating)</li><li>Rixdorf #1: "Bidet" (4.95 avg rating)</li><li>Different neighborhoods reward different niche amenities</li><li>Metric: avg rating, with avg revenue as tiebreaker</li></ul></div>
+              <div class="text-sm text-gray-500 italic bg-gray-50 rounded-xl p-4"><ul class="list-disc pl-4 space-y-1"><li>Tempelhofer Vorstadt #1: "55 inch HDTV" (&euro;58K avg revenue)</li><li>Prenzlauer Berg Südwest #1: "Bread maker" (&euro;74K avg revenue)</li><li>Top characteristics vary by neighborhood</li><li>Metric: avg rating >= 4.8, ranked by avg revenue</li></ul></div>
             </div>
           </div>
         </div>
@@ -100,12 +100,12 @@
           </div>
           <div class="bg-white p-4 md:p-6 rounded-2xl shadow-sm border border-gray-100">
             <h3 class="font-bold text-sm text-gray-400 uppercase tracking-widest mb-1">Top 5 Amenities: Berlin vs Munich</h3>
-            <p class="text-[11px] text-gray-400 mb-4">Ranked by avg rating, with avg revenue as tiebreaker</p>
+            <p class="text-[11px] text-gray-400 mb-4">Avg rating >= 4.8, ranked by avg revenue</p>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="regional-tables"></div>
           </div>
           <div class="bg-white p-4 md:p-6 rounded-2xl shadow-sm border border-gray-100">
-            <h3 class="font-bold text-sm text-gray-400 uppercase tracking-widest mb-1">Top Amenities: Tempelhof vs Rixdorf (Berlin)</h3>
-            <p class="text-[11px] text-gray-400 mb-4">Ranked by avg rating, with avg revenue as tiebreaker</p>
+            <h3 class="font-bold text-sm text-gray-400 uppercase tracking-widest mb-1">Top 5 Amenities in Berlin Neighborhoods</h3>
+            <p class="text-[11px] text-gray-400 mb-4">Avg rating >= 4.8, ranked by avg revenue</p>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="trend-tables"></div>
           </div>
         </div>
@@ -324,9 +324,9 @@ function renderRecommendationCharts() {
       });
     });
     return Object.values(stats)
-      .filter(function(a) { return a.count > cityData.length * 0.05 && a.count < cityData.length * 0.5 && a.ratCount > 0; })
+      .filter(function(a) { return a.count > cityData.length * 0.05 && a.count < cityData.length * 0.5 && a.ratCount > 0 && (a.rat / a.ratCount) >= 4.8; })
       .map(function(a) { return { name: a.name, avg: Math.round(a.rev / a.count), avgRat: (a.rat / a.ratCount).toFixed(2) }; })
-      .sort(function(a,b) { return parseFloat(b.avgRat) - parseFloat(a.avgRat) || b.avg - a.avg; })
+      .sort(function(a,b) { return b.avg - a.avg; })
       .slice(0, n);
   }
   var berlinData = data.filter(function(d) { return d.cityName === 'Berlin'; });
@@ -357,9 +357,9 @@ function renderRecommendationCharts() {
       });
     });
     return Object.values(stats)
-      .filter(function(a) { return a.count >= 5 && a.count < hoodData.length * 0.5 && a.ratCount > 0; })
+      .filter(function(a) { return a.count >= 5 && a.count < hoodData.length * 0.5 && a.ratCount > 0 && (a.rat / a.ratCount) >= 4.8; })
       .map(function(a) { return { name: a.name, avg: Math.round(a.rev / a.count), avgRat: (a.rat / a.ratCount).toFixed(2) }; })
-      .sort(function(a,b) { return parseFloat(b.avgRat) - parseFloat(a.avgRat) || b.avg - a.avg; })
+      .sort(function(a,b) { return b.avg - a.avg; })
       .slice(0, n);
   }
   function makeHoodTable(hood, top, color) {
@@ -369,8 +369,8 @@ function renderRecommendationCharts() {
     return '<div><div class="flex items-center gap-2 mb-3"><div class="w-3 h-3 rounded-full ' + color + '"></div><p class="text-xs font-black uppercase tracking-widest text-gray-600">' + hood + '</p></div><table class="w-full"><thead><tr><th class="text-left text-[10px] font-black text-gray-400 uppercase pb-2 pr-2">#</th><th class="text-left text-[10px] font-black text-gray-400 uppercase pb-2">Amenity</th><th class="text-center text-[10px] font-black text-gray-400 uppercase pb-2 pl-2">Avg Rating</th><th class="text-right text-[10px] font-black text-gray-400 uppercase pb-2 pl-2">Avg Revenue</th></tr></thead><tbody>' + rows + '</tbody></table></div>';
   }
   document.getElementById('trend-tables').innerHTML =
-    makeHoodTable('Tempelhof', getHoodTopAmenities('Tempelhof', 5), 'bg-[#00A699]') +
-    makeHoodTable('Rixdorf', getHoodTopAmenities('Rixdorf', 5), 'bg-[#FF5A5F]');
+    makeHoodTable('Tempelhofer Vorstadt', getHoodTopAmenities('Tempelhofer Vorstadt', 5), 'bg-[#00A699]') +
+    makeHoodTable('Prenzlauer Berg Südwest', getHoodTopAmenities('Prenzlauer Berg Südwest', 5), 'bg-[#FF5A5F]');
 }
 
 function renderAmenitiesChart() {

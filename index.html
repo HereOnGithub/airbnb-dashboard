@@ -44,12 +44,29 @@
             <button onclick="setCityFilter('Berlin')" data-city="Berlin" class="city-btn px-3 md:px-4 py-1.5 rounded-lg text-xs font-bold transition-all text-gray-500 hover:bg-gray-50">Berlin</button>
             <button onclick="setCityFilter('Munich')" data-city="Munich" class="city-btn px-3 md:px-4 py-1.5 rounded-lg text-xs font-bold transition-all text-gray-500 hover:bg-gray-50">Munich</button>
           </div>
-          <div class="bg-white p-1 rounded-xl shadow-sm border border-gray-200 flex items-center flex-1 sm:flex-none sm:min-w-[200px]">
+          <div class="bg-white p-1 rounded-xl shadow-sm border border-gray-200 flex items-center flex-1 sm:flex-none sm:min-w-[180px]">
             <div class="px-2 md:px-3 py-2 text-gray-400 border-r border-gray-100 mr-1">
               <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
             </div>
             <select id="neighborhood-select" onchange="setNeighborhoodFilter(this.value)" class="w-full pr-3 py-1.5 rounded-lg text-xs font-bold text-gray-600 appearance-none focus:outline-none cursor-pointer bg-transparent">
               <option value="All">All Neighborhoods</option>
+            </select>
+          </div>
+          <div class="bg-white p-1 rounded-xl shadow-sm border border-gray-200 flex items-center flex-1 sm:flex-none sm:min-w-[150px]">
+            <select id="roomtype-select" onchange="setRoomTypeFilter(this.value)" class="w-full px-3 py-1.5 rounded-lg text-xs font-bold text-gray-600 appearance-none focus:outline-none cursor-pointer bg-transparent">
+              <option value="All">All Property Types</option>
+              <option value="Entire home/apt">Entire home/apt</option>
+              <option value="Private room">Private room</option>
+            </select>
+          </div>
+          <div class="bg-white p-1 rounded-xl shadow-sm border border-gray-200 flex items-center flex-1 sm:flex-none sm:min-w-[120px]">
+            <select id="bedroom-select" onchange="setBedroomFilter(this.value)" class="w-full px-3 py-1.5 rounded-lg text-xs font-bold text-gray-600 appearance-none focus:outline-none cursor-pointer bg-transparent">
+              <option value="All">All Bedrooms</option>
+            </select>
+          </div>
+          <div class="bg-white p-1 rounded-xl shadow-sm border border-gray-200 flex items-center flex-1 sm:flex-none sm:min-w-[120px]">
+            <select id="bathroom-select" onchange="setBathroomFilter(this.value)" class="w-full px-3 py-1.5 rounded-lg text-xs font-bold text-gray-600 appearance-none focus:outline-none cursor-pointer bg-transparent">
+              <option value="All">All Bathrooms</option>
             </select>
           </div>
         </div>
@@ -89,7 +106,7 @@
                 <p class="text-[11px] font-black uppercase tracking-widest">Interesting Trend</p>
               </div>
               <p class="text-[15px] font-bold text-gray-900 leading-snug">How do top characteristics vary between specific neighborhoods in Berlin?</p>
-              <div class="text-sm text-gray-500 italic bg-gray-50 rounded-xl p-4"><ul class="list-disc pl-4 space-y-1"><li>Tempelhofer Vorstadt #1: "55 inch HDTV" (&euro;58K avg revenue)</li><li>Prenzlauer Berg Südwest #1: "Bread maker" (&euro;74K avg revenue)</li><li>Top characteristics vary by neighborhood</li><li>Metric: avg rating >= 4.8, ranked by avg revenue</li></ul></div>
+              <div class="text-sm text-gray-500 italic bg-gray-50 rounded-xl p-4"><ul class="list-disc pl-4 space-y-1"><li>Tempelhofer Vorstadt #1: "55 inch HDTV" (&euro;58K avg revenue)</li><li>Südliche Luisenstadt #1: "Noise decibel monitors" (&euro;53K avg revenue)</li><li>Top characteristics vary by neighborhood</li><li>Metric: avg rating >= 4.8, ranked by avg revenue</li></ul></div>
             </div>
           </div>
         </div>
@@ -104,9 +121,14 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="regional-tables"></div>
           </div>
           <div class="bg-white p-4 md:p-6 rounded-2xl shadow-sm border border-gray-100">
-            <h3 class="font-bold text-sm text-gray-400 uppercase tracking-widest mb-1">Top 5 Amenities in Berlin Neighborhoods</h3>
+            <h3 class="font-bold text-sm text-gray-400 uppercase tracking-widest mb-1">Top 5 Amenities by Neighborhood: Berlin</h3>
             <p class="text-[11px] text-gray-400 mb-4">Avg rating >= 4.8, ranked by avg revenue</p>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="trend-tables"></div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="trend-tables-berlin"></div>
+          </div>
+          <div class="bg-white p-4 md:p-6 rounded-2xl shadow-sm border border-gray-100">
+            <h3 class="font-bold text-sm text-gray-400 uppercase tracking-widest mb-1">Top 5 Amenities by Neighborhood: Munich</h3>
+            <p class="text-[11px] text-gray-400 mb-4">Avg rating >= 4.8, ranked by avg revenue</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="trend-tables-munich"></div>
           </div>
         </div>
 
@@ -122,6 +144,25 @@
         <div class="bg-white p-4 md:p-6 rounded-2xl shadow-sm border border-gray-100">
           <h3 class="font-bold text-sm text-gray-400 uppercase tracking-widest mb-4 md:mb-6">Volume Comparison</h3>
           <div class="h-52 md:h-64"><canvas id="chart-volume"></canvas></div>
+        </div>
+        <div class="bg-white p-4 md:p-6 rounded-2xl shadow-sm border border-gray-100">
+          <h3 class="font-bold text-sm text-gray-400 uppercase tracking-widest mb-4">Revenue & Rating by Number of Reviews</h3>
+          <div class="h-56 md:h-64"><canvas id="chart-success-other"></canvas></div>
+        </div>
+        <div class="bg-white p-4 md:p-6 rounded-2xl shadow-sm border border-gray-100">
+          <h3 class="font-bold text-sm text-gray-400 uppercase tracking-widest mb-1">Top 5 Amenities: Berlin vs Munich</h3>
+          <p class="text-[11px] text-gray-400 mb-4">Avg rating >= 4.8, ranked by avg revenue</p>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="regional-tables-other"></div>
+        </div>
+        <div class="bg-white p-4 md:p-6 rounded-2xl shadow-sm border border-gray-100">
+          <h3 class="font-bold text-sm text-gray-400 uppercase tracking-widest mb-1">Top 5 Amenities by Neighborhood: Berlin</h3>
+          <p class="text-[11px] text-gray-400 mb-4">Avg rating >= 4.8, ranked by avg revenue</p>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="trend-tables-berlin-other"></div>
+        </div>
+        <div class="bg-white p-4 md:p-6 rounded-2xl shadow-sm border border-gray-100">
+          <h3 class="font-bold text-sm text-gray-400 uppercase tracking-widest mb-1">Top 5 Amenities by Neighborhood: Munich</h3>
+          <p class="text-[11px] text-gray-400 mb-4">Avg rating >= 4.8, ranked by avg revenue</p>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="trend-tables-munich-other"></div>
         </div>
       </div>
 
@@ -141,7 +182,7 @@
                 <p class="text-[11px] font-black uppercase tracking-widest">Wording Impact</p>
               </div>
               <p class="text-[15px] font-bold text-gray-900 leading-snug">How does the wording of a listing impact the number of visitors to that listing?</p>
-              <p class="text-sm text-gray-500 italic bg-gray-50 rounded-xl p-4">Detailed descriptions (100+ words) and descriptive neighborhood overviews lead to significantly higher estimated annual revenue.</p>
+              <p class="text-sm text-gray-500 italic bg-gray-50 rounded-xl p-4 flex-1">Detailed descriptions (100+ words) and descriptive neighborhood overviews lead to higher estimated annual revenue.</p>
             </div>
             <div class="flex flex-col gap-4">
               <div class="flex items-center gap-2 text-[#FF5A5F]">
@@ -149,7 +190,7 @@
                 <p class="text-[11px] font-black uppercase tracking-widest">Satisfaction Trend</p>
               </div>
               <p class="text-[15px] font-bold text-gray-900 leading-snug">Is there a correlation between neighborhood detail and guest ratings?</p>
-              <p class="text-sm text-gray-500 italic bg-gray-50 rounded-xl p-4">Yes, brief or minimal neighborhood overviews (0-10 words) correlate with lower average review scores compared to moderate detail.</p>
+              <p class="text-sm text-gray-500 italic bg-gray-50 rounded-xl p-4 flex-1">Yes, brief or minimal neighborhood overviews (0-10 words) correlate with lower average review scores compared to moderate detail.</p>
             </div>
             <div class="flex flex-col gap-4">
               <div class="flex items-center gap-2 text-[#FF5A5F]">
@@ -157,7 +198,7 @@
                 <p class="text-[11px] font-black uppercase tracking-widest">Optimal Length</p>
               </div>
               <p class="text-[15px] font-bold text-gray-900 leading-snug">What is the ideal word count for listing titles?</p>
-              <p class="text-sm text-gray-500 italic bg-gray-50 rounded-xl p-4">Titles with 11-15 words achieve peak satisfaction ratings with an average rating of 4.9 or higher.</p>
+              <p class="text-sm text-gray-500 italic bg-gray-50 rounded-xl p-4 flex-1">Titles with 11-15 words achieve peak satisfaction ratings with an average rating of 4.9 or higher.</p>
             </div>
           </div>
         </div>
@@ -200,6 +241,9 @@ D = null;
 let activeTab = 'overview';
 let cityFilter = 'All';
 let neighborhoodFilter = 'All';
+let roomTypeFilter = 'All';
+let bedroomFilter = 'All';
+let bathroomFilter = 'All';
 const charts = {};
 
 function getAllData() {
@@ -210,6 +254,9 @@ function getActiveData() {
   let data = getAllData();
   if (cityFilter !== 'All') data = data.filter(d => d.cityName === cityFilter);
   if (neighborhoodFilter !== 'All') data = data.filter(d => d.neighbourhood_cleansed === neighborhoodFilter);
+  if (roomTypeFilter !== 'All') data = data.filter(d => d.room_type === roomTypeFilter);
+  if (bedroomFilter !== 'All') data = data.filter(d => String(d.bedrooms_clean) === bedroomFilter);
+  if (bathroomFilter !== 'All') data = data.filter(d => String(d.bathrooms_clean) === bathroomFilter || d.bathrooms_clean === parseFloat(bathroomFilter));
   return data;
 }
 
@@ -256,6 +303,20 @@ function renderNeighborhoods() {
   var sel = document.getElementById('neighborhood-select');
   sel.innerHTML = '<option value="All">All Neighborhoods</option>' +
     unique.map(function(n) { return '<option value="' + n + '"' + (n === neighborhoodFilter ? ' selected' : '') + '>' + n + '</option>'; }).join('');
+
+  var bedrooms = [], bathrooms = [], seenB = {}, seenBa = {};
+  data.forEach(function(d) {
+    var b = String(d.bedrooms_clean), ba = String(d.bathrooms_clean);
+    if (b && b !== 'NaN' && b !== 'null' && !seenB[b]) { seenB[b] = true; bedrooms.push(b); }
+    if (ba && ba !== 'NaN' && ba !== 'null' && !seenBa[ba]) { seenBa[ba] = true; bathrooms.push(ba); }
+  });
+  bedrooms.sort(function(a, b) { return parseInt(a) - parseInt(b); });
+  bathrooms.sort(function(a, b) { return parseFloat(a) - parseFloat(b); });
+  document.getElementById('bedroom-select').innerHTML = '<option value="All">All Bedrooms</option>' +
+    bedrooms.map(function(b) { return '<option value="' + b + '"' + (b === bedroomFilter ? ' selected' : '') + '>' + (b === '0' ? 'Studio' : b + ' BR') + '</option>'; }).join('');
+  document.getElementById('bathroom-select').innerHTML = '<option value="All">All Bathrooms</option>' +
+    bathrooms.map(function(b) { return '<option value="' + b + '"' + (b === bathroomFilter ? ' selected' : '') + '>' + b + ' BA</option>'; }).join('');
+  document.getElementById('roomtype-select').value = roomTypeFilter;
 }
 
 function destroyChart(id) {
@@ -368,9 +429,12 @@ function renderRecommendationCharts() {
     }).join('');
     return '<div><div class="flex items-center gap-2 mb-3"><div class="w-3 h-3 rounded-full ' + color + '"></div><p class="text-xs font-black uppercase tracking-widest text-gray-600">' + hood + '</p></div><table class="w-full"><thead><tr><th class="text-left text-[10px] font-black text-gray-400 uppercase pb-2 pr-2">#</th><th class="text-left text-[10px] font-black text-gray-400 uppercase pb-2">Amenity</th><th class="text-center text-[10px] font-black text-gray-400 uppercase pb-2 pl-2">Avg Rating</th><th class="text-right text-[10px] font-black text-gray-400 uppercase pb-2 pl-2">Avg Revenue</th></tr></thead><tbody>' + rows + '</tbody></table></div>';
   }
-  document.getElementById('trend-tables').innerHTML =
+  document.getElementById('trend-tables-berlin').innerHTML =
     makeHoodTable('Tempelhofer Vorstadt', getHoodTopAmenities('Tempelhofer Vorstadt', 5), 'bg-[#00A699]') +
-    makeHoodTable('Prenzlauer Berg Südwest', getHoodTopAmenities('Prenzlauer Berg Südwest', 5), 'bg-[#FF5A5F]');
+    makeHoodTable('südliche Luisenstadt', getHoodTopAmenities('südliche Luisenstadt', 5), 'bg-[#FF5A5F]');
+  document.getElementById('trend-tables-munich').innerHTML =
+    makeHoodTable('Ludwigsvorstadt-Isarvorstadt', getHoodTopAmenities('Ludwigsvorstadt-Isarvorstadt', 5), 'bg-[#00A699]') +
+    makeHoodTable('Schwabing-West', getHoodTopAmenities('Schwabing-West', 5), 'bg-[#FF5A5F]');
 }
 
 function renderAmenitiesChart() {
@@ -438,11 +502,11 @@ function renderListingsTable() {
 
 function getWordMetrics(data, wcField, bins) {
   bins = bins || [
-    { label: 'Max Detail (200+)', min: 201, max: 5000, sortOrder: 0 },
-    { label: 'Detailed (101-200)', min: 101, max: 200, sortOrder: 1 },
+    { label: 'Minimal (0-10)', min: 0, max: 10, sortOrder: 0 },
+    { label: 'Brief (11-50)', min: 11, max: 50, sortOrder: 1 },
     { label: 'Moderate (51-100)', min: 51, max: 100, sortOrder: 2 },
-    { label: 'Brief (11-50)', min: 11, max: 50, sortOrder: 3 },
-    { label: 'Minimal (0-10)', min: 0, max: 10, sortOrder: 4 }
+    { label: 'Detailed (101-200)', min: 101, max: 200, sortOrder: 3 },
+    { label: 'Max Detail (200+)', min: 201, max: 5000, sortOrder: 4 }
   ];
   return bins.map(function(bin) {
     var matching = data.filter(function(d) {
@@ -483,11 +547,11 @@ function renderComposedChart(canvasId, metrics) {
 function renderAnalysisTab() {
   var data = getActiveData();
   var titleBins = [
-    { label: 'Max Detail (15+)', min: 16, max: 100, sortOrder: 0 },
-    { label: 'Descriptive (11-15)', min: 11, max: 15, sortOrder: 1 },
+    { label: 'Short (1-3)', min: 1, max: 3, sortOrder: 0 },
+    { label: 'Standard (4-6)', min: 4, max: 6, sortOrder: 1 },
     { label: 'Long (7-10)', min: 7, max: 10, sortOrder: 2 },
-    { label: 'Standard (4-6)', min: 4, max: 6, sortOrder: 3 },
-    { label: 'Short (1-3)', min: 1, max: 3, sortOrder: 4 }
+    { label: 'Descriptive (11-15)', min: 11, max: 15, sortOrder: 3 },
+    { label: 'Max Detail (15+)', min: 16, max: 100, sortOrder: 4 }
   ];
   renderComposedChart('title', getWordMetrics(data, 'name_wc', titleBins));
   renderComposedChart('description', getWordMetrics(data, 'description_wc'));
@@ -525,6 +589,126 @@ function setNeighborhoodFilter(val) {
   renderAll();
 }
 
+function setRoomTypeFilter(val) {
+  roomTypeFilter = val;
+  renderAll();
+}
+
+function setBedroomFilter(val) {
+  bedroomFilter = val;
+  renderAll();
+}
+
+function setBathroomFilter(val) {
+  bathroomFilter = val;
+  renderAll();
+}
+
+function renderOtherCharts() {
+  var data = getActiveData();
+  var amenList = window._amenList;
+
+  // Reviews vs Revenue chart (duplicate of overview)
+  var reviewBuckets = [
+    { label: '0–10', min: 0, max: 10 },
+    { label: '11–25', min: 11, max: 25 },
+    { label: '26–50', min: 26, max: 50 },
+    { label: '51–100', min: 51, max: 100 },
+    { label: '101–200', min: 101, max: 200 },
+    { label: '200+', min: 201, max: 99999 }
+  ];
+  var revLabels = [];
+  var revData = [];
+  var ratingData = [];
+  reviewBuckets.forEach(function(b) {
+    var bucket = data.filter(function(d) { return d.number_of_reviews >= b.min && d.number_of_reviews <= b.max; });
+    if (bucket.length >= 5) {
+      revLabels.push(b.label);
+      revData.push(Math.round(bucket.reduce(function(a,d){return a+(d.revenue_num||0);},0) / bucket.length));
+      var ratedBucket = bucket.filter(function(d) { return d.rating > 0; });
+      ratingData.push(ratedBucket.length ? parseFloat((ratedBucket.reduce(function(a,d){return a+d.rating;},0) / ratedBucket.length).toFixed(2)) : 0);
+    }
+  });
+  destroyChart('success-other');
+  charts['success-other'] = new Chart(document.getElementById('chart-success-other'), {
+    type: 'bar',
+    data: {
+      labels: revLabels,
+      datasets: [
+        { type: 'bar', label: 'Avg Annual Revenue', data: revData, backgroundColor: '#00A699', borderRadius: 4, yAxisID: 'y', order: 2 },
+        { type: 'line', label: 'Avg Rating', data: ratingData, borderColor: '#f59e0b', backgroundColor: '#fff', borderWidth: 3, pointRadius: 6, pointBorderWidth: 2, pointBackgroundColor: '#fff', pointBorderColor: '#f59e0b', tension: 0.3, fill: false, yAxisID: 'y1', order: 1 }
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { position: 'bottom', labels: { font: { size: 10 } } }, tooltip: { callbacks: { label: function(ctx) { return ctx.datasetIndex === 1 ? 'Rating: ' + ctx.raw : '€' + ctx.raw.toLocaleString(); } } } },
+      scales: {
+        y: { position: 'left', beginAtZero: true, title: { display: true, text: 'Revenue (€)', font: { size: 9 } }, ticks: { callback: function(v) { return '€' + v.toLocaleString(); }, font: { size: 9 }, maxTicksLimit: 5 }, grid: { display: false } },
+        y1: { position: 'right', min: 4, max: 5, title: { display: true, text: 'Rating', font: { size: 9 } }, ticks: { font: { size: 9 }, maxTicksLimit: 5 }, grid: { drawOnChartArea: false } },
+        x: { title: { display: true, text: 'Number of Reviews', font: { size: 9 } }, grid: { display: false } }
+      }
+    }
+  });
+
+  // Regional tables
+  function getTopAmenitiesOther(cityData, n) {
+    var stats = {};
+    cityData.forEach(function(d) {
+      if (!d.amenities_idx || !d.amenities_idx.length) return;
+      d.amenities_idx.forEach(function(idx) {
+        var a = amenList[idx];
+        if (!a) return;
+        if (!stats[a]) stats[a] = { name: a, rev: 0, rat: 0, count: 0, ratCount: 0 };
+        stats[a].rev += d.revenue_num || 0;
+        stats[a].count += 1;
+        if (d.rating > 0) { stats[a].rat += d.rating; stats[a].ratCount += 1; }
+      });
+    });
+    return Object.values(stats)
+      .filter(function(a) { return a.count > cityData.length * 0.05 && a.count < cityData.length * 0.5 && a.ratCount > 0 && (a.rat / a.ratCount) >= 4.8; })
+      .map(function(a) { return { name: a.name, avg: Math.round(a.rev / a.count), avgRat: (a.rat / a.ratCount).toFixed(2) }; })
+      .sort(function(a,b) { return b.avg - a.avg; })
+      .slice(0, n);
+  }
+  function getHoodTopAmenitiesOther(hoodName, n) {
+    var hoodData = data.filter(function(d) { return d.neighbourhood_cleansed === hoodName; });
+    var stats = {};
+    hoodData.forEach(function(d) {
+      if (!d.amenities_idx || !d.amenities_idx.length) return;
+      d.amenities_idx.forEach(function(idx) {
+        var a = amenList[idx];
+        if (!a) return;
+        if (!stats[a]) stats[a] = { name: a, rev: 0, rat: 0, count: 0, ratCount: 0 };
+        stats[a].rev += d.revenue_num || 0;
+        stats[a].count += 1;
+        if (d.rating > 0) { stats[a].rat += d.rating; stats[a].ratCount += 1; }
+      });
+    });
+    return Object.values(stats)
+      .filter(function(a) { return a.count >= 5 && a.count < hoodData.length * 0.5 && a.ratCount > 0 && (a.rat / a.ratCount) >= 4.8; })
+      .map(function(a) { return { name: a.name, avg: Math.round(a.rev / a.count), avgRat: (a.rat / a.ratCount).toFixed(2) }; })
+      .sort(function(a,b) { return b.avg - a.avg; })
+      .slice(0, n);
+  }
+  function makeTableOther(label, top, color) {
+    var rows = top.map(function(a, i) {
+      return '<tr class="border-t border-gray-100"><td class="py-2 pr-2 text-xs text-gray-400 font-bold">#' + (i+1) + '</td><td class="py-2 text-sm font-semibold text-gray-800">' + a.name + '</td><td class="py-2 pl-2 text-sm font-bold text-center text-amber-500">' + a.avgRat + '</td><td class="py-2 pl-2 text-sm font-bold text-right text-gray-600">&euro;' + a.avg.toLocaleString() + '</td></tr>';
+    }).join('');
+    return '<div><div class="flex items-center gap-2 mb-3"><div class="w-3 h-3 rounded-full ' + color + '"></div><p class="text-xs font-black uppercase tracking-widest text-gray-600">' + label + '</p></div><table class="w-full"><thead><tr><th class="text-left text-[10px] font-black text-gray-400 uppercase pb-2 pr-2">#</th><th class="text-left text-[10px] font-black text-gray-400 uppercase pb-2">Amenity</th><th class="text-center text-[10px] font-black text-gray-400 uppercase pb-2 pl-2">Avg Rating</th><th class="text-right text-[10px] font-black text-gray-400 uppercase pb-2 pl-2">Avg Revenue</th></tr></thead><tbody>' + rows + '</tbody></table></div>';
+  }
+  var berlinData = data.filter(function(d) { return d.cityName === 'Berlin'; });
+  var munichData = data.filter(function(d) { return d.cityName === 'Munich'; });
+  document.getElementById('regional-tables-other').innerHTML =
+    makeTableOther('Berlin', getTopAmenitiesOther(berlinData, 5), 'bg-[#00A699]') +
+    makeTableOther('Munich', getTopAmenitiesOther(munichData, 5), 'bg-[#FF5A5F]');
+  document.getElementById('trend-tables-berlin-other').innerHTML =
+    makeTableOther('Tempelhofer Vorstadt', getHoodTopAmenitiesOther('Tempelhofer Vorstadt', 5), 'bg-[#00A699]') +
+    makeTableOther('südliche Luisenstadt', getHoodTopAmenitiesOther('südliche Luisenstadt', 5), 'bg-[#FF5A5F]');
+  document.getElementById('trend-tables-munich-other').innerHTML =
+    makeTableOther('Ludwigsvorstadt-Isarvorstadt', getHoodTopAmenitiesOther('Ludwigsvorstadt-Isarvorstadt', 5), 'bg-[#00A699]') +
+    makeTableOther('Schwabing-West', getHoodTopAmenitiesOther('Schwabing-West', 5), 'bg-[#FF5A5F]');
+}
+
 function renderAll() {
   renderKPIs();
   renderNeighborhoods();
@@ -533,6 +717,7 @@ function renderAll() {
   } else if (activeTab === 'other') {
     renderVolumeChart();
     renderListingsTable();
+    renderOtherCharts();
   } else if (activeTab === 'analysis') {
     renderAnalysisTab();
   }

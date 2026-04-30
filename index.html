@@ -28,44 +28,44 @@
     <!-- Scrollable controls area -->
     <div class="max-w-7xl mx-auto px-4 md:px-8 pt-4 md:pt-6 space-y-4 md:space-y-6">
       <div id="kpi-cards" class="grid grid-cols-2 lg:grid-cols-4 gap-2 md:gap-4"></div>
-      <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 pt-2 border-t border-gray-100">
-        <div class="flex items-center gap-3">
-          <div class="bg-rose-500 p-2 rounded-lg shadow-sm">
-            <svg class="w-4 h-4 md:w-5 md:h-5 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+      <div class="space-y-3 pt-2 border-t border-gray-100">
+        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+          <div class="flex items-center gap-3">
+            <div class="bg-rose-500 p-2 rounded-lg shadow-sm">
+              <svg class="w-4 h-4 md:w-5 md:h-5 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+            </div>
+            <h2 id="tab-title" class="text-base md:text-xl font-bold text-gray-900 uppercase tracking-tight">Overview</h2>
           </div>
-          <h2 id="tab-title" class="text-base md:text-xl font-bold text-gray-900 uppercase tracking-tight">Overview</h2>
-        </div>
-        <div class="flex items-center gap-2 md:gap-3 flex-wrap w-full sm:w-auto">
-          <div class="bg-white p-1 rounded-xl shadow-sm border border-gray-100 flex items-center">
-            <div class="px-2 md:px-3 py-2 text-gray-400 border-r border-gray-100 mr-1">
+          <div class="bg-white p-1.5 rounded-xl shadow-sm border border-gray-200 flex items-center">
+            <div class="px-3 py-2 text-gray-400 border-r border-gray-100 mr-1">
               <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
             </div>
-            <button onclick="setCityFilter('All')" data-city="All" class="city-btn px-3 md:px-4 py-1.5 rounded-lg text-xs font-bold transition-all bg-gray-900 text-white shadow-sm">All</button>
-            <button onclick="setCityFilter('Berlin')" data-city="Berlin" class="city-btn px-3 md:px-4 py-1.5 rounded-lg text-xs font-bold transition-all text-gray-500 hover:bg-gray-50">Berlin</button>
-            <button onclick="setCityFilter('Munich')" data-city="Munich" class="city-btn px-3 md:px-4 py-1.5 rounded-lg text-xs font-bold transition-all text-gray-500 hover:bg-gray-50">Munich</button>
+            <button onclick="setCityFilter('All')" data-city="All" class="city-btn px-4 md:px-6 py-2 rounded-lg text-sm font-bold transition-all bg-gray-900 text-white shadow-sm">All</button>
+            <button onclick="setCityFilter('Berlin')" data-city="Berlin" class="city-btn px-4 md:px-6 py-2 rounded-lg text-sm font-bold transition-all text-gray-500 hover:bg-gray-50">Berlin</button>
+            <button onclick="setCityFilter('Munich')" data-city="Munich" class="city-btn px-4 md:px-6 py-2 rounded-lg text-sm font-bold transition-all text-gray-500 hover:bg-gray-50">Munich</button>
           </div>
-          <div class="bg-white p-1 rounded-xl shadow-sm border border-gray-200 flex items-center flex-1 sm:flex-none sm:min-w-[180px]">
-            <div class="px-2 md:px-3 py-2 text-gray-400 border-r border-gray-100 mr-1">
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
-            </div>
-            <select id="neighborhood-select" onchange="setNeighborhoodFilter(this.value)" class="w-full pr-3 py-1.5 rounded-lg text-xs font-bold text-gray-600 appearance-none focus:outline-none cursor-pointer bg-transparent">
+        </div>
+        <div id="secondary-filters" class="hidden flex items-center gap-2 flex-wrap">
+          <span class="text-[10px] font-bold text-gray-400 uppercase tracking-wider">Filters:</span>
+          <div class="bg-white p-1 rounded-lg shadow-sm border border-gray-200 flex items-center min-w-[160px]">
+            <select id="neighborhood-select" onchange="setNeighborhoodFilter(this.value)" class="w-full px-2 py-1 rounded-lg text-xs font-bold text-gray-600 appearance-none focus:outline-none cursor-pointer bg-transparent">
               <option value="All">All Neighborhoods</option>
             </select>
           </div>
-          <div class="bg-white p-1 rounded-xl shadow-sm border border-gray-200 flex items-center flex-1 sm:flex-none sm:min-w-[150px]">
-            <select id="roomtype-select" onchange="setRoomTypeFilter(this.value)" class="w-full px-3 py-1.5 rounded-lg text-xs font-bold text-gray-600 appearance-none focus:outline-none cursor-pointer bg-transparent">
+          <div class="bg-white p-1 rounded-lg shadow-sm border border-gray-200 flex items-center min-w-[140px]">
+            <select id="roomtype-select" onchange="setRoomTypeFilter(this.value)" class="w-full px-2 py-1 rounded-lg text-xs font-bold text-gray-600 appearance-none focus:outline-none cursor-pointer bg-transparent">
               <option value="All">All Property Types</option>
               <option value="Entire home/apt">Entire home/apt</option>
               <option value="Private room">Private room</option>
             </select>
           </div>
-          <div class="bg-white p-1 rounded-xl shadow-sm border border-gray-200 flex items-center flex-1 sm:flex-none sm:min-w-[120px]">
-            <select id="bedroom-select" onchange="setBedroomFilter(this.value)" class="w-full px-3 py-1.5 rounded-lg text-xs font-bold text-gray-600 appearance-none focus:outline-none cursor-pointer bg-transparent">
+          <div class="bg-white p-1 rounded-lg shadow-sm border border-gray-200 flex items-center min-w-[110px]">
+            <select id="bedroom-select" onchange="setBedroomFilter(this.value)" class="w-full px-2 py-1 rounded-lg text-xs font-bold text-gray-600 appearance-none focus:outline-none cursor-pointer bg-transparent">
               <option value="All">All Bedrooms</option>
             </select>
           </div>
-          <div class="bg-white p-1 rounded-xl shadow-sm border border-gray-200 flex items-center flex-1 sm:flex-none sm:min-w-[120px]">
-            <select id="bathroom-select" onchange="setBathroomFilter(this.value)" class="w-full px-3 py-1.5 rounded-lg text-xs font-bold text-gray-600 appearance-none focus:outline-none cursor-pointer bg-transparent">
+          <div class="bg-white p-1 rounded-lg shadow-sm border border-gray-200 flex items-center min-w-[110px]">
+            <select id="bathroom-select" onchange="setBathroomFilter(this.value)" class="w-full px-2 py-1 rounded-lg text-xs font-bold text-gray-600 appearance-none focus:outline-none cursor-pointer bg-transparent">
               <option value="All">All Bathrooms</option>
             </select>
           </div>
@@ -140,10 +140,6 @@
           <h3 class="font-bold text-sm text-gray-400 uppercase tracking-widest mb-1">Top Rated Listings</h3>
           <p class="text-[11px] text-gray-400 mb-4">Ranked by rating, with number of reviews as tiebreaker</p>
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="listings-tables"></div>
-        </div>
-        <div class="bg-white p-4 md:p-6 rounded-2xl shadow-sm border border-gray-100">
-          <h3 class="font-bold text-sm text-gray-400 uppercase tracking-widest mb-4 md:mb-6">Volume Comparison</h3>
-          <div class="h-52 md:h-64"><canvas id="chart-volume"></canvas></div>
         </div>
         <div class="bg-white p-4 md:p-6 rounded-2xl shadow-sm border border-gray-100">
           <h3 class="font-bold text-sm text-gray-400 uppercase tracking-widest mb-4">Revenue & Rating by Number of Reviews</h3>
@@ -308,14 +304,14 @@ function renderNeighborhoods() {
   data.forEach(function(d) {
     var b = String(d.bedrooms_clean), ba = String(d.bathrooms_clean);
     if (b && b !== 'NaN' && b !== 'null' && !seenB[b]) { seenB[b] = true; bedrooms.push(b); }
-    if (ba && ba !== 'NaN' && ba !== 'null' && !seenBa[ba]) { seenBa[ba] = true; bathrooms.push(ba); }
+    if (ba && ba !== 'NaN' && ba !== 'null' && ba !== '-1' && parseFloat(ba) >= 0 && !seenBa[ba]) { seenBa[ba] = true; bathrooms.push(ba); }
   });
   bedrooms.sort(function(a, b) { return parseInt(a) - parseInt(b); });
   bathrooms.sort(function(a, b) { return parseFloat(a) - parseFloat(b); });
   document.getElementById('bedroom-select').innerHTML = '<option value="All">All Bedrooms</option>' +
-    bedrooms.map(function(b) { return '<option value="' + b + '"' + (b === bedroomFilter ? ' selected' : '') + '>' + (b === '0' ? 'Studio' : b + ' BR') + '</option>'; }).join('');
+    bedrooms.map(function(b) { return '<option value="' + b + '"' + (b === bedroomFilter ? ' selected' : '') + '>' + (b === '0' ? 'Studio' : b + ' Bedrooms') + '</option>'; }).join('');
   document.getElementById('bathroom-select').innerHTML = '<option value="All">All Bathrooms</option>' +
-    bathrooms.map(function(b) { return '<option value="' + b + '"' + (b === bathroomFilter ? ' selected' : '') + '>' + b + ' BA</option>'; }).join('');
+    bathrooms.map(function(b) { return '<option value="' + b + '"' + (b === bathroomFilter ? ' selected' : '') + '>' + b + ' Bathrooms</option>'; }).join('');
   document.getElementById('roomtype-select').value = roomTypeFilter;
 }
 
@@ -570,6 +566,10 @@ function setTab(tab) {
   document.getElementById('tab-overview').classList.toggle('hidden', tab !== 'overview');
   document.getElementById('tab-other').classList.toggle('hidden', tab !== 'other');
   document.getElementById('tab-analysis').classList.toggle('hidden', tab !== 'analysis');
+  document.getElementById('secondary-filters').classList.toggle('hidden', tab === 'overview');
+  if (tab === 'overview') {
+    roomTypeFilter = 'All'; bedroomFilter = 'All'; bathroomFilter = 'All'; neighborhoodFilter = 'All';
+  }
   renderAll();
 }
 
@@ -715,7 +715,6 @@ function renderAll() {
   if (activeTab === 'overview') {
     renderRecommendationCharts();
   } else if (activeTab === 'other') {
-    renderVolumeChart();
     renderListingsTable();
     renderOtherCharts();
   } else if (activeTab === 'analysis') {

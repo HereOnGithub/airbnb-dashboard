@@ -6,6 +6,8 @@
   <title>Airbnb Dashboard</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9/dist/leaflet.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9/dist/leaflet.min.js"></script>
   <script src="data.js"></script>
 </head>
 <body class="bg-gray-50">
@@ -22,9 +24,11 @@
     <div class="max-w-7xl mx-auto px-4 md:px-8 pt-4 md:pt-6 space-y-4 md:space-y-6">
       <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 border-b border-gray-200 pb-3">
         <div class="flex gap-6">
-          <button onclick="setTab('overview')" data-tab="overview" class="tab-btn pb-2 text-sm font-semibold transition-all border-b-2 border-rose-500 text-gray-900 -mb-[13px]">Overview</button>
+          <button onclick="setTab('overview')" data-tab="overview" class="tab-btn pb-2 text-sm font-semibold transition-all border-b-2 border-rose-500 text-gray-900 -mb-[13px]">Key Insights</button>
           <button onclick="setTab('analysis')" data-tab="analysis" class="tab-btn pb-2 text-sm font-semibold transition-all border-b-2 border-transparent text-gray-400 hover:text-gray-600 -mb-[13px]">Text Analysis</button>
-          <button onclick="setTab('other')" data-tab="other" class="tab-btn pb-2 text-sm font-semibold transition-all border-b-2 border-transparent text-gray-400 hover:text-gray-600 -mb-[13px]">Neighborhood Analysis</button>
+          <button onclick="setTab('amenities')" data-tab="amenities" class="tab-btn pb-2 text-sm font-semibold transition-all border-b-2 border-transparent text-gray-400 hover:text-gray-600 -mb-[13px]">Amenities</button>
+          <button onclick="setTab('trends')" data-tab="trends" class="tab-btn pb-2 text-sm font-semibold transition-all border-b-2 border-transparent text-gray-400 hover:text-gray-600 -mb-[13px]">More Interesting Findings</button>
+          <button onclick="setTab('conclusion')" data-tab="conclusion" class="tab-btn pb-2 text-sm font-semibold transition-all border-b-2 border-transparent text-gray-400 hover:text-gray-600 -mb-[13px]">Conclusion & Summary</button>
         </div>
         <div class="bg-white p-1.5 rounded-xl shadow-sm border border-gray-200 flex items-center">
           <div class="px-3 py-2 text-gray-400 border-r border-gray-100 mr-1">
@@ -71,7 +75,7 @@
             <div class="p-1.5 bg-[#FF5A5F] rounded-lg text-white shadow-md">
               <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="9" y1="18" x2="15" y2="18"/><line x1="12" y1="2" x2="12" y2="8"/><path d="M12 8a4 4 0 100 8 4 4 0 000-8z"/></svg>
             </div>
-            <h3 class="font-bold text-gray-800 text-base tracking-tight">Recommendations for Hosts</h3>
+            <h3 class="font-bold text-gray-800 text-base tracking-tight">Insights for Hosts</h3>
           </div>
           <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div class="flex flex-col gap-4">
@@ -96,7 +100,7 @@
                 <p class="text-[11px] font-black uppercase tracking-widest">Interesting Trend</p>
               </div>
               <p class="text-[15px] font-bold text-gray-900 leading-snug">How do top characteristics vary between specific neighborhoods in Berlin?</p>
-              <div class="text-sm text-gray-500 italic bg-gray-50 rounded-xl p-4"><ul class="list-disc pl-4 space-y-1"><li>Tempelhofer Vorstadt #1: "55 inch HDTV" (&euro;58K avg revenue)</li><li>Südliche Luisenstadt #1: "Noise decibel monitors" (&euro;53K avg revenue)</li><li>Top characteristics vary by neighborhood</li><li>Metric: avg rating >= 4.8, ranked by avg revenue</li></ul></div>
+              <div class="text-sm text-gray-500 italic bg-gray-50 rounded-xl p-4"><ul class="list-disc pl-4 space-y-1"><li>Tempelhofer Vorstadt #1: "55 inch HDTV"</li><li>Südliche Luisenstadt #1: "Noise decibel monitors"</li><li>Top characteristics vary by neighborhood</li><li>Metric: avg rating >= 4.8, ranked by avg revenue</li></ul></div>
             </div>
           </div>
         </div>
@@ -124,29 +128,186 @@
 
       </div>
 
-      <!-- Neighborhood Analysis Tab -->
-      <div id="tab-other" class="hidden flex flex-col gap-4 md:gap-8 pb-20">
-        <div class="flex items-center gap-3 flex-wrap">
-          <span class="text-sm font-bold text-gray-600">Compare:</span>
-          <div class="bg-white p-1.5 rounded-lg shadow-sm border border-gray-200 flex items-center min-w-[200px]">
-            <div class="w-3 h-3 rounded-full bg-[#00A699] ml-2 mr-2 shrink-0"></div>
-            <select id="hood-compare-1" onchange="renderNeighborhoodTab()" class="w-full px-1 py-1.5 rounded-lg text-xs font-bold text-gray-600 appearance-none focus:outline-none cursor-pointer bg-transparent"></select>
+
+      <!-- More Interesting Findings Tab -->
+      <div id="tab-trends" class="hidden flex flex-col gap-4 md:gap-8 pb-20">
+        <div class="bg-white p-4 md:p-8 rounded-2xl border border-gray-100 shadow-sm">
+          <div class="flex items-center gap-3 mb-4 md:mb-8">
+            <div class="p-1.5 bg-[#FF5A5F] rounded-lg text-white shadow-md">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+            </div>
+            <h3 class="font-bold text-gray-800 text-base tracking-tight">Smoking Allowed</h3>
           </div>
-          <span class="text-sm font-bold text-gray-400">vs</span>
-          <div class="bg-white p-1.5 rounded-lg shadow-sm border border-gray-200 flex items-center min-w-[200px]">
-            <div class="w-3 h-3 rounded-full bg-[#FF5A5F] ml-2 mr-2 shrink-0"></div>
-            <select id="hood-compare-2" onchange="renderNeighborhoodTab()" class="w-full px-1 py-1.5 rounded-lg text-xs font-bold text-gray-600 appearance-none focus:outline-none cursor-pointer bg-transparent"></select>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+            <div class="bg-gray-50 rounded-xl p-5 text-center">
+              <p class="text-3xl font-black text-[#FF5A5F]">613</p>
+              <p class="text-xs font-bold text-gray-400 mt-1 uppercase">Listings allow smoking</p>
+            </div>
+            <div class="bg-gray-50 rounded-xl p-5 text-center">
+              <p class="text-3xl font-black text-gray-900">115</p>
+              <p class="text-xs font-bold text-gray-400 mt-1 uppercase">Neighborhoods</p>
+            </div>
+            <div class="bg-gray-50 rounded-xl p-5 text-center">
+              <p class="text-3xl font-black text-[#00A699]">~Same</p>
+              <p class="text-xs font-bold text-gray-400 mt-1 uppercase">Avg rating vs non-smoking</p>
+            </div>
+          </div>
+          <p class="text-sm text-gray-500 italic mb-6">Guests who book smoking-allowed listings appear to do so intentionally — ratings are nearly identical to non-smoking listings.</p>
+          <div class="h-48 md:h-56"><canvas id="chart-smoking-rating"></canvas></div>
+        </div>
+      </div>
+
+      <!-- Conclusion & Summary Tab -->
+      <div id="tab-conclusion" class="hidden flex flex-col gap-4 md:gap-8 pb-20">
+        <!-- Conclusion Section -->
+        <div class="bg-white p-4 md:p-8 rounded-2xl border border-gray-100 shadow-sm">
+          <div class="flex items-center gap-3 mb-4 md:mb-8">
+            <div class="p-1.5 bg-[#FF5A5F] rounded-lg text-white shadow-md">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            </div>
+            <h3 class="font-bold text-gray-800 text-base tracking-tight">Conclusion</h3>
+          </div>
+          <p class="text-[15px] font-bold text-gray-900 leading-relaxed">Success on Airbnb in Berlin and Munich is about doing the small things well. It's not one big differentiator — it's the combination of building a review base over time, investing in practical home amenities (washer, dryer), writing detailed descriptions and neighborhood overviews, and tailoring your listing to your specific neighborhood. Hosts who put effort into every touchpoint of the guest experience — from the listing text to the in-unit amenities — consistently outperform those who don't.</p>
+        </div>
+
+        <!-- Summary Section -->
+        <div class="bg-white p-4 md:p-8 rounded-2xl border border-gray-100 shadow-sm">
+          <div class="flex items-center gap-3 mb-4 md:mb-8">
+            <div class="p-1.5 bg-gray-800 rounded-lg text-white shadow-md">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+            </div>
+            <h3 class="font-bold text-gray-800 text-base tracking-tight">Summary</h3>
+          </div>
+          <div class="space-y-6">
+            <div>
+              <p class="text-[11px] font-black uppercase tracking-widest text-[#FF5A5F] mb-3">Problem</p>
+              <p class="text-sm text-gray-500 italic">(To be defined)</p>
+            </div>
+            <div>
+              <p class="text-[11px] font-black uppercase tracking-widest text-[#FF5A5F] mb-3">Findings</p>
+              <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+                <div class="bg-gray-50 rounded-xl p-4">
+                  <p class="text-xs font-black text-gray-400 uppercase mb-1">1. Reviews Drive Revenue</p>
+                  <p class="text-sm font-bold text-gray-900">Ratings stay flat (~4.77) regardless of review count, but revenue increases steadily with more reviews</p>
+                </div>
+                <div class="bg-gray-50 rounded-xl p-4">
+                  <p class="text-xs font-black text-gray-400 uppercase mb-1">2. Practical Amenities Win</p>
+                  <p class="text-sm font-bold text-gray-900">Free washer and dryer appear in the highest-earning, highly-rated listings</p>
+                </div>
+                <div class="bg-gray-50 rounded-xl p-4">
+                  <p class="text-xs font-black text-gray-400 uppercase mb-1">3. Neighborhoods Have Different Needs</p>
+                  <p class="text-sm font-bold text-gray-900">Top amenities vary by neighborhood — what works in one area doesn't necessarily work in another</p>
+                </div>
+                <div class="bg-gray-50 rounded-xl p-4">
+                  <p class="text-xs font-black text-gray-400 uppercase mb-1">4. Detailed Descriptions Earn More</p>
+                  <p class="text-sm font-bold text-gray-900">Listings with 100+ word descriptions lead to higher estimated annual revenue</p>
+                </div>
+                <div class="bg-gray-50 rounded-xl p-4">
+                  <p class="text-xs font-black text-gray-400 uppercase mb-1">5. Minimal Text Hurts Ratings</p>
+                  <p class="text-sm font-bold text-gray-900">Brief or minimal neighborhood overviews (0-10 words) correlate with lower average review scores</p>
+                </div>
+                <div class="bg-gray-50 rounded-xl p-4">
+                  <p class="text-xs font-black text-gray-400 uppercase mb-1">6. Longer Titles Rate Higher</p>
+                  <p class="text-sm font-bold text-gray-900">Titles with 11-15 words achieve peak satisfaction ratings with an average rating of 4.9 or higher</p>
+                </div>
+              </div>
+            </div>
+            <div>
+              <p class="text-[11px] font-black uppercase tracking-widest text-[#FF5A5F] mb-3">Conclusion</p>
+              <p class="text-sm font-bold text-gray-900">Success on Airbnb is the sum of many small efforts — building reviews, choosing practical amenities, writing detailed text, and tailoring to your neighborhood. There is no single shortcut.</p>
+            </div>
           </div>
         </div>
-        <div class="bg-white p-4 md:p-6 rounded-2xl shadow-sm border border-gray-100">
-          <h3 class="font-bold text-sm text-gray-400 uppercase tracking-widest mb-1">Top Rated Listings</h3>
-          <p class="text-[11px] text-gray-400 mb-4">Ranked by rating, with number of reviews as tiebreaker</p>
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="listings-tables"></div>
+      </div>
+
+      <!-- Amenities Tab -->
+      <div id="tab-amenities" class="hidden flex flex-col gap-4 md:gap-8 pb-20">
+        <div class="bg-white p-4 md:p-8 rounded-2xl border border-gray-100 shadow-sm">
+          <div class="flex items-center gap-3 mb-4 md:mb-8">
+            <div class="p-1.5 bg-[#FF5A5F] rounded-lg text-white shadow-md">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            </div>
+            <h3 class="font-bold text-gray-800 text-base tracking-tight">Insights for Hosts</h3>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="flex flex-col gap-3">
+              <div class="flex items-center gap-2 text-[#FF5A5F]">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                <p class="text-[11px] font-black uppercase tracking-widest">Popular vs Profitable</p>
+              </div>
+              <p class="text-[15px] font-bold text-gray-900 leading-snug">Most popular amenities are not necessarily the ones associated with high revenue or high ratings.</p>
+            </div>
+            <div class="flex flex-col gap-3">
+              <div class="flex items-center gap-2 text-[#FF5A5F]">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
+                <p class="text-[11px] font-black uppercase tracking-widest">Money Makers</p>
+              </div>
+              <p class="text-[15px] font-bold text-gray-900 leading-snug">Amenities like "Free Dryer" and "Free Washer" appear in highly rated, high revenue listings.</p>
+            </div>
+            <div class="flex flex-col gap-3">
+              <div class="flex items-center gap-2 text-[#FF5A5F]">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                <p class="text-[11px] font-black uppercase tracking-widest">Guest Expectations</p>
+              </div>
+              <p class="text-[15px] font-bold text-gray-900 leading-snug">Wifi is the most popular amenity but doesn't appear in the revenue table, suggesting guests expect it as a baseline.</p>
+            </div>
+          </div>
         </div>
-        <div class="bg-white p-4 md:p-6 rounded-2xl shadow-sm border border-gray-100">
-          <h3 class="font-bold text-sm text-gray-400 uppercase tracking-widest mb-1">Top Amenities by Neighborhood</h3>
-          <p class="text-[11px] text-gray-400 mb-4">Avg rating >= 4.8, ranked by avg revenue</p>
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="trend-tables-berlin-other"></div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="bg-white p-4 md:p-6 rounded-2xl shadow-sm border border-gray-100">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-4">
+              <div>
+                <h3 class="font-bold text-sm text-gray-400 uppercase tracking-widest mb-1">Amenities By Popularity</h3>
+                <p class="text-[11px] text-gray-400" id="amenities-count"></p>
+              </div>
+              <div class="relative w-full sm:w-48">
+                <svg class="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                <input type="text" id="amenity-search" placeholder="Search..." class="w-full pl-9 pr-4 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none" oninput="renderAmenitiesTab()" />
+              </div>
+            </div>
+            <div class="overflow-x-auto max-h-[320px] overflow-y-auto">
+              <table class="w-full text-left table-fixed">
+                <colgroup><col class="w-[40px]"><col><col class="w-[60px]"><col class="w-[70px]"><col class="w-[50px]"></colgroup>
+                <thead class="bg-gray-50/50 sticky top-0">
+                  <tr>
+                    <th class="px-3 py-3 text-[10px] font-black text-gray-400 uppercase">#</th>
+                    <th class="px-3 py-3 text-[10px] font-black text-gray-400 uppercase">Amenity</th>
+                    <th class="px-3 py-3 text-[10px] font-black text-gray-400 uppercase text-center">Rating</th>
+                    <th class="px-3 py-3 text-[10px] font-black text-gray-400 uppercase text-right">Listings</th>
+                    <th class="px-3 py-3 text-[10px] font-black text-gray-400 uppercase text-right">%</th>
+                  </tr>
+                </thead>
+                <tbody id="amenities-tbody" class="divide-y divide-gray-50"></tbody>
+              </table>
+            </div>
+          </div>
+          <div class="bg-white p-4 md:p-6 rounded-2xl shadow-sm border border-gray-100">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-4">
+              <div>
+                <h3 class="font-bold text-sm text-gray-400 uppercase tracking-widest mb-1">Amenities By Revenue (Highly Rated)</h3>
+                <p class="text-[11px] text-gray-400">Avg rating >= 4.8, ranked by avg revenue</p>
+              </div>
+              <div class="relative w-full sm:w-48">
+                <svg class="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                <input type="text" id="amenity-search-revenue" placeholder="Search..." class="w-full pl-9 pr-4 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none" oninput="renderAmenitiesTab()" />
+              </div>
+            </div>
+            <div class="overflow-x-auto max-h-[320px] overflow-y-auto">
+              <table class="w-full text-left table-fixed">
+                <colgroup><col class="w-[40px]"><col><col class="w-[60px]"><col class="w-[70px]"><col class="w-[80px]"></colgroup>
+                <thead class="bg-gray-50/50 sticky top-0">
+                  <tr>
+                    <th class="px-3 py-3 text-[10px] font-black text-gray-400 uppercase">#</th>
+                    <th class="px-3 py-3 text-[10px] font-black text-gray-400 uppercase">Amenity</th>
+                    <th class="px-3 py-3 text-[10px] font-black text-gray-400 uppercase text-center">Rating</th>
+                    <th class="px-3 py-3 text-[10px] font-black text-gray-400 uppercase text-right">Listings</th>
+                    <th class="px-3 py-3 text-[10px] font-black text-gray-400 uppercase text-right">Avg Rev</th>
+                  </tr>
+                </thead>
+                <tbody id="amenities-revenue-tbody" class="divide-y divide-gray-50"></tbody>
+              </table>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -157,7 +318,7 @@
             <div class="p-1.5 bg-[#FF5A5F] rounded-lg text-white shadow-md">
               <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
             </div>
-            <h3 class="font-bold text-gray-800 text-base tracking-tight">Recommendations for Hosts</h3>
+            <h3 class="font-bold text-gray-800 text-base tracking-tight">Insights for Hosts</h3>
           </div>
           <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div class="flex flex-col gap-4">
@@ -552,9 +713,12 @@ function setTab(tab) {
       : 'tab-btn pb-2 text-sm font-semibold transition-all border-b-2 border-transparent text-gray-400 hover:text-gray-600 -mb-[13px]';
   });
   document.getElementById('tab-overview').classList.toggle('hidden', tab !== 'overview');
-  document.getElementById('tab-other').classList.toggle('hidden', tab !== 'other');
+  document.getElementById('tab-amenities').classList.toggle('hidden', tab !== 'amenities');
   document.getElementById('tab-analysis').classList.toggle('hidden', tab !== 'analysis');
-  document.getElementById('secondary-filters').classList.toggle('hidden', tab === 'overview');
+  document.getElementById('tab-trends').classList.toggle('hidden', tab !== 'trends');
+  document.getElementById('tab-conclusion').classList.toggle('hidden', tab !== 'conclusion');
+  document.getElementById('secondary-filters').classList.toggle('hidden', tab === 'overview' || tab === 'trends' || tab === 'conclusion');
+  document.getElementById('kpi-cards').classList.toggle('hidden', tab === 'trends' || tab === 'conclusion');
   if (tab === 'overview') {
     roomTypeFilter = 'All'; bedroomFilter = 'All'; bathroomFilter = 'All'; neighborhoodFilter = 'All';
   }
@@ -592,105 +756,8 @@ function setBathroomFilter(val) {
   renderAll();
 }
 
-function renderOtherCharts() {
+function populateHoodDropdowns() {
   var data = getActiveData();
-  var amenList = window._amenList;
-
-  // Reviews vs Revenue chart (duplicate of overview)
-  var reviewBuckets = [
-    { label: '0–10', min: 0, max: 10 },
-    { label: '11–25', min: 11, max: 25 },
-    { label: '26–50', min: 26, max: 50 },
-    { label: '51–100', min: 51, max: 100 },
-    { label: '101–200', min: 101, max: 200 },
-    { label: '200+', min: 201, max: 99999 }
-  ];
-  var revLabels = [];
-  var revData = [];
-  var ratingData = [];
-  reviewBuckets.forEach(function(b) {
-    var bucket = data.filter(function(d) { return d.number_of_reviews >= b.min && d.number_of_reviews <= b.max; });
-    if (bucket.length >= 5) {
-      revLabels.push(b.label);
-      revData.push(Math.round(bucket.reduce(function(a,d){return a+(d.revenue_num||0);},0) / bucket.length));
-      var ratedBucket = bucket.filter(function(d) { return d.rating > 0; });
-      ratingData.push(ratedBucket.length ? parseFloat((ratedBucket.reduce(function(a,d){return a+d.rating;},0) / ratedBucket.length).toFixed(2)) : 0);
-    }
-  });
-  destroyChart('success-other');
-  charts['success-other'] = new Chart(document.getElementById('chart-success-other'), {
-    type: 'bar',
-    data: {
-      labels: revLabels,
-      datasets: [
-        { type: 'bar', label: 'Avg Annual Revenue', data: revData, backgroundColor: '#00A699', borderRadius: 4, yAxisID: 'y', order: 2 },
-        { type: 'line', label: 'Avg Rating', data: ratingData, borderColor: '#f59e0b', backgroundColor: '#fff', borderWidth: 3, pointRadius: 6, pointBorderWidth: 2, pointBackgroundColor: '#fff', pointBorderColor: '#f59e0b', tension: 0.3, fill: false, yAxisID: 'y1', order: 1 }
-      ]
-    },
-    options: {
-      responsive: true, maintainAspectRatio: false,
-      plugins: { legend: { position: 'bottom', labels: { font: { size: 10 } } }, tooltip: { callbacks: { label: function(ctx) { return ctx.datasetIndex === 1 ? 'Rating: ' + ctx.raw : '€' + ctx.raw.toLocaleString(); } } } },
-      scales: {
-        y: { position: 'left', beginAtZero: true, title: { display: true, text: 'Revenue (€)', font: { size: 9 } }, ticks: { callback: function(v) { return '€' + v.toLocaleString(); }, font: { size: 9 }, maxTicksLimit: 5 }, grid: { display: false } },
-        y1: { position: 'right', min: 4, max: 5, title: { display: true, text: 'Rating', font: { size: 9 } }, ticks: { font: { size: 9 }, maxTicksLimit: 5 }, grid: { drawOnChartArea: false } },
-        x: { title: { display: true, text: 'Number of Reviews', font: { size: 9 } }, grid: { display: false } }
-      }
-    }
-  });
-
-  // Regional tables
-  function getTopAmenitiesOther(cityData, n) {
-    var stats = {};
-    cityData.forEach(function(d) {
-      if (!d.amenities_idx || !d.amenities_idx.length) return;
-      d.amenities_idx.forEach(function(idx) {
-        var a = amenList[idx];
-        if (!a) return;
-        if (!stats[a]) stats[a] = { name: a, rev: 0, rat: 0, count: 0, ratCount: 0 };
-        stats[a].rev += d.revenue_num || 0;
-        stats[a].count += 1;
-        if (d.rating > 0) { stats[a].rat += d.rating; stats[a].ratCount += 1; }
-      });
-    });
-    return Object.values(stats)
-      .filter(function(a) { return a.count > cityData.length * 0.05 && a.count < cityData.length * 0.5 && a.ratCount > 0 && (a.rat / a.ratCount) >= 4.8; })
-      .map(function(a) { return { name: a.name, avg: Math.round(a.rev / a.count), avgRat: (a.rat / a.ratCount).toFixed(2) }; })
-      .sort(function(a,b) { return b.avg - a.avg; })
-      .slice(0, n);
-  }
-  function getHoodTopAmenitiesOther(hoodName, n) {
-    var hoodData = data.filter(function(d) { return d.neighbourhood_cleansed === hoodName; });
-    var stats = {};
-    hoodData.forEach(function(d) {
-      if (!d.amenities_idx || !d.amenities_idx.length) return;
-      d.amenities_idx.forEach(function(idx) {
-        var a = amenList[idx];
-        if (!a) return;
-        if (!stats[a]) stats[a] = { name: a, rev: 0, rat: 0, count: 0, ratCount: 0 };
-        stats[a].rev += d.revenue_num || 0;
-        stats[a].count += 1;
-        if (d.rating > 0) { stats[a].rat += d.rating; stats[a].ratCount += 1; }
-      });
-    });
-    return Object.values(stats)
-      .filter(function(a) { return a.count >= 5 && a.count < hoodData.length * 0.5 && a.ratCount > 0 && (a.rat / a.ratCount) >= 4.8; })
-      .map(function(a) { return { name: a.name, avg: Math.round(a.rev / a.count), avgRat: (a.rat / a.ratCount).toFixed(2) }; })
-      .sort(function(a,b) { return b.avg - a.avg; })
-      .slice(0, n);
-  }
-  function makeTableOther(label, top, color) {
-    var rows = top.map(function(a, i) {
-      return '<tr class="border-t border-gray-100"><td class="py-2 pr-2 text-xs text-gray-400 font-bold">#' + (i+1) + '</td><td class="py-2 text-sm font-semibold text-gray-800">' + a.name + '</td><td class="py-2 pl-2 text-sm font-bold text-center text-amber-500">' + a.avgRat + '</td><td class="py-2 pl-2 text-sm font-bold text-right text-gray-600">&euro;' + a.avg.toLocaleString() + '</td></tr>';
-    }).join('');
-    return '<div><div class="flex items-center gap-2 mb-3"><div class="w-3 h-3 rounded-full ' + color + '"></div><p class="text-xs font-black uppercase tracking-widest text-gray-600">' + label + '</p></div><table class="w-full"><thead><tr><th class="text-left text-[10px] font-black text-gray-400 uppercase pb-2 pr-2">#</th><th class="text-left text-[10px] font-black text-gray-400 uppercase pb-2">Amenity</th><th class="text-center text-[10px] font-black text-gray-400 uppercase pb-2 pl-2">Avg Rating</th><th class="text-right text-[10px] font-black text-gray-400 uppercase pb-2 pl-2">Avg Revenue</th></tr></thead><tbody>' + rows + '</tbody></table></div>';
-  }
-  var berlinData = data.filter(function(d) { return d.cityName === 'Berlin'; });
-  var munichData = data.filter(function(d) { return d.cityName === 'Munich'; });
-  document.getElementById('regional-tables-other').innerHTML =
-    makeTableOther('Berlin', getTopAmenitiesOther(berlinData, 5), 'bg-[#00A699]') +
-    makeTableOther('Munich', getTopAmenitiesOther(munichData, 5), 'bg-[#FF5A5F]');
-
-  // Populate hood comparison dropdowns
   var hoodCounts = {};
   data.forEach(function(d) {
     var h = d.neighbourhood_cleansed;
@@ -705,16 +772,42 @@ function renderOtherCharts() {
   if (validHoods.indexOf(cur2) === -1 && validHoods.length > 1) cur2 = validHoods[1];
   sel1.innerHTML = validHoods.map(function(h) { return '<option value="' + h + '"' + (h === cur1 ? ' selected' : '') + '>' + h + '</option>'; }).join('');
   sel2.innerHTML = validHoods.map(function(h) { return '<option value="' + h + '"' + (h === cur2 ? ' selected' : '') + '>' + h + '</option>'; }).join('');
-
-  renderNeighborhoodTab();
 }
 
 function renderNeighborhoodTab() {
-  renderListingsTable();
   var data = getActiveData();
   var amenList = window._amenList;
-  function getHoodTop(hoodName, n) {
-    var hoodData = data.filter(function(d) { return d.neighbourhood_cleansed === hoodName; });
+  var hood1 = document.getElementById('hood-compare-1').value;
+  var hood2 = document.getElementById('hood-compare-2').value;
+  var hood1Data = data.filter(function(d) { return d.neighbourhood_cleansed === hood1; });
+  var hood2Data = data.filter(function(d) { return d.neighbourhood_cleansed === hood2; });
+
+  // Section 1: At a Glance KPIs
+  function hoodKPIs(hoodData) {
+    var len = hoodData.length || 1;
+    var rated = hoodData.filter(function(d) { return d.rating > 0; });
+    return {
+      listings: hoodData.length,
+      avgPrice: Math.round(hoodData.reduce(function(a,d){return a+d.price_num;},0) / len),
+      avgRating: rated.length ? (rated.reduce(function(a,d){return a+d.rating;},0) / rated.length).toFixed(2) : 'N/A',
+      avgRevenue: Math.round(hoodData.reduce(function(a,d){return a+(d.revenue_num||0);},0) / len)
+    };
+  }
+  function makeKPICard(label, kpis, color) {
+    return '<div><div class="flex items-center gap-2 mb-3"><div class="w-3 h-3 rounded-full ' + color + '"></div><p class="text-xs font-black uppercase tracking-widest text-gray-600">' + label + '</p></div>' +
+      '<div class="grid grid-cols-2 gap-3">' +
+      '<div class="bg-gray-50 rounded-lg p-3"><p class="text-[10px] font-bold text-gray-400 uppercase">Listings</p><p class="text-lg font-bold text-gray-900">' + kpis.listings.toLocaleString() + '</p></div>' +
+      '<div class="bg-gray-50 rounded-lg p-3"><p class="text-[10px] font-bold text-gray-400 uppercase">Avg Price</p><p class="text-lg font-bold text-gray-900">&euro;' + kpis.avgPrice.toLocaleString() + '</p></div>' +
+      '<div class="bg-gray-50 rounded-lg p-3"><p class="text-[10px] font-bold text-gray-400 uppercase">Avg Rating</p><p class="text-lg font-bold text-gray-900">' + kpis.avgRating + '</p></div>' +
+      '<div class="bg-gray-50 rounded-lg p-3"><p class="text-[10px] font-bold text-gray-400 uppercase">Avg Revenue</p><p class="text-lg font-bold text-gray-900">&euro;' + kpis.avgRevenue.toLocaleString() + '</p></div>' +
+      '</div></div>';
+  }
+  document.getElementById('hood-kpis').innerHTML =
+    makeKPICard(hood1, hoodKPIs(hood1Data), 'bg-[#00A699]') +
+    makeKPICard(hood2, hoodKPIs(hood2Data), 'bg-[#FF5A5F]');
+
+  // Section 2: Top Amenities
+  function getHoodTop(hoodData, n) {
     var stats = {};
     hoodData.forEach(function(d) {
       if (!d.amenities_idx || !d.amenities_idx.length) return;
@@ -733,17 +826,66 @@ function renderNeighborhoodTab() {
       .sort(function(a,b) { return b.avg - a.avg; })
       .slice(0, n);
   }
-  function makeTable(label, top, color) {
+  function makeAmenTable(label, top, color) {
     var rows = top.map(function(a, i) {
       return '<tr class="border-t border-gray-100"><td class="py-2 pr-2 text-xs text-gray-400 font-bold">#' + (i+1) + '</td><td class="py-2 text-sm font-semibold text-gray-800">' + a.name + '</td><td class="py-2 pl-2 text-sm font-bold text-center text-amber-500">' + a.avgRat + '</td><td class="py-2 pl-2 text-sm font-bold text-right text-gray-600">&euro;' + a.avg.toLocaleString() + '</td></tr>';
     }).join('');
     return '<div><div class="flex items-center gap-2 mb-3"><div class="w-3 h-3 rounded-full ' + color + '"></div><p class="text-xs font-black uppercase tracking-widest text-gray-600">' + label + '</p></div><table class="w-full"><thead><tr><th class="text-left text-[10px] font-black text-gray-400 uppercase pb-2 pr-2">#</th><th class="text-left text-[10px] font-black text-gray-400 uppercase pb-2">Amenity</th><th class="text-center text-[10px] font-black text-gray-400 uppercase pb-2 pl-2">Avg Rating</th><th class="text-right text-[10px] font-black text-gray-400 uppercase pb-2 pl-2">Avg Revenue</th></tr></thead><tbody>' + rows + '</tbody></table></div>';
   }
-  var hood1 = document.getElementById('hood-compare-1').value;
-  var hood2 = document.getElementById('hood-compare-2').value;
   document.getElementById('trend-tables-berlin-other').innerHTML =
-    makeTable(hood1, getHoodTop(hood1, 5), 'bg-[#00A699]') +
-    makeTable(hood2, getHoodTop(hood2, 5), 'bg-[#FF5A5F]');
+    makeAmenTable(hood1, getHoodTop(hood1Data, 5), 'bg-[#00A699]') +
+    makeAmenTable(hood2, getHoodTop(hood2Data, 5), 'bg-[#FF5A5F]');
+}
+
+function renderAmenitiesTab() {
+  var data = getActiveData();
+  var amenList = window._amenList;
+  var query = (document.getElementById('amenity-search').value || '').toLowerCase();
+  var stats = {};
+  data.forEach(function(d) {
+    if (!d.amenities_idx || !d.amenities_idx.length) return;
+    d.amenities_idx.forEach(function(idx) {
+      var a = amenList[idx];
+      if (!a) return;
+      if (!stats[a]) stats[a] = { name: a, count: 0, rev: 0, rat: 0, ratCount: 0 };
+      stats[a].count += 1;
+      stats[a].rev += d.revenue_num || 0;
+      if (d.rating > 0) { stats[a].rat += d.rating; stats[a].ratCount += 1; }
+    });
+  });
+
+  var total = data.length || 1;
+
+  // Popularity table
+  var sorted = Object.values(stats)
+    .filter(function(a) { return !query || a.name.toLowerCase().indexOf(query) !== -1; })
+    .sort(function(a, b) { return b.count - a.count; });
+  document.getElementById('amenities-count').textContent = sorted.length + ' amenities across ' + data.length.toLocaleString() + ' listings';
+  document.getElementById('amenities-tbody').innerHTML = sorted.map(function(a, i) {
+    var pct = (a.count / total * 100).toFixed(1);
+    var avgRat = a.ratCount > 0 ? (a.rat / a.ratCount).toFixed(2) : 'N/A';
+    return '<tr class="hover:bg-gray-50/50">' +
+      '<td class="px-3 py-2 text-xs text-gray-400 font-bold">' + (i + 1) + '</td>' +
+      '<td class="px-3 py-2 text-sm font-semibold text-gray-800">' + a.name + '</td>' +
+      '<td class="px-3 py-2 text-sm font-bold text-center text-amber-500">' + avgRat + '</td>' +
+      '<td class="px-3 py-2 text-sm font-bold text-right text-gray-600">' + a.count.toLocaleString() + '</td>' +
+      '<td class="px-3 py-2 text-sm text-right text-gray-400">' + pct + '%</td></tr>';
+  }).join('');
+
+  // Revenue table (highly rated)
+  var revQuery = (document.getElementById('amenity-search-revenue').value || '').toLowerCase();
+  var revSorted = Object.values(stats)
+    .filter(function(a) { return a.count > total * 0.05 && a.count < total * 0.5 && a.ratCount > 0 && (a.rat / a.ratCount) >= 4.8 && (!revQuery || a.name.toLowerCase().indexOf(revQuery) !== -1); })
+    .map(function(a) { return { name: a.name, avgRev: Math.round(a.rev / a.count), avgRat: (a.rat / a.ratCount).toFixed(2), count: a.count }; })
+    .sort(function(a, b) { return b.avgRev - a.avgRev; });
+  document.getElementById('amenities-revenue-tbody').innerHTML = revSorted.map(function(a, i) {
+    return '<tr class="hover:bg-gray-50/50">' +
+      '<td class="px-3 py-2 text-xs text-gray-400 font-bold">' + (i + 1) + '</td>' +
+      '<td class="px-3 py-2 text-sm font-semibold text-gray-800">' + a.name + '</td>' +
+      '<td class="px-3 py-2 text-sm font-bold text-center text-amber-500">' + a.avgRat + '</td>' +
+      '<td class="px-3 py-2 text-sm font-bold text-right text-gray-600">' + a.count.toLocaleString() + '</td>' +
+      '<td class="px-3 py-2 text-sm font-bold text-right text-gray-600">&euro;' + a.avgRev.toLocaleString() + '</td></tr>';
+  }).join('');
 }
 
 function renderAll() {
@@ -751,12 +893,50 @@ function renderAll() {
   renderNeighborhoods();
   if (activeTab === 'overview') {
     renderRecommendationCharts();
-  } else if (activeTab === 'other') {
-    renderOtherCharts();
-    renderNeighborhoodTab();
+  } else if (activeTab === 'amenities') {
+    renderAmenitiesTab();
   } else if (activeTab === 'analysis') {
     renderAnalysisTab();
+  } else if (activeTab === 'trends') {
+    renderTrendsTab();
   }
+}
+
+function renderTrendsTab() {
+  var data = getActiveData();
+  var amenList = window._amenList;
+  var smokingIdx = amenList.indexOf('Smoking allowed');
+
+  var smoking = data.filter(function(d) { return smokingIdx >= 0 && d.amenities_idx.indexOf(smokingIdx) !== -1; });
+  var noSmoking = data.filter(function(d) { return smokingIdx < 0 || d.amenities_idx.indexOf(smokingIdx) === -1; });
+
+  var sRated = smoking.filter(function(d) { return d.rating > 0; });
+  var nsRated = noSmoking.filter(function(d) { return d.rating > 0; });
+  var sAvgRat = sRated.length ? parseFloat((sRated.reduce(function(a,d){return a+d.rating;},0) / sRated.length).toFixed(2)) : 0;
+  var nsAvgRat = nsRated.length ? parseFloat((nsRated.reduce(function(a,d){return a+d.rating;},0) / nsRated.length).toFixed(2)) : 0;
+  var sAvgReviews = smoking.length ? Math.round(smoking.reduce(function(a,d){return a+(d.number_of_reviews||0);},0) / smoking.length) : 0;
+  var nsAvgReviews = noSmoking.length ? Math.round(noSmoking.reduce(function(a,d){return a+(d.number_of_reviews||0);},0) / noSmoking.length) : 0;
+
+  destroyChart('smoking-rating');
+  charts['smoking-rating'] = new Chart(document.getElementById('chart-smoking-rating'), {
+    type: 'bar',
+    data: {
+      labels: ['Smoking Allowed (' + smoking.length + ')', 'No Smoking (' + noSmoking.length.toLocaleString() + ')'],
+      datasets: [
+        { type: 'bar', label: 'Avg Reviews', data: [sAvgReviews, nsAvgReviews], backgroundColor: ['#FF5A5F', '#00A699'], borderRadius: 4, barThickness: 40, yAxisID: 'y', order: 2 },
+        { type: 'line', label: 'Avg Rating', data: [sAvgRat, nsAvgRat], borderColor: '#f59e0b', backgroundColor: '#fff', borderWidth: 3, pointRadius: 7, pointBorderWidth: 3, pointBorderColor: '#f59e0b', pointBackgroundColor: '#fff', yAxisID: 'y1', order: 1 }
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { position: 'bottom', labels: { font: { size: 10 } } } },
+      scales: {
+        y: { position: 'left', beginAtZero: true, title: { display: true, text: 'Avg Reviews', font: { size: 9 } }, ticks: { font: { size: 9 } }, grid: { display: false } },
+        y1: { position: 'right', min: 4.5, max: 5, title: { display: true, text: 'Avg Rating', font: { size: 9 } }, ticks: { font: { size: 9 } }, grid: { drawOnChartArea: false } },
+        x: { ticks: { font: { size: 10 } }, grid: { display: false } }
+      }
+    }
+  });
 }
 
 renderAll();

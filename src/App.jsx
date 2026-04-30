@@ -1,4 +1,3 @@
-<<<<<<<< HEAD:App.jsx
 import React, { useState, useMemo } from 'react';
 import { 
   BarChart, Bar, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, 
@@ -527,7 +526,6 @@ const App = () => {
 };
 
 export default App;
-========
 import React, { useState, useMemo } from 'react';
 import { 
   BarChart, Bar, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, 
@@ -1056,4 +1054,3 @@ const App = () => {
 };
 
 export default App;
->>>>>>>> 61d20c2dfce1f530db036f8e017e040b066e5c79:app.jsx.txt

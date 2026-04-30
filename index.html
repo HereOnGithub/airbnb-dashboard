@@ -19,8 +19,8 @@
         </div>
         <div class="flex bg-white rounded-lg p-1 shadow-sm border border-gray-200 shrink-0">
           <button onclick="setTab('overview')" data-tab="overview" class="tab-btn px-2 md:px-3 py-1.5 rounded-md text-xs font-semibold transition-all flex items-center gap-1 md:gap-2 bg-rose-500 text-white shadow-sm">Overview</button>
-          <button onclick="setTab('other')" data-tab="other" class="tab-btn px-2 md:px-3 py-1.5 rounded-md text-xs font-semibold transition-all flex items-center gap-1 md:gap-2 text-gray-500 hover:bg-gray-50">Other Analysis</button>
           <button onclick="setTab('analysis')" data-tab="analysis" class="tab-btn px-2 md:px-3 py-1.5 rounded-md text-xs font-semibold transition-all flex items-center gap-1 md:gap-2 text-gray-500 hover:bg-gray-50">Text Analysis</button>
+          <button onclick="setTab('other')" data-tab="other" class="tab-btn px-2 md:px-3 py-1.5 rounded-md text-xs font-semibold transition-all flex items-center gap-1 md:gap-2 text-gray-500 hover:bg-gray-50">Other Analysis</button>
         </div>
       </div>
     </div>
@@ -99,12 +99,12 @@
             <div class="h-56 md:h-64"><canvas id="chart-success"></canvas></div>
           </div>
           <div class="bg-white p-4 md:p-6 rounded-2xl shadow-sm border border-gray-100">
-            <h3 class="font-bold text-sm text-gray-400 uppercase tracking-widest mb-1">Top 5 Amenities</h3>
+            <h3 class="font-bold text-sm text-gray-400 uppercase tracking-widest mb-1">Top 5 Amenities: Berlin vs Munich</h3>
             <p class="text-[11px] text-gray-400 mb-4">Ranked by avg rating, with avg revenue as tiebreaker</p>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="regional-tables"></div>
           </div>
           <div class="bg-white p-4 md:p-6 rounded-2xl shadow-sm border border-gray-100">
-            <h3 class="font-bold text-sm text-gray-400 uppercase tracking-widest mb-1">Tempelhof vs Rixdorf: Top Amenities</h3>
+            <h3 class="font-bold text-sm text-gray-400 uppercase tracking-widest mb-1">Top Amenities: Tempelhof vs Rixdorf (Berlin)</h3>
             <p class="text-[11px] text-gray-400 mb-4">Ranked by avg rating, with avg revenue as tiebreaker</p>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="trend-tables"></div>
           </div>
@@ -114,41 +114,14 @@
 
       <!-- Other Analysis Tab -->
       <div id="tab-other" class="hidden flex flex-col gap-4 md:gap-8 pb-20">
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 md:gap-8">
-          <div class="lg:col-span-8 space-y-4 md:space-y-8">
-            <div class="bg-white p-4 md:p-6 rounded-2xl shadow-sm border border-gray-100">
-              <h3 class="font-bold text-base md:text-lg mb-4 md:mb-6 text-gray-800">Top 5 Amenities by Revenue</h3>
-              <div class="h-56 md:h-72"><canvas id="chart-amenities"></canvas></div>
-            </div>
-            <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
-              <div class="p-4 md:p-6 border-b border-gray-100 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
-                <h3 class="font-bold text-base md:text-lg text-gray-800">Top Rated Listings</h3>
-                <div class="relative w-full sm:w-64">
-                  <svg class="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-                  <input type="text" id="search-input" placeholder="Search name..." class="w-full pl-9 pr-4 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none" oninput="renderListingsTable()" />
-                </div>
-              </div>
-              <div class="overflow-x-auto">
-                <table class="w-full text-left">
-                  <thead class="bg-gray-50/50">
-                    <tr>
-                      <th class="px-3 md:px-6 py-3 md:py-4 text-[10px] font-black text-gray-400 uppercase">Market</th>
-                      <th class="px-3 md:px-6 py-3 md:py-4 text-[10px] font-black text-gray-400 uppercase">Listing</th>
-                      <th class="px-3 md:px-6 py-3 md:py-4 text-[10px] font-black text-gray-400 uppercase text-right">Price</th>
-                      <th class="px-3 md:px-6 py-3 md:py-4 text-[10px] font-black text-gray-400 uppercase text-center">Rating</th>
-                    </tr>
-                  </thead>
-                  <tbody id="listings-tbody" class="divide-y divide-gray-50"></tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-          <div class="lg:col-span-4 space-y-4 md:space-y-6">
-            <div class="bg-white p-4 md:p-6 rounded-2xl shadow-sm border border-gray-100">
-              <h3 class="font-bold text-sm text-gray-400 uppercase tracking-widest mb-4 md:mb-6">Volume Comparison</h3>
-              <div class="h-52 md:h-64"><canvas id="chart-volume"></canvas></div>
-            </div>
-          </div>
+        <div class="bg-white p-4 md:p-6 rounded-2xl shadow-sm border border-gray-100">
+          <h3 class="font-bold text-sm text-gray-400 uppercase tracking-widest mb-1">Top Rated Listings</h3>
+          <p class="text-[11px] text-gray-400 mb-4">Ranked by rating, with number of reviews as tiebreaker</p>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="listings-tables"></div>
+        </div>
+        <div class="bg-white p-4 md:p-6 rounded-2xl shadow-sm border border-gray-100">
+          <h3 class="font-bold text-sm text-gray-400 uppercase tracking-widest mb-4 md:mb-6">Volume Comparison</h3>
+          <div class="h-52 md:h-64"><canvas id="chart-volume"></canvas></div>
         </div>
       </div>
 
@@ -260,9 +233,9 @@ function renderKPIs() {
   const berlinCount = data.filter(d => d.cityName === 'Berlin').length;
   const munichCount = data.filter(d => d.cityName === 'Munich').length;
   document.getElementById('kpi-cards').innerHTML =
-    makeCard('Listings', data.length, 'bg-blue-500', berlinCount + ' Berlin · ' + munichCount + ' Munich') +
+    makeCard('Listings', data.length.toLocaleString(), 'bg-blue-500', berlinCount.toLocaleString() + ' Berlin · ' + munichCount.toLocaleString() + ' Munich') +
     makeCard('Avg Price', '&euro;' + avgPrice.toFixed(0), 'bg-emerald-500', 'Per night') +
-    makeCard('High Rating %', highPct + '%', 'bg-rose-500', 'Ratings >= 4.8') +
+    makeCard('Highly Rated Listings', highPct + '%', 'bg-rose-500', 'Ratings >= 4.8') +
     makeCard('Avg # of Reviews', avgReviews, 'bg-amber-500', 'Per listing');
 }
 
@@ -443,19 +416,24 @@ function renderVolumeChart() {
 }
 
 function renderListingsTable() {
-  var query = (document.getElementById('search-input').value || '').toLowerCase();
   var data = getActiveData();
-  var top = data
-    .filter(function(d) { return d.name && d.rating > 0 && d.name.toLowerCase().indexOf(query) !== -1; })
-    .sort(function(a, b) { return b.rating - a.rating || b.number_of_reviews - a.number_of_reviews; })
-    .slice(0, 5);
-  document.getElementById('listings-tbody').innerHTML = top.map(function(l) {
-    return '<tr class="hover:bg-gray-50/50">' +
-      '<td class="px-3 md:px-6 py-3 md:py-4"><span class="px-2 py-0.5 bg-rose-50 text-rose-600 rounded text-[10px] font-black uppercase">' + l.cityName + '</span></td>' +
-      '<td class="px-3 md:px-6 py-3 md:py-4 text-xs md:text-sm font-semibold truncate max-w-[120px] md:max-w-[200px]">' + l.name + '</td>' +
-      '<td class="px-3 md:px-6 py-3 md:py-4 text-xs md:text-sm font-bold text-right">&euro;' + l.price_num + '</td>' +
-      '<td class="px-3 md:px-6 py-3 md:py-4 text-center text-xs md:text-sm">&star;' + l.rating + '</td></tr>';
-  }).join('');
+  function getTopListings(cityData, n) {
+    return cityData
+      .filter(function(d) { return d.name && d.rating > 0; })
+      .sort(function(a, b) { return b.rating - a.rating || b.number_of_reviews - a.number_of_reviews; })
+      .slice(0, n);
+  }
+  function makeListingTable(city, top, color) {
+    var rows = top.map(function(l, i) {
+      return '<tr class="border-t border-gray-100"><td class="py-2 pr-2 text-xs text-gray-400 font-bold">#' + (i+1) + '</td><td class="py-2 text-sm font-semibold text-gray-800 truncate max-w-[180px]">' + l.name + '</td><td class="py-2 pl-2 text-sm font-bold text-center text-amber-500">' + l.rating + '</td><td class="py-2 pl-2 text-sm font-bold text-right text-gray-600">&euro;' + l.price_num + '</td><td class="py-2 pl-2 text-sm font-bold text-right text-gray-600">&euro;' + Math.round(l.revenue_num).toLocaleString() + '</td></tr>';
+    }).join('');
+    return '<div><div class="flex items-center gap-2 mb-3"><div class="w-3 h-3 rounded-full ' + color + '"></div><p class="text-xs font-black uppercase tracking-widest text-gray-600">' + city + '</p></div><table class="w-full"><thead><tr><th class="text-left text-[10px] font-black text-gray-400 uppercase pb-2 pr-2">#</th><th class="text-left text-[10px] font-black text-gray-400 uppercase pb-2">Listing</th><th class="text-center text-[10px] font-black text-gray-400 uppercase pb-2 pl-2">Rating</th><th class="text-right text-[10px] font-black text-gray-400 uppercase pb-2 pl-2">Price</th><th class="text-right text-[10px] font-black text-gray-400 uppercase pb-2 pl-2">Est. Revenue</th></tr></thead><tbody>' + rows + '</tbody></table></div>';
+  }
+  var berlinData = data.filter(function(d) { return d.cityName === 'Berlin'; });
+  var munichData = data.filter(function(d) { return d.cityName === 'Munich'; });
+  document.getElementById('listings-tables').innerHTML =
+    makeListingTable('Berlin', getTopListings(berlinData, 5), 'bg-[#00A699]') +
+    makeListingTable('Munich', getTopListings(munichData, 5), 'bg-[#FF5A5F]');
 }
 
 function getWordMetrics(data, wcField, bins) {
@@ -553,7 +531,6 @@ function renderAll() {
   if (activeTab === 'overview') {
     renderRecommendationCharts();
   } else if (activeTab === 'other') {
-    renderAmenitiesChart();
     renderVolumeChart();
     renderListingsTable();
   } else if (activeTab === 'analysis') {

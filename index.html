@@ -24,11 +24,14 @@
     <div class="max-w-7xl mx-auto px-4 md:px-8 pt-4 md:pt-6 space-y-4 md:space-y-6">
       <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 border-b border-gray-200 pb-3">
         <div class="flex gap-6">
-          <button onclick="setTab('overview')" data-tab="overview" class="tab-btn pb-2 text-sm font-semibold transition-all border-b-2 border-rose-500 text-gray-900 -mb-[13px]">Key Insights</button>
+          <button onclick="setTab('bizquestion')" data-tab="bizquestion" class="tab-btn pb-2 text-sm font-semibold transition-all border-b-2 border-transparent text-gray-400 hover:text-gray-600 -mb-[13px]">Business Question</button>
+          <button onclick="setTab('overview')" data-tab="overview" class="tab-btn pb-2 text-sm font-semibold transition-all border-b-2 border-rose-500 text-gray-900 -mb-[13px]">Characteristics Analysis</button>
           <button onclick="setTab('analysis')" data-tab="analysis" class="tab-btn pb-2 text-sm font-semibold transition-all border-b-2 border-transparent text-gray-400 hover:text-gray-600 -mb-[13px]">Text Analysis</button>
+          <button onclick="setTab('amenities')" data-tab="amenities" class="tab-btn pb-2 text-sm font-semibold transition-all border-b-2 border-transparent text-gray-400 hover:text-gray-600 -mb-[13px]">Explore Amenities Data</button>
+          <button onclick="setTab('playtext')" data-tab="playtext" class="tab-btn pb-2 text-sm font-semibold transition-all border-b-2 border-transparent text-gray-400 hover:text-gray-600 -mb-[13px]">Explore Text Data</button>
           <button onclick="setTab('questions')" data-tab="questions" class="tab-btn pb-2 text-sm font-semibold transition-all border-b-2 border-transparent text-gray-400 hover:text-gray-600 -mb-[13px]">Analysis Questions</button>
           <button onclick="setTab('conclusion')" data-tab="conclusion" class="tab-btn pb-2 text-sm font-semibold transition-all border-b-2 border-transparent text-gray-400 hover:text-gray-600 -mb-[13px]">Conclusion & Summary</button>
-          <button onclick="setTab('amenities')" data-tab="amenities" class="tab-btn pb-2 text-sm font-semibold transition-all border-b-2 border-transparent text-gray-400 hover:text-gray-600 -mb-[13px]">Amenities</button>
+          <button onclick="setTab('datasources')" data-tab="datasources" class="tab-btn pb-2 text-sm font-semibold transition-all border-b-2 border-transparent text-gray-400 hover:text-gray-600 -mb-[13px]">Data Sources</button>
         </div>
         <div class="bg-white p-1.5 rounded-xl shadow-sm border border-gray-200 flex items-center">
           <div class="px-3 py-2 text-gray-400 border-r border-gray-100 mr-1">
@@ -68,6 +71,24 @@
     </div>
 
     <div class="max-w-7xl mx-auto px-4 md:px-8 mt-4 md:mt-8">
+      <!-- Business Question Tab -->
+      <div id="tab-bizquestion" class="hidden flex flex-col gap-4 md:gap-8 pb-20">
+        <div class="bg-white p-4 md:p-8 rounded-2xl border border-gray-100 shadow-sm">
+          <div class="flex items-center gap-3 mb-4 md:mb-6">
+            <div class="p-1.5 bg-[#FF5A5F] rounded-lg text-white shadow-md">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+            </div>
+            <h3 class="font-bold text-gray-800 text-base tracking-tight">Business Question</h3>
+          </div>
+          <p class="text-sm font-bold text-gray-900 mb-3">What makes an Airbnb listing successful in Berlin and Munich, and what can hosts do to improve their performance?</p>
+          <ul class="list-disc pl-4 space-y-1 text-sm text-gray-600">
+            <li>What drives revenue? Is it ratings, reviews, amenities, or something else?</li>
+            <li>Does listing quality matter? Do better descriptions and titles translate to higher earnings?</li>
+            <li>What should hosts invest in? Which amenities are associated with top-performing listings?</li>
+          </ul>
+        </div>
+      </div>
+
       <!-- Overview Tab -->
       <div id="tab-overview" class="flex flex-col gap-4 md:gap-8 pb-20">
         <div class="bg-white p-4 md:p-8 rounded-2xl border border-gray-100 shadow-sm">
@@ -393,6 +414,250 @@
           </div>
           <p class="text-sm text-gray-500 italic mb-6">Guests who book smoking-allowed listings appear to do so intentionally. Ratings are nearly identical to non-smoking listings.</p>
           <div class="h-48 md:h-56"><canvas id="chart-smoking-amenities"></canvas></div>
+        </div>
+      </div>
+
+      <!-- Data Sources Tab -->
+      <div id="tab-datasources" class="hidden flex flex-col gap-4 md:gap-8 pb-20">
+        <div class="bg-white p-4 md:p-8 rounded-2xl border border-gray-100 shadow-sm">
+          <div class="flex items-center gap-3 mb-4 md:mb-8">
+            <div class="p-1.5 bg-gray-800 rounded-lg text-white shadow-md">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            </div>
+            <h3 class="font-bold text-gray-800 text-base tracking-tight">Data Sources</h3>
+          </div>
+          <p class="text-sm text-gray-600 mb-6">This dashboard analyzes Airbnb listing data from two German cities, sourced from Inside Airbnb CSV exports. Both files share an identical schema of 79 columns.</p>
+
+          <!-- Overview Table -->
+          <div class="overflow-x-auto mb-8">
+            <table class="w-full text-left">
+              <thead class="bg-gray-50">
+                <tr>
+                  <th class="px-4 py-3 text-[10px] font-black text-gray-400 uppercase"></th>
+                  <th class="px-4 py-3 text-[10px] font-black text-gray-400 uppercase">Berlin</th>
+                  <th class="px-4 py-3 text-[10px] font-black text-gray-400 uppercase">Munich</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-gray-100">
+                <tr><td class="px-4 py-3 text-sm font-bold text-gray-600">File</td><td class="px-4 py-3 text-sm text-gray-800">zip_berlin_listings.csv</td><td class="px-4 py-3 text-sm text-gray-800">zip_munich_listings.csv</td></tr>
+                <tr><td class="px-4 py-3 text-sm font-bold text-gray-600">Rows</td><td class="px-4 py-3 text-sm text-gray-800">14,274</td><td class="px-4 py-3 text-sm text-gray-800">8,274</td></tr>
+                <tr><td class="px-4 py-3 text-sm font-bold text-gray-600">Columns</td><td class="px-4 py-3 text-sm text-gray-800">79</td><td class="px-4 py-3 text-sm text-gray-800">79</td></tr>
+                <tr><td class="px-4 py-3 text-sm font-bold text-gray-600">Schema Match</td><td class="px-4 py-3 text-sm text-emerald-600 font-bold" colspan="2">Identical (all 79 columns shared)</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="bg-white p-4 md:p-8 rounded-2xl border border-gray-100 shadow-sm">
+          <h4 class="font-bold text-sm text-gray-400 uppercase tracking-widest mb-3">About The Data</h4>
+          <div class="space-y-4">
+            <div class="bg-gray-50 rounded-xl p-4">
+              <p class="text-xs font-black text-gray-400 uppercase mb-1">Bathroom Data</p>
+              <p class="text-sm text-gray-700">Two columns contain bathroom information: <span class="font-bold">bathrooms_text</span> (99.9% fill rate) is the primary source, with <span class="font-bold">bathrooms</span> (66.3% fill rate) used as a fallback. Of 22,548 total listings, 22 are missing bathrooms_text. Of those, 10 have data in the bathrooms column, recovering those listings. Only 12 listings (0.05%) have no bathroom data at all.</p>
+            </div>
+            <div class="bg-gray-50 rounded-xl p-4">
+              <p class="text-xs font-black text-gray-400 uppercase mb-1">Ratings</p>
+              <p class="text-sm text-gray-700">The <span class="font-bold">review_scores_rating</span> column has a 76.8% fill rate. Listings without ratings (typically new listings with no reviews) are excluded from all rating calculations in the dashboard to avoid skewing averages.</p>
+            </div>
+            <div class="bg-gray-50 rounded-xl p-4">
+              <p class="text-xs font-black text-gray-400 uppercase mb-1">Revenue</p>
+              <p class="text-sm text-gray-700">The <span class="font-bold">estimated_revenue_l365d</span> column has a 65.9% fill rate. Only listings with a valid price (and therefore revenue estimate) are included in the dashboard, resulting in 14,867 listings used for analysis.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-white p-4 md:p-8 rounded-2xl border border-gray-100 shadow-sm">
+          <h4 class="font-bold text-sm text-gray-400 uppercase tracking-widest mb-3">All 79 Columns</h4>
+          <div class="overflow-x-auto max-h-[400px] overflow-y-auto">
+            <table class="w-full text-left table-fixed">
+              <colgroup><col class="w-[50px]"><col><col class="w-[90px]"><col class="w-[120px]"></colgroup>
+              <thead class="bg-gray-50 sticky top-0">
+                <tr>
+                  <th class="px-4 py-3 text-[10px] font-black text-gray-400 uppercase">#</th>
+                  <th class="px-4 py-3 text-[10px] font-black text-gray-400 uppercase">Column Name</th>
+                  <th class="px-4 py-3 text-[10px] font-black text-gray-400 uppercase text-right">Data Available</th>
+                  <th class="px-4 py-3 text-[10px] font-black text-gray-400 uppercase">Used in Dashboard</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-gray-50" id="columns-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="bg-white p-4 md:p-8 rounded-2xl border border-gray-100 shadow-sm">
+          <h4 class="font-bold text-sm text-gray-400 uppercase tracking-widest mb-3">Columns Used Per Analysis Question</h4>
+          <div class="space-y-4">
+            <div class="bg-gray-50 rounded-xl p-4">
+              <p class="text-xs font-black text-[#FF5A5F] uppercase mb-2">1. Success Factors</p>
+              <p class="text-sm text-gray-600 italic mb-2">What are the characteristics that determine whether a given listing is successful?</p>
+              <div class="flex flex-wrap gap-2 mb-3">
+                <span class="px-2 py-1 bg-white border rounded text-xs font-bold text-gray-600">number_of_reviews</span>
+                <span class="px-2 py-1 bg-white border rounded text-xs font-bold text-gray-600">estimated_revenue_l365d</span>
+                <span class="px-2 py-1 bg-white border rounded text-xs font-bold text-gray-600">review_scores_rating</span>
+              </div>
+              <p class="text-[10px] font-bold text-gray-400 uppercase mb-2">Analytical Method</p>
+              <p class="text-sm text-gray-600 mb-2"><span class="font-bold">Software:</span> Excel (Pivot Table)</p>
+              <div class="bg-white rounded-lg p-3 border border-gray-100 mb-2">
+                <p class="text-[10px] font-black text-gray-400 uppercase mb-1">Setup</p>
+                <p class="text-sm text-gray-700">Create a helper column to bin review counts into ranges: 0-10, 11-25, 26-50, 51-100, 101-200, 200+. Use this as the Row field in the pivot table.</p>
+              </div>
+              <div class="bg-white rounded-lg p-3 border border-gray-100">
+                <p class="text-[10px] font-black text-gray-400 uppercase mb-1">Steps</p>
+                <ol class="list-decimal pl-4 space-y-1 text-sm text-gray-700">
+                  <li>Add the review count bin column as the Row field</li>
+                  <li>Add estimated_revenue_l365d as a Value field, set to "Average"</li>
+                  <li>Add review_scores_rating as a second Value field, set to "Average"</li>
+                  <li>Read the resulting table to see avg revenue and avg rating per review count bin</li>
+                </ol>
+              </div>
+            </div>
+            <div class="bg-gray-50 rounded-xl p-4">
+              <p class="text-xs font-black text-[#FF5A5F] uppercase mb-2">2. Regional Observation</p>
+              <p class="text-sm text-gray-600 italic mb-2">What are the top amenity characteristics for listings in different regions?</p>
+              <div class="flex flex-wrap gap-2 mb-3">
+                <span class="px-2 py-1 bg-white border rounded text-xs font-bold text-gray-600">amenities</span>
+                <span class="px-2 py-1 bg-white border rounded text-xs font-bold text-gray-600">review_scores_rating</span>
+                <span class="px-2 py-1 bg-white border rounded text-xs font-bold text-gray-600">estimated_revenue_l365d</span>
+                <span class="px-2 py-1 bg-white border rounded text-xs font-bold text-gray-600">neighbourhood_cleansed</span>
+              </div>
+              <p class="text-[10px] font-bold text-gray-400 uppercase mb-2">Analytical Method</p>
+              <p class="text-sm text-gray-600 mb-2"><span class="font-bold">Software:</span> Python (pandas)</p>
+              <div class="bg-white rounded-lg p-3 border border-gray-100 mb-2">
+                <p class="text-[10px] font-black text-gray-400 uppercase mb-1">Setup</p>
+                <p class="text-sm text-gray-700">Each listing stores amenities as a list (e.g., "Wifi, Kitchen, Dryer"). Parse each listing's amenity list and split into individual items so each amenity can be analyzed separately.</p>
+              </div>
+              <div class="bg-white rounded-lg p-3 border border-gray-100">
+                <p class="text-[10px] font-black text-gray-400 uppercase mb-1">Steps</p>
+                <ol class="list-decimal pl-4 space-y-1 text-sm text-gray-700">
+                  <li>Split each listing's amenity list into individual amenity rows</li>
+                  <li>Group by city and amenity</li>
+                  <li>Calculate average rating and average revenue per amenity per city</li>
+                  <li>Filter for amenities with avg rating >= 4.8</li>
+                  <li>Rank by average revenue to find top performers</li>
+                </ol>
+              </div>
+            </div>
+            <div class="bg-gray-50 rounded-xl p-4">
+              <p class="text-xs font-black text-[#FF5A5F] uppercase mb-2">3. Interesting Trend</p>
+              <p class="text-sm text-gray-600 italic mb-2">How do top characteristics vary between specific neighborhoods in Berlin?</p>
+              <div class="flex flex-wrap gap-2 mb-3">
+                <span class="px-2 py-1 bg-white border rounded text-xs font-bold text-gray-600">amenities</span>
+                <span class="px-2 py-1 bg-white border rounded text-xs font-bold text-gray-600">neighbourhood_cleansed</span>
+                <span class="px-2 py-1 bg-white border rounded text-xs font-bold text-gray-600">review_scores_rating</span>
+                <span class="px-2 py-1 bg-white border rounded text-xs font-bold text-gray-600">estimated_revenue_l365d</span>
+              </div>
+              <p class="text-[10px] font-bold text-gray-400 uppercase mb-2">Analytical Method</p>
+              <p class="text-sm text-gray-600 mb-2"><span class="font-bold">Software:</span> Python (pandas) or Tableau</p>
+              <div class="bg-white rounded-lg p-3 border border-gray-100 mb-2">
+                <p class="text-[10px] font-black text-gray-400 uppercase mb-1">Setup</p>
+                <p class="text-sm text-gray-700">Filter the dataset to a specific neighborhood, then parse each listing's amenity list into individual items for per-neighborhood analysis.</p>
+              </div>
+              <div class="bg-white rounded-lg p-3 border border-gray-100 mb-2">
+                <p class="text-[10px] font-black text-gray-400 uppercase mb-1">Steps (Python)</p>
+                <ol class="list-decimal pl-4 space-y-1 text-sm text-gray-700">
+                  <li>Filter listings to a single neighborhood</li>
+                  <li>Split each listing's amenity list into individual amenity rows</li>
+                  <li>Calculate average rating and average revenue per amenity</li>
+                  <li>Filter for amenities with avg rating >= 4.8</li>
+                  <li>Rank by average revenue</li>
+                  <li>Repeat for other neighborhoods and compare results</li>
+                </ol>
+              </div>
+              <div class="bg-white rounded-lg p-3 border border-gray-100">
+                <p class="text-[10px] font-black text-gray-400 uppercase mb-1">Alternative (Tableau)</p>
+                <p class="text-sm text-gray-700">Create a cross-tab with neighborhood and amenity as dimensions, avg rating and avg revenue as measures, filtered by rating >= 4.8. Compare neighborhoods side by side.</p>
+              </div>
+            </div>
+            <div class="bg-gray-50 rounded-xl p-4">
+              <p class="text-xs font-black text-[#FF5A5F] uppercase mb-2">4. Wording Impact</p>
+              <p class="text-sm text-gray-600 italic mb-2">How does the wording of a listing impact the number of visitors to that listing?</p>
+              <div class="flex flex-wrap gap-2 mb-3">
+                <span class="px-2 py-1 bg-white border rounded text-xs font-bold text-gray-600">description</span>
+                <span class="px-2 py-1 bg-white border rounded text-xs font-bold text-gray-600">neighborhood_overview</span>
+                <span class="px-2 py-1 bg-white border rounded text-xs font-bold text-gray-600">estimated_revenue_l365d</span>
+              </div>
+              <p class="text-[10px] font-bold text-gray-400 uppercase mb-2">Analytical Method</p>
+              <p class="text-sm text-gray-600 mb-2"><span class="font-bold">Software:</span> Python (pandas, scipy/statsmodels)</p>
+              <div class="bg-white rounded-lg p-3 border border-gray-100 mb-2">
+                <p class="text-[10px] font-black text-gray-400 uppercase mb-1">Setup</p>
+                <p class="text-sm text-gray-700">Count the number of words in each listing's description and neighborhood overview to create word count columns for analysis.</p>
+              </div>
+              <div class="bg-white rounded-lg p-3 border border-gray-100">
+                <p class="text-[10px] font-black text-gray-400 uppercase mb-1">Steps</p>
+                <ol class="list-decimal pl-4 space-y-1 text-sm text-gray-700">
+                  <li>Create word count columns for description and neighborhood_overview</li>
+                  <li>Binned aggregation: group word counts into ranges (0-10, 11-50, 51-100, 101-200, 200+), compute average revenue per bin</li>
+                  <li>Linear regression: use word count as the predictor and revenue as the target to quantify the relationship</li>
+                  <li>Check statistical significance (p-value) to confirm the relationship is not due to chance</li>
+                </ol>
+              </div>
+            </div>
+            <div class="bg-gray-50 rounded-xl p-4">
+              <p class="text-xs font-black text-[#FF5A5F] uppercase mb-2">5. Satisfaction Trend</p>
+              <p class="text-sm text-gray-600 italic mb-2">Is there a correlation between neighborhood detail and guest ratings?</p>
+              <div class="flex flex-wrap gap-2 mb-3">
+                <span class="px-2 py-1 bg-white border rounded text-xs font-bold text-gray-600">neighborhood_overview</span>
+                <span class="px-2 py-1 bg-white border rounded text-xs font-bold text-gray-600">review_scores_rating</span>
+              </div>
+              <p class="text-[10px] font-bold text-gray-400 uppercase mb-2">Analytical Method</p>
+              <p class="text-sm text-gray-600 mb-2"><span class="font-bold">Software:</span> Python (scipy/statsmodels) or Excel</p>
+              <div class="bg-white rounded-lg p-3 border border-gray-100 mb-2">
+                <p class="text-[10px] font-black text-gray-400 uppercase mb-1">Setup</p>
+                <p class="text-sm text-gray-700">Count words in each listing's neighborhood_overview to create a word count column. Pair with review_scores_rating for each listing.</p>
+              </div>
+              <div class="bg-white rounded-lg p-3 border border-gray-100">
+                <p class="text-[10px] font-black text-gray-400 uppercase mb-1">Steps</p>
+                <ol class="list-decimal pl-4 space-y-1 text-sm text-gray-700">
+                  <li>Correlation analysis (Pearson/Spearman) between word count and rating</li>
+                  <li>Regression analysis to quantify how much each additional word predicts rating changes</li>
+                  <li>Excel scatter plot with trendline to visually confirm the relationship</li>
+                </ol>
+              </div>
+            </div>
+            <div class="bg-gray-50 rounded-xl p-4">
+              <p class="text-xs font-black text-[#FF5A5F] uppercase mb-2">6. Optimal Length</p>
+              <p class="text-sm text-gray-600 italic mb-2">What is the ideal word count for listing titles?</p>
+              <div class="flex flex-wrap gap-2 mb-3">
+                <span class="px-2 py-1 bg-white border rounded text-xs font-bold text-gray-600">name</span>
+                <span class="px-2 py-1 bg-white border rounded text-xs font-bold text-gray-600">review_scores_rating</span>
+              </div>
+              <p class="text-[10px] font-bold text-gray-400 uppercase mb-2">Analytical Method</p>
+              <p class="text-sm text-gray-600 mb-2"><span class="font-bold">Software:</span> Excel or Python</p>
+              <div class="bg-white rounded-lg p-3 border border-gray-100 mb-2">
+                <p class="text-[10px] font-black text-gray-400 uppercase mb-1">Setup</p>
+                <p class="text-sm text-gray-700">Count the number of words in each listing title to create a word count column. Define bin ranges: 1-3 (Short), 4-6 (Standard), 7-10 (Long), 11-15 (Descriptive), 15+ (Max Detail).</p>
+              </div>
+              <div class="bg-white rounded-lg p-3 border border-gray-100 mb-2">
+                <p class="text-[10px] font-black text-gray-400 uppercase mb-1">Steps</p>
+                <ol class="list-decimal pl-4 space-y-1 text-sm text-gray-700">
+                  <li>Create a word count column for each listing title</li>
+                  <li>Assign each listing to a bin based on its word count</li>
+                  <li>Calculate the average rating per bin</li>
+                  <li>Identify which bin has the highest average rating</li>
+                </ol>
+              </div>
+              <div class="bg-white rounded-lg p-3 border border-gray-100">
+                <p class="text-[10px] font-black text-gray-400 uppercase mb-1">Alternative (Machine Learning)</p>
+                <p class="text-sm text-gray-700">A random forest or gradient boosting model could use title word count as a feature to predict ratings. Feature importance scores would confirm whether title length is a meaningful predictor.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Explore Text Data Tab -->
+      <div id="tab-playtext" class="hidden flex flex-col gap-4 md:gap-8 pb-20">
+        <div id="text-kpis" class="grid grid-cols-1 md:grid-cols-3 gap-4"></div>
+        <div class="bg-white p-4 md:p-6 rounded-2xl shadow-sm border border-gray-100">
+          <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-4">
+            <h3 class="font-bold text-sm text-gray-400 uppercase tracking-widest">Word Count vs Revenue & Rating</h3>
+            <div class="bg-gray-50 p-1 rounded-lg border border-gray-200 flex items-center">
+              <button onclick="setTextField('name_wc')" data-textfield="name_wc" class="text-field-btn px-3 py-1.5 rounded-md text-xs font-bold transition-all bg-gray-900 text-white">Title</button>
+              <button onclick="setTextField('description_wc')" data-textfield="description_wc" class="text-field-btn px-3 py-1.5 rounded-md text-xs font-bold transition-all text-gray-500 hover:bg-gray-100">Description</button>
+              <button onclick="setTextField('neighborhood_wc')" data-textfield="neighborhood_wc" class="text-field-btn px-3 py-1.5 rounded-md text-xs font-bold transition-all text-gray-500 hover:bg-gray-100">Neighborhood</button>
+            </div>
+          </div>
+          <div class="h-64 md:h-80"><canvas id="chart-text-play"></canvas></div>
         </div>
       </div>
 
@@ -790,6 +1055,49 @@ function renderAnalysisTab() {
   renderComposedChart('neighborhood', getWordMetrics(data, 'neighborhood_wc'));
 }
 
+var activeTextField = 'name_wc';
+
+function setTextField(field) {
+  activeTextField = field;
+  document.querySelectorAll('.text-field-btn').forEach(function(btn) {
+    btn.className = btn.dataset.textfield === field
+      ? 'text-field-btn px-3 py-1.5 rounded-md text-xs font-bold transition-all bg-gray-900 text-white'
+      : 'text-field-btn px-3 py-1.5 rounded-md text-xs font-bold transition-all text-gray-500 hover:bg-gray-100';
+  });
+  renderPlayTextTab();
+}
+
+function renderPlayTextTab() {
+  var data = getActiveData();
+  var len = data.length || 1;
+
+  var fieldLabels = { name_wc: 'Title', description_wc: 'Description', neighborhood_wc: 'Neighborhood Overview' };
+  var fieldBins = {
+    name_wc: [
+      { label: 'Short (1-3)', min: 1, max: 3, sortOrder: 0 },
+      { label: 'Standard (4-6)', min: 4, max: 6, sortOrder: 1 },
+      { label: 'Long (7-10)', min: 7, max: 10, sortOrder: 2 },
+      { label: 'Descriptive (11-15)', min: 11, max: 15, sortOrder: 3 },
+      { label: 'Max Detail (15+)', min: 16, max: 100, sortOrder: 4 }
+    ]
+  };
+
+  var wcValues = data.map(function(d) { return d[activeTextField] || 0; });
+  var avgWc = Math.round(wcValues.reduce(function(a,v){return a+v;},0) / len);
+  var rated = data.filter(function(d) { return d.rating > 0; });
+  var avgRat = rated.length ? (rated.reduce(function(a,d){return a+d.rating;},0) / rated.length).toFixed(2) : 'N/A';
+  var avgRev = Math.round(data.reduce(function(a,d){return a+(d.revenue_num||0);},0) / len);
+
+  document.getElementById('text-kpis').innerHTML =
+    '<div class="bg-white p-4 rounded-xl shadow-sm border border-gray-100 text-center"><p class="text-[10px] font-bold text-gray-400 uppercase">Avg ' + fieldLabels[activeTextField] + ' Word Count</p><p class="text-2xl font-bold text-gray-900">' + avgWc + ' words</p></div>' +
+    '<div class="bg-white p-4 rounded-xl shadow-sm border border-gray-100 text-center"><p class="text-[10px] font-bold text-gray-400 uppercase">Avg Rating</p><p class="text-2xl font-bold text-amber-500">' + avgRat + '</p></div>' +
+    '<div class="bg-white p-4 rounded-xl shadow-sm border border-gray-100 text-center"><p class="text-[10px] font-bold text-gray-400 uppercase">Avg Revenue</p><p class="text-2xl font-bold text-gray-900">&euro;' + avgRev.toLocaleString() + '</p></div>';
+
+  var bins = fieldBins[activeTextField] || null;
+  var metrics = getWordMetrics(data, activeTextField, bins);
+  renderComposedChart('text-play', metrics);
+}
+
 function setTab(tab) {
   activeTab = tab;
   document.querySelectorAll('.tab-btn').forEach(function(btn) {
@@ -797,13 +1105,16 @@ function setTab(tab) {
       ? 'tab-btn pb-2 text-sm font-semibold transition-all border-b-2 border-rose-500 text-gray-900 -mb-[13px]'
       : 'tab-btn pb-2 text-sm font-semibold transition-all border-b-2 border-transparent text-gray-400 hover:text-gray-600 -mb-[13px]';
   });
+  document.getElementById('tab-bizquestion').classList.toggle('hidden', tab !== 'bizquestion');
   document.getElementById('tab-overview').classList.toggle('hidden', tab !== 'overview');
   document.getElementById('tab-amenities').classList.toggle('hidden', tab !== 'amenities');
+  document.getElementById('tab-playtext').classList.toggle('hidden', tab !== 'playtext');
   document.getElementById('tab-analysis').classList.toggle('hidden', tab !== 'analysis');
   document.getElementById('tab-questions').classList.toggle('hidden', tab !== 'questions');
   document.getElementById('tab-conclusion').classList.toggle('hidden', tab !== 'conclusion');
-  document.getElementById('secondary-filters').classList.toggle('hidden', tab === 'overview' || tab === 'conclusion' || tab === 'questions');
-  document.getElementById('kpi-cards').classList.toggle('hidden', tab === 'conclusion' || tab === 'questions');
+  document.getElementById('tab-datasources').classList.toggle('hidden', tab !== 'datasources');
+  document.getElementById('secondary-filters').classList.toggle('hidden', tab === 'overview' || tab === 'analysis' || tab === 'conclusion' || tab === 'questions' || tab === 'datasources' || tab === 'bizquestion');
+  document.getElementById('kpi-cards').classList.toggle('hidden', tab === 'conclusion' || tab === 'questions' || tab === 'datasources' || tab === 'bizquestion');
   if (tab === 'overview') {
     roomTypeFilter = 'All'; bedroomFilter = 'All'; bathroomFilter = 'All'; neighborhoodFilter = 'All';
   }
@@ -973,6 +1284,28 @@ function renderAmenitiesTab() {
   }).join('');
 }
 
+// Populate Data Sources column list
+(function() {
+  var allCols = ['id','listing_url','scrape_id','last_scraped','source','name','description','neighborhood_overview','picture_url','host_id','host_url','host_name','host_since','host_location','host_about','host_response_time','host_response_rate','host_acceptance_rate','host_is_superhost','host_thumbnail_url','host_picture_url','host_neighbourhood','host_listings_count','host_total_listings_count','host_verifications','host_has_profile_pic','host_identity_verified','neighbourhood','neighbourhood_cleansed','neighbourhood_group_cleansed','latitude','longitude','property_type','room_type','accommodates','bathrooms','bathrooms_text','bedrooms','beds','amenities','price','minimum_nights','maximum_nights','minimum_minimum_nights','maximum_minimum_nights','minimum_maximum_nights','maximum_maximum_nights','minimum_nights_avg_ntm','maximum_nights_avg_ntm','calendar_updated','has_availability','availability_30','availability_60','availability_90','availability_365','calendar_last_scraped','number_of_reviews','number_of_reviews_ltm','number_of_reviews_l30d','availability_eoy','number_of_reviews_ly','estimated_occupancy_l365d','estimated_revenue_l365d','first_review','last_review','review_scores_rating','review_scores_accuracy','review_scores_cleanliness','review_scores_checkin','review_scores_communication','review_scores_location','review_scores_value','license','instant_bookable','calculated_host_listings_count','calculated_host_listings_count_entire_homes','calculated_host_listings_count_private_rooms','calculated_host_listings_count_shared_rooms','reviews_per_month'];
+  var usedCols = ['name','description','neighborhood_overview','neighbourhood_cleansed','room_type','bathrooms','bathrooms_text','bedrooms','amenities','price','number_of_reviews','estimated_occupancy_l365d','estimated_revenue_l365d','review_scores_rating'];
+  var fillRates = {"id":100.0,"listing_url":100.0,"scrape_id":100.0,"last_scraped":100.0,"source":100.0,"name":100.0,"description":96.1,"neighborhood_overview":39.4,"picture_url":100.0,"host_id":100.0,"host_url":100.0,"host_name":99.9,"host_since":99.9,"host_location":77.6,"host_about":46.5,"host_response_time":99.9,"host_response_rate":99.9,"host_acceptance_rate":99.9,"host_is_superhost":99.0,"host_thumbnail_url":99.9,"host_picture_url":99.9,"host_neighbourhood":33.7,"host_listings_count":99.9,"host_total_listings_count":99.9,"host_verifications":100.0,"host_has_profile_pic":99.9,"host_identity_verified":99.9,"neighbourhood":39.4,"neighbourhood_cleansed":100.0,"neighbourhood_group_cleansed":63.3,"latitude":100.0,"longitude":100.0,"property_type":100.0,"room_type":100.0,"accommodates":100.0,"bathrooms":66.3,"bathrooms_text":99.9,"bedrooms":87.6,"beds":66.1,"amenities":100.0,"price":65.9,"minimum_nights":100.0,"maximum_nights":100.0,"minimum_minimum_nights":100.0,"maximum_minimum_nights":100.0,"minimum_maximum_nights":100.0,"maximum_maximum_nights":100.0,"minimum_nights_avg_ntm":100.0,"maximum_nights_avg_ntm":100.0,"calendar_updated":0.0,"has_availability":94.3,"availability_30":100.0,"availability_60":100.0,"availability_90":100.0,"availability_365":100.0,"calendar_last_scraped":100.0,"number_of_reviews":100.0,"number_of_reviews_ltm":100.0,"number_of_reviews_l30d":100.0,"availability_eoy":100.0,"number_of_reviews_ly":100.0,"estimated_occupancy_l365d":100.0,"estimated_revenue_l365d":65.9,"first_review":76.8,"last_review":76.8,"review_scores_rating":76.8,"review_scores_accuracy":76.8,"review_scores_cleanliness":76.8,"review_scores_checkin":76.8,"review_scores_communication":76.8,"review_scores_location":76.8,"review_scores_value":76.8,"license":41.4,"instant_bookable":100.0,"calculated_host_listings_count":100.0,"calculated_host_listings_count_entire_homes":100.0,"calculated_host_listings_count_private_rooms":100.0,"calculated_host_listings_count_shared_rooms":100.0,"reviews_per_month":76.8};
+  var sorted = allCols.slice().sort(function(a, b) {
+    var aUsed = usedCols.indexOf(a) !== -1 ? 0 : 1;
+    var bUsed = usedCols.indexOf(b) !== -1 ? 0 : 1;
+    return aUsed - bUsed;
+  });
+  document.getElementById('columns-tbody').innerHTML = sorted.map(function(col, i) {
+    var used = usedCols.indexOf(col) !== -1;
+    var pct = fillRates[col] || 0;
+    var pctColor = pct >= 90 ? 'text-emerald-600' : pct >= 50 ? 'text-amber-500' : 'text-rose-500';
+    return '<tr class="hover:bg-gray-50/50">' +
+      '<td class="px-4 py-2 text-xs text-gray-400 font-bold">' + (i+1) + '</td>' +
+      '<td class="px-4 py-2 text-sm font-semibold text-gray-800">' + col + '</td>' +
+      '<td class="px-4 py-2 text-sm font-bold text-right ' + pctColor + '">' + pct + '%</td>' +
+      '<td class="px-4 py-2 text-sm ' + (used ? 'text-emerald-600 font-bold' : 'text-gray-300') + '">' + (used ? 'Yes' : 'No') + '</td></tr>';
+  }).join('');
+})();
+
 function renderAll() {
   renderKPIs();
   renderNeighborhoods();
@@ -981,6 +1314,8 @@ function renderAll() {
   } else if (activeTab === 'amenities') {
     renderAmenitiesTab();
     renderTrendsTab();
+  } else if (activeTab === 'playtext') {
+    renderPlayTextTab();
   } else if (activeTab === 'analysis') {
     renderAnalysisTab();
   }

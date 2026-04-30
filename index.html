@@ -11,41 +11,32 @@
 <body class="bg-gray-50">
   <!-- Dashboard -->
   <div id="dashboard" class="min-h-screen bg-gray-50 pb-20">
-    <!-- Sticky nav: title + tabs only -->
+    <!-- Sticky nav: title only -->
     <div class="sticky top-0 z-50 bg-gray-50/95 backdrop-blur-md border-b border-gray-200 px-4 md:px-8 py-3 shadow-sm">
-      <div class="max-w-7xl mx-auto flex justify-between items-center gap-3">
-        <div class="flex items-center gap-3 min-w-0">
-          <h1 class="text-lg md:text-2xl font-bold text-gray-900 truncate">Airbnb Dashboard</h1>
-        </div>
-        <div class="flex bg-white rounded-lg p-1 shadow-sm border border-gray-200 shrink-0">
-          <button onclick="setTab('overview')" data-tab="overview" class="tab-btn px-2 md:px-3 py-1.5 rounded-md text-xs font-semibold transition-all flex items-center gap-1 md:gap-2 bg-rose-500 text-white shadow-sm">Overview</button>
-          <button onclick="setTab('analysis')" data-tab="analysis" class="tab-btn px-2 md:px-3 py-1.5 rounded-md text-xs font-semibold transition-all flex items-center gap-1 md:gap-2 text-gray-500 hover:bg-gray-50">Text Analysis</button>
-          <button onclick="setTab('other')" data-tab="other" class="tab-btn px-2 md:px-3 py-1.5 rounded-md text-xs font-semibold transition-all flex items-center gap-1 md:gap-2 text-gray-500 hover:bg-gray-50">Other Analysis</button>
-        </div>
+      <div class="max-w-7xl mx-auto flex items-center gap-3 min-w-0">
+        <h1 class="text-lg md:text-2xl font-bold text-gray-900 truncate">Airbnb Dashboard</h1>
       </div>
     </div>
 
     <!-- Scrollable controls area -->
     <div class="max-w-7xl mx-auto px-4 md:px-8 pt-4 md:pt-6 space-y-4 md:space-y-6">
-      <div id="kpi-cards" class="grid grid-cols-2 lg:grid-cols-4 gap-2 md:gap-4"></div>
-      <div class="space-y-3 pt-2 border-t border-gray-100">
-        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
-          <div class="flex items-center gap-3">
-            <div class="bg-rose-500 p-2 rounded-lg shadow-sm">
-              <svg class="w-4 h-4 md:w-5 md:h-5 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
-            </div>
-            <h2 id="tab-title" class="text-base md:text-xl font-bold text-gray-900 uppercase tracking-tight">Overview</h2>
-          </div>
-          <div class="bg-white p-1.5 rounded-xl shadow-sm border border-gray-200 flex items-center">
-            <div class="px-3 py-2 text-gray-400 border-r border-gray-100 mr-1">
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
-            </div>
-            <button onclick="setCityFilter('All')" data-city="All" class="city-btn px-4 md:px-6 py-2 rounded-lg text-sm font-bold transition-all bg-gray-900 text-white shadow-sm">All</button>
-            <button onclick="setCityFilter('Berlin')" data-city="Berlin" class="city-btn px-4 md:px-6 py-2 rounded-lg text-sm font-bold transition-all text-gray-500 hover:bg-gray-50">Berlin</button>
-            <button onclick="setCityFilter('Munich')" data-city="Munich" class="city-btn px-4 md:px-6 py-2 rounded-lg text-sm font-bold transition-all text-gray-500 hover:bg-gray-50">Munich</button>
-          </div>
+      <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 border-b border-gray-200 pb-3">
+        <div class="flex gap-6">
+          <button onclick="setTab('overview')" data-tab="overview" class="tab-btn pb-2 text-sm font-semibold transition-all border-b-2 border-rose-500 text-gray-900 -mb-[13px]">Overview</button>
+          <button onclick="setTab('analysis')" data-tab="analysis" class="tab-btn pb-2 text-sm font-semibold transition-all border-b-2 border-transparent text-gray-400 hover:text-gray-600 -mb-[13px]">Text Analysis</button>
+          <button onclick="setTab('other')" data-tab="other" class="tab-btn pb-2 text-sm font-semibold transition-all border-b-2 border-transparent text-gray-400 hover:text-gray-600 -mb-[13px]">Other Analysis</button>
         </div>
-        <div id="secondary-filters" class="hidden flex items-center gap-2 flex-wrap">
+        <div class="bg-white p-1.5 rounded-xl shadow-sm border border-gray-200 flex items-center">
+          <div class="px-3 py-2 text-gray-400 border-r border-gray-100 mr-1">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
+          </div>
+          <button onclick="setCityFilter('All')" data-city="All" class="city-btn px-4 md:px-6 py-2 rounded-lg text-sm font-bold transition-all bg-gray-900 text-white shadow-sm">All</button>
+          <button onclick="setCityFilter('Berlin')" data-city="Berlin" class="city-btn px-4 md:px-6 py-2 rounded-lg text-sm font-bold transition-all text-gray-500 hover:bg-gray-50">Berlin</button>
+          <button onclick="setCityFilter('Munich')" data-city="Munich" class="city-btn px-4 md:px-6 py-2 rounded-lg text-sm font-bold transition-all text-gray-500 hover:bg-gray-50">Munich</button>
+        </div>
+      </div>
+      <div id="kpi-cards" class="grid grid-cols-2 lg:grid-cols-4 gap-2 md:gap-4"></div>
+      <div id="secondary-filters" class="hidden flex items-center gap-2 flex-wrap">
           <span class="text-[10px] font-bold text-gray-400 uppercase tracking-wider">Filters:</span>
           <div class="bg-white p-1 rounded-lg shadow-sm border border-gray-200 flex items-center min-w-[160px]">
             <select id="neighborhood-select" onchange="setNeighborhoodFilter(this.value)" class="w-full px-2 py-1 rounded-lg text-xs font-bold text-gray-600 appearance-none focus:outline-none cursor-pointer bg-transparent">
@@ -69,7 +60,6 @@
               <option value="All">All Bathrooms</option>
             </select>
           </div>
-        </div>
       </div>
     </div>
 
@@ -558,11 +548,9 @@ function setTab(tab) {
   activeTab = tab;
   document.querySelectorAll('.tab-btn').forEach(function(btn) {
     btn.className = btn.dataset.tab === tab
-      ? 'tab-btn px-3 py-1.5 rounded-md text-xs font-semibold transition-all flex items-center gap-2 bg-rose-500 text-white shadow-sm'
-      : 'tab-btn px-3 py-1.5 rounded-md text-xs font-semibold transition-all flex items-center gap-2 text-gray-500 hover:bg-gray-50';
+      ? 'tab-btn pb-2 text-sm font-semibold transition-all border-b-2 border-rose-500 text-gray-900 -mb-[13px]'
+      : 'tab-btn pb-2 text-sm font-semibold transition-all border-b-2 border-transparent text-gray-400 hover:text-gray-600 -mb-[13px]';
   });
-  var titles = { overview: 'Overview', other: 'Other Analysis', analysis: 'Text Analysis' };
-  document.getElementById('tab-title').textContent = titles[tab];
   document.getElementById('tab-overview').classList.toggle('hidden', tab !== 'overview');
   document.getElementById('tab-other').classList.toggle('hidden', tab !== 'other');
   document.getElementById('tab-analysis').classList.toggle('hidden', tab !== 'analysis');

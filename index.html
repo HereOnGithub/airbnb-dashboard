@@ -24,13 +24,14 @@
     <div class="max-w-7xl mx-auto px-4 md:px-8 pt-4 md:pt-6 space-y-4 md:space-y-6">
       <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 border-b border-gray-200 pb-3">
         <div class="flex gap-6">
-          <button onclick="setTab('bizquestion')" data-tab="bizquestion" class="tab-btn pb-2 text-sm font-semibold transition-all border-b-2 border-transparent text-gray-400 hover:text-gray-600 -mb-[13px]">Business Question</button>
           <button onclick="setTab('overview')" data-tab="overview" class="tab-btn pb-2 text-sm font-semibold transition-all border-b-2 border-rose-500 text-gray-900 -mb-[13px]">Characteristics Analysis</button>
           <button onclick="setTab('analysis')" data-tab="analysis" class="tab-btn pb-2 text-sm font-semibold transition-all border-b-2 border-transparent text-gray-400 hover:text-gray-600 -mb-[13px]">Text Analysis</button>
           <button onclick="setTab('amenities')" data-tab="amenities" class="tab-btn pb-2 text-sm font-semibold transition-all border-b-2 border-transparent text-gray-400 hover:text-gray-600 -mb-[13px]">Explore Amenities Data</button>
           <button onclick="setTab('playtext')" data-tab="playtext" class="tab-btn pb-2 text-sm font-semibold transition-all border-b-2 border-transparent text-gray-400 hover:text-gray-600 -mb-[13px]">Explore Text Data</button>
+          <button onclick="setTab('bizquestion')" data-tab="bizquestion" class="tab-btn pb-2 text-sm font-semibold transition-all border-b-2 border-transparent text-gray-400 hover:text-gray-600 -mb-[13px]">Business Question</button>
           <button onclick="setTab('questions')" data-tab="questions" class="tab-btn pb-2 text-sm font-semibold transition-all border-b-2 border-transparent text-gray-400 hover:text-gray-600 -mb-[13px]">Analysis Questions</button>
           <button onclick="setTab('conclusion')" data-tab="conclusion" class="tab-btn pb-2 text-sm font-semibold transition-all border-b-2 border-transparent text-gray-400 hover:text-gray-600 -mb-[13px]">Conclusion & Summary</button>
+          <button onclick="setTab('challenges')" data-tab="challenges" class="tab-btn pb-2 text-sm font-semibold transition-all border-b-2 border-transparent text-gray-400 hover:text-gray-600 -mb-[13px]">Challenges</button>
           <button onclick="setTab('datasources')" data-tab="datasources" class="tab-btn pb-2 text-sm font-semibold transition-all border-b-2 border-transparent text-gray-400 hover:text-gray-600 -mb-[13px]">Data Sources</button>
         </div>
         <div class="bg-white p-1.5 rounded-xl shadow-sm border border-gray-200 flex items-center">
@@ -417,6 +418,101 @@
         </div>
       </div>
 
+      <!-- Challenges Tab -->
+      <div id="tab-challenges" class="hidden flex flex-col gap-4 md:gap-8 pb-20">
+        <!-- Analytical Challenges -->
+        <div class="bg-white p-4 md:p-8 rounded-2xl border border-gray-100 shadow-sm">
+          <div class="flex items-center gap-3 mb-4 md:mb-6">
+            <div class="p-1.5 bg-indigo-500 rounded-lg text-white shadow-md">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+            </div>
+            <h3 class="font-bold text-gray-800 text-base tracking-tight">Analytical Decisions</h3>
+          </div>
+          <div class="space-y-4">
+            <div class="bg-gray-50 rounded-xl p-4">
+              <p class="text-xs font-black text-indigo-500 uppercase mb-2">Defining "Success"</p>
+              <p class="text-[10px] font-black text-gray-400 uppercase mb-1">Challenge</p>
+              <p class="text-sm text-gray-700 mb-3">Ranking amenities by pure rating produced unintuitive results (e.g., BBQ grill at #1 with only 5 listings). Ranking by pure revenue ignored quality entirely.</p>
+              <p class="text-[10px] font-black text-gray-400 uppercase mb-1">Solution</p>
+              <p class="text-sm text-gray-700">Filter for amenities with avg rating >= 4.8 first, then rank by revenue. This balances quality with business impact and filters out low-sample outliers.</p>
+            </div>
+            <div class="bg-gray-50 rounded-xl p-4">
+              <p class="text-xs font-black text-indigo-500 uppercase mb-2">Excel Limitations for Amenity Analysis</p>
+              <p class="text-[10px] font-black text-gray-400 uppercase mb-1">Challenge</p>
+              <p class="text-sm text-gray-700 mb-3">Each listing's amenities are stored as a single text field containing a list (e.g., ["Wifi","Kitchen","Dryer"]). Opening this in Excel shows the entire list crammed into one cell, making individual amenity analysis impossible with standard pivot tables.</p>
+              <p class="text-[10px] font-black text-gray-400 uppercase mb-1">Solution</p>
+              <p class="text-sm text-gray-700">Used Python to read each list, break it apart into separate items, and handle formatting inconsistencies like extra quotes. This produced 3,092 unique amenities across all listings. Simpler analyses like review count binning worked well in Excel, but amenity analysis required Python (pandas).</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Data Cleaning -->
+        <div class="bg-white p-4 md:p-8 rounded-2xl border border-gray-100 shadow-sm">
+          <div class="flex items-center gap-3 mb-4 md:mb-6">
+            <div class="p-1.5 bg-amber-500 rounded-lg text-white shadow-md">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            </div>
+            <h3 class="font-bold text-gray-800 text-base tracking-tight">Data Cleaning & Transformation</h3>
+          </div>
+          <div class="space-y-4">
+            <div class="bg-gray-50 rounded-xl p-4">
+              <p class="text-xs font-black text-amber-600 uppercase mb-2">Unrated Listings Stored as Zero</p>
+              <p class="text-[10px] font-black text-gray-400 uppercase mb-1">Challenge</p>
+              <p class="text-sm text-gray-700 mb-3">3,465 listings had no rating data. These were initially stored as 0, which dragged down all average rating calculations across the dashboard.</p>
+              <p class="text-[10px] font-black text-gray-400 uppercase mb-1">Solution</p>
+              <p class="text-sm text-gray-700">Stored missing ratings as -1 and excluded them from all rating computations. This required regenerating the entire embedded dataset.</p>
+            </div>
+            <div class="bg-gray-50 rounded-xl p-4">
+              <p class="text-xs font-black text-amber-600 uppercase mb-2">Bathroom Data Split Across Two Columns</p>
+              <p class="text-[10px] font-black text-gray-400 uppercase mb-1">Challenge</p>
+              <p class="text-sm text-gray-700 mb-3">Bathroom information was split between "bathrooms" (66.3% fill rate, numeric) and "bathrooms_text" (99.9% fill rate, descriptive like "1.5 baths"). Neither column alone covered all listings.</p>
+              <p class="text-[10px] font-black text-gray-400 uppercase mb-1">Solution</p>
+              <p class="text-sm text-gray-700">Used bathrooms_text as the primary source and bathrooms as a fallback, recovering 10 additional listings that would otherwise have no bathroom data.</p>
+            </div>
+            <div class="bg-gray-50 rounded-xl p-4">
+              <p class="text-xs font-black text-amber-600 uppercase mb-2">Mixed Language Content</p>
+              <p class="text-[10px] font-black text-gray-400 uppercase mb-1">Challenge</p>
+              <p class="text-sm text-gray-700 mb-3">The data contains a mix of English and German text. Amenities are almost entirely English (only 2.7% German), but host-written text has much more: 22.5% of titles, 19.3% of descriptions, and 33.5% of neighborhood overviews contain German characters.</p>
+              <p class="text-[10px] font-black text-gray-400 uppercase mb-1">Solution</p>
+              <p class="text-sm text-gray-700">Word count analysis captures all text equally regardless of language, so no special handling was needed for the current dashboard. Any future keyword or sentiment analysis would need multilingual support.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Technical Challenges (collapsible) -->
+        <details class="bg-white rounded-2xl border border-gray-100 shadow-sm">
+          <summary class="p-4 md:p-8 cursor-pointer flex items-center gap-3">
+            <div class="p-1.5 bg-rose-500 rounded-lg text-white shadow-md">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+            </div>
+            <h3 class="font-bold text-gray-800 text-base tracking-tight">Technical & Deployment</h3>
+          </summary>
+          <div class="px-4 md:px-8 pb-4 md:pb-8 space-y-4">
+            <div class="bg-gray-50 rounded-xl p-4">
+              <p class="text-xs font-black text-rose-500 uppercase mb-2">React to Vanilla JS Rewrite</p>
+              <p class="text-[10px] font-black text-gray-400 uppercase mb-1">Challenge</p>
+              <p class="text-sm text-gray-700 mb-3">The original codebase was a React/Vite app with duplicated code (the entire component was copy-pasted twice), causing build failures.</p>
+              <p class="text-[10px] font-black text-gray-400 uppercase mb-1">Solution</p>
+              <p class="text-sm text-gray-700">Rewrote the entire dashboard as a single HTML file with vanilla JS, eliminating the need for any build step or npm dependencies.</p>
+            </div>
+            <div class="bg-gray-50 rounded-xl p-4">
+              <p class="text-xs font-black text-rose-500 uppercase mb-2">44 MB of CSV Data for a Static Site</p>
+              <p class="text-[10px] font-black text-gray-400 uppercase mb-1">Challenge</p>
+              <p class="text-sm text-gray-700 mb-3">The raw CSV files totaled 44 MB, far too large to embed directly in a static HTML page.</p>
+              <p class="text-[10px] font-black text-gray-400 uppercase mb-1">Solution</p>
+              <p class="text-sm text-gray-700">Built a Python preprocessing pipeline that extracted only the needed fields, replaced text with word counts, and used dictionary encoding for amenities (3,092 unique) and neighborhoods (163 unique), compressing the data to 2.5 MB (0.7 MB gzipped).</p>
+            </div>
+            <div class="bg-gray-50 rounded-xl p-4">
+              <p class="text-xs font-black text-rose-500 uppercase mb-2">GitHub Pages Jekyll Failures</p>
+              <p class="text-[10px] font-black text-gray-400 uppercase mb-1">Challenge</p>
+              <p class="text-sm text-gray-700 mb-3">GitHub Pages runs Jekyll by default, which choked on the 2.5 MB data.js file. Deployments failed silently.</p>
+              <p class="text-[10px] font-black text-gray-400 uppercase mb-1">Solution</p>
+              <p class="text-sm text-gray-700">Added a .nojekyll file to bypass Jekyll processing entirely. Also disconnected a conflicting Vercel integration.</p>
+            </div>
+          </div>
+        </details>
+      </div>
+
       <!-- Data Sources Tab -->
       <div id="tab-datasources" class="hidden flex flex-col gap-4 md:gap-8 pb-20">
         <div class="bg-white p-4 md:p-8 rounded-2xl border border-gray-100 shadow-sm">
@@ -697,18 +793,86 @@
             </div>
           </div>
         </div>
-        <div class="space-y-6 md:space-y-12">
-          <div class="bg-white p-4 md:p-8 rounded-2xl border border-gray-100 shadow-sm">
-            <h2 class="text-xl md:text-2xl font-bold text-gray-900 mb-3 md:mb-4">Listing Title</h2>
-            <div class="h-56 md:h-72 bg-gray-50 p-2 md:p-4 rounded-xl border border-gray-100"><canvas id="chart-title"></canvas></div>
+        <div class="bg-white p-4 md:p-6 rounded-2xl shadow-sm border border-gray-100">
+          <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-4">
+            <h3 class="font-bold text-sm text-gray-400 uppercase tracking-widest">Word Count vs Revenue & Rating</h3>
+            <div class="bg-gray-50 p-1 rounded-lg border border-gray-200 flex items-center">
+              <button onclick="setAnalysisField('name_wc')" data-analysisfield="name_wc" class="analysis-field-btn px-3 py-1.5 rounded-md text-xs font-bold transition-all bg-gray-900 text-white">Title</button>
+              <button onclick="setAnalysisField('description_wc')" data-analysisfield="description_wc" class="analysis-field-btn px-3 py-1.5 rounded-md text-xs font-bold transition-all text-gray-500 hover:bg-gray-100">Description</button>
+              <button onclick="setAnalysisField('neighborhood_wc')" data-analysisfield="neighborhood_wc" class="analysis-field-btn px-3 py-1.5 rounded-md text-xs font-bold transition-all text-gray-500 hover:bg-gray-100">Neighborhood</button>
+            </div>
           </div>
-          <div class="bg-white p-4 md:p-8 rounded-2xl border border-gray-100 shadow-sm">
-            <h2 class="text-xl md:text-2xl font-bold text-gray-900 mb-3 md:mb-4">Listing Description</h2>
-            <div class="h-56 md:h-72 bg-gray-50 p-2 md:p-4 rounded-xl border border-gray-100"><canvas id="chart-description"></canvas></div>
+          <div class="h-64 md:h-80"><canvas id="chart-analysis-single"></canvas></div>
+        </div>
+        <hr class="border-gray-200">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-100 flex items-center space-x-3">
+            <div class="p-2 rounded-lg bg-rose-500"><div class="w-5 h-5"></div></div>
+            <div>
+              <p class="text-[10px] font-bold text-gray-400 uppercase">Titles with German</p>
+              <p class="text-xl font-bold text-gray-900">22.5%</p>
+              <p class="text-[10px] text-gray-400">5,083 of 22,548</p>
+            </div>
           </div>
-          <div class="bg-white p-4 md:p-8 rounded-2xl border border-gray-100 shadow-sm">
-            <h2 class="text-xl md:text-2xl font-bold text-gray-900 mb-3 md:mb-4">Neighborhood Description</h2>
-            <div class="h-56 md:h-72 bg-gray-50 p-2 md:p-4 rounded-xl border border-gray-100"><canvas id="chart-neighborhood"></canvas></div>
+          <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-100 flex items-center space-x-3">
+            <div class="p-2 rounded-lg bg-amber-500"><div class="w-5 h-5"></div></div>
+            <div>
+              <p class="text-[10px] font-bold text-gray-400 uppercase">Descriptions with German</p>
+              <p class="text-xl font-bold text-gray-900">19.3%</p>
+              <p class="text-[10px] text-gray-400">4,177 of 21,659</p>
+            </div>
+          </div>
+          <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-100 flex items-center space-x-3">
+            <div class="p-2 rounded-lg bg-indigo-500"><div class="w-5 h-5"></div></div>
+            <div>
+              <p class="text-[10px] font-bold text-gray-400 uppercase">Neighborhood Overviews with German</p>
+              <p class="text-xl font-bold text-gray-900">33.5%</p>
+              <p class="text-[10px] text-gray-400">2,977 of 8,886</p>
+            </div>
+          </div>
+        </div>
+        <div class="bg-white p-4 md:p-8 rounded-2xl border border-gray-100 shadow-sm">
+          <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-4">
+            <h3 class="font-bold text-sm text-gray-400 uppercase tracking-widest">Most Common Words</h3>
+            <div class="bg-gray-50 p-1 rounded-lg border border-gray-200 flex items-center">
+              <button onclick="setWordField('name')" data-wordfield="name" class="word-field-btn px-3 py-1.5 rounded-md text-xs font-bold transition-all bg-gray-900 text-white">Listing Title</button>
+              <button onclick="setWordField('description')" data-wordfield="description" class="word-field-btn px-3 py-1.5 rounded-md text-xs font-bold transition-all text-gray-500 hover:bg-gray-100">Listing Description</button>
+              <button onclick="setWordField('neighborhood_overview')" data-wordfield="neighborhood_overview" class="word-field-btn px-3 py-1.5 rounded-md text-xs font-bold transition-all text-gray-500 hover:bg-gray-100">Neighborhood Description</button>
+            </div>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <h4 class="font-bold text-sm text-emerald-600 uppercase tracking-widest mb-2">English Words</h4>
+              <div class="overflow-y-auto max-h-[320px]">
+                <table class="w-full text-left table-fixed">
+                  <colgroup><col class="w-[40px]"><col><col class="w-[70px]"></colgroup>
+                  <thead class="bg-gray-50 sticky top-0">
+                    <tr>
+                      <th class="px-3 py-2 text-[10px] font-black text-gray-400 uppercase">#</th>
+                      <th class="px-3 py-2 text-[10px] font-black text-gray-400 uppercase">Word</th>
+                      <th class="px-3 py-2 text-[10px] font-black text-gray-400 uppercase text-right">Count</th>
+                    </tr>
+                  </thead>
+                  <tbody id="eng-words-tbody" class="divide-y divide-gray-50"></tbody>
+                </table>
+              </div>
+            </div>
+            <div>
+              <h4 class="font-bold text-sm text-rose-500 uppercase tracking-widest mb-2">German Words</h4>
+              <div class="overflow-y-auto max-h-[320px]">
+                <table class="w-full text-left table-fixed">
+                  <colgroup><col class="w-[40px]"><col><col class="w-[70px]"></colgroup>
+                  <thead class="bg-gray-50 sticky top-0">
+                    <tr>
+                      <th class="px-3 py-2 text-[10px] font-black text-gray-400 uppercase">#</th>
+                      <th class="px-3 py-2 text-[10px] font-black text-gray-400 uppercase">Word</th>
+                      <th class="px-3 py-2 text-[10px] font-black text-gray-400 uppercase text-right">Count</th>
+                    </tr>
+                  </thead>
+                  <tbody id="ger-words-tbody" class="divide-y divide-gray-50"></tbody>
+                </table>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -1041,18 +1205,54 @@ function renderComposedChart(canvasId, metrics) {
   });
 }
 
+var WORD_DATA = {"name":{"eng":[["in",7778],["apartment",4605],["room",3303],["berlin",2531],["wohnung",1814],["cozy",1633],["zimmer",1582],["the",1481],["with",1438],["flat",1421],["mit",1378],["central",1244],["studio",1236],["im",1157],["to",1016],["of",1001],["munich",961],["city",930],["and",888],["near",861],["oktoberfest",837],["kreuzberg",773],["mitte",748],["balcony",712],["bright",704],["center",700],["cosy",696],["spacious",675],["beautiful",648],["heart",637],["am",624],["quiet",589],["loft",565],["berg",543],["for",542],["modern",536],["prenzlauer",526],["friedrichshain",523],["private",509],["und",424],["balkon",417],["sunny",394],["location",391],["min",389],["bedroom",375],["stylish",370],["home",368],["close",346],["nice",328],["at",325]],"ger":[["neukölln",564],["münchen",541],["schöne",406],["für",327],["nähe",320],["gemütliche",318],["gemütliches",297],["schönes",254],["schöneberg",157],["großes",114],["grünen",111],["münchens",110],["große",85],["kurfürstendamm",79],["kreuzkölln",72],["wunderschöne",72],["über",66],["küche",64],["münchner",62],["gemütlich",45],["wunderschönes",40],["gästezimmer",39],["grüne",38],["großer",35],["süden",35],["dächern",34],["frühstück",31],["gäste",29],["schönen",29],["möbliertes",28],["großem",28],["schöner",27],["großzügige",26],["gärtnerplatz",26],["wohlfühlen",24],["görlitzer",23],["köpenick",23],["großzügiges",22],["wohlfühloase",21],["möblierte",20],["fuß",19],["grün",18],["schönhauser",17],["isarnähe",17],["berlinneukölln",16],["schönem",16],["geräumiges",16],["geräumige",16],["luxuriöses",15],["süße",14]]},"description":{"eng":[["the",69684],["and",49108],["in",34726],["to",26984],["is",25163],["with",24136],["br",20754],["of",20317],["apartment",18138],["for",15188],["you",13594],["room",10825],["are",8468],["located",7840],["this",7654],["berlin",7552],["from",7465],["kitchen",7182],["on",6918],["minutes",6694],["bed",5890],["quiet",5610],["can",5583],["or",5276],["our",5171],["as",5131],["at",4979],["bathroom",4954],["living",4943],["city",4807],["it",4780],["your",4753],["very",4596],["equipped",4537],["by",4292],["fully",4154],["be",4098],["has",4020],["restaurants",3986],["cozy",3918],["walk",3853],["station",3828],["beautiful",3718],["area",3660],["all",3630],["an",3558],["there",3489],["large",3407],["just",3371],["balcony",3339]],"ger":[["neukölln",802],["kurfürstendamm",276],["straße",243],["schöneberg",220],["münchen",197],["görlitzer",130],["schönhauser",128],["friedrichstraße",92],["münchner",86],["gärtnerplatz",85],["kreuzkölln",70],["köpenick",63],["müggelsee",57],["bergmannstraße",46],["schwanthalerhöhe",44],["schönleinstraße",42],["königsplatz",41],["hackerbrücke",40],["turmstraße",39],["neuköllnbr",37],["spätis",35],["für",34],["gründerzeit",32],["späti",32],["weißensee",31],["weserstraße",29],["hofbräuhaus",29],["universität",28],["maximilianstraße",27],["invalidenstraße",26],["schönefeld",25],["körnerpark",24],["gräfekiez",23],["oberbaumbrücke",22],["torstraße",22],["höfe",21],["oberschöneweide",21],["leopoldstraße",21],["neuköllner",20],["südstern",20],["hermannstraße",20],["schillerstraße",20],["schönebergbr",19],["schloßstraße",19],["waldbühne",19],["bürgerpark",19],["berlinneukölln",19],["grünau",18],["böhmischrixdorf",17],["samariterstraße",17]]},"neighborhood_overview":{"eng":[["the",38313],["and",23388],["is",14169],["in",13890],["of",13104],["to",10125],["you",6974],["br",6277],["are",5786],["with",5631],["berlin",4822],["restaurants",4520],["for",4434],["as",3579],["minutes",3447],["can",3266],["from",3198],["there",3009],["located",3003],["on",2948],["by",2819],["bars",2738],["walk",2726],["or",2692],["also",2633],["area",2558],["apartment",2506],["neighborhood",2390],["its",2383],["very",2328],["away",2263],["walking",2249],["shops",2179],["just",2165],["cafes",2147],["city",2134],["at",2117],["within",2057],["it",1969],["many",1844],["quiet",1835],["all",1812],["distance",1798],["around",1731],["shopping",1697],["park",1680],["one",1626],["this",1514],["station",1508],["street",1498]],"ger":[["neukölln",532],["straße",357],["kurfürstendamm",282],["schöneberg",181],["görlitzer",141],["schönhauser",110],["weißensee",109],["friedrichstraße",79],["kreuzkölln",69],["torstraße",57],["bergmannstraße",49],["köpenick",47],["gerichtstraße",47],["späti",46],["oberbaumbrücke",46],["müggelsee",46],["weserstraße",45],["spätis",44],["neuköllns",44],["invalidenstraße",43],["höfe",41],["gärtnerplatz",41],["oranienstraße",36],["münchner",36],["schönefeld",34],["schaubühne",33],["oberschöneweide",32],["über",32],["kantstraße",30],["königsplatz",30],["hofbräuhaus",29],["schwanthalerhöhe",29],["münchen",29],["rawgelände",28],["gründerzeit",27],["schloßstraße",27],["hermannstraße",26],["müllerstraße",24],["körnerpark",23],["simondachstraße",23],["neuköllner",20],["berlinweißensee",20],["plötzensee",19],["visionäre",19],["bötzowviertel",18],["milchhäuschen",17],["schillerstraße",17],["schäfersee",16],["döner",16],["südpark",16]]}};
+var activeWordField = 'name';
+
+function setWordField(field) {
+  activeWordField = field;
+  document.querySelectorAll('.word-field-btn').forEach(function(btn) {
+    btn.className = btn.dataset.wordfield === field
+      ? 'word-field-btn px-3 py-1.5 rounded-md text-xs font-bold transition-all bg-gray-900 text-white'
+      : 'word-field-btn px-3 py-1.5 rounded-md text-xs font-bold transition-all text-gray-500 hover:bg-gray-100';
+  });
+  renderWordTables();
+}
+
+function renderWordTables() {
+  var data = WORD_DATA[activeWordField];
+  document.getElementById('eng-words-tbody').innerHTML = data.eng.map(function(w, i) {
+    return '<tr class="hover:bg-gray-50/50"><td class="px-3 py-2 text-xs text-gray-400 font-bold">' + (i+1) + '</td><td class="px-3 py-2 text-sm font-semibold text-gray-800">' + w[0] + '</td><td class="px-3 py-2 text-sm font-bold text-right text-gray-600">' + w[1].toLocaleString() + '</td></tr>';
+  }).join('');
+  document.getElementById('ger-words-tbody').innerHTML = data.ger.map(function(w, i) {
+    return '<tr class="hover:bg-gray-50/50"><td class="px-3 py-2 text-xs text-gray-400 font-bold">' + (i+1) + '</td><td class="px-3 py-2 text-sm font-semibold text-gray-800">' + w[0] + '</td><td class="px-3 py-2 text-sm font-bold text-right text-gray-600">' + w[1].toLocaleString() + '</td></tr>';
+  }).join('');
+}
+
+var activeAnalysisField = 'name_wc';
+
+function setAnalysisField(field) {
+  activeAnalysisField = field;
+  document.querySelectorAll('.analysis-field-btn').forEach(function(btn) {
+    btn.className = btn.dataset.analysisfield === field
+      ? 'analysis-field-btn px-3 py-1.5 rounded-md text-xs font-bold transition-all bg-gray-900 text-white'
+      : 'analysis-field-btn px-3 py-1.5 rounded-md text-xs font-bold transition-all text-gray-500 hover:bg-gray-100';
+  });
+  renderAnalysisTab();
+}
+
 function renderAnalysisTab() {
   var data = getActiveData();
-  var titleBins = [
-    { label: 'Short (1-3)', min: 1, max: 3, sortOrder: 0 },
-    { label: 'Standard (4-6)', min: 4, max: 6, sortOrder: 1 },
-    { label: 'Long (7-10)', min: 7, max: 10, sortOrder: 2 },
-    { label: 'Descriptive (11-15)', min: 11, max: 15, sortOrder: 3 },
-    { label: 'Max Detail (15+)', min: 16, max: 100, sortOrder: 4 }
-  ];
-  renderComposedChart('title', getWordMetrics(data, 'name_wc', titleBins));
-  renderComposedChart('description', getWordMetrics(data, 'description_wc'));
-  renderComposedChart('neighborhood', getWordMetrics(data, 'neighborhood_wc'));
+  var fieldBins = {
+    name_wc: [
+      { label: 'Short (1-3)', min: 1, max: 3, sortOrder: 0 },
+      { label: 'Standard (4-6)', min: 4, max: 6, sortOrder: 1 },
+      { label: 'Long (7-10)', min: 7, max: 10, sortOrder: 2 },
+      { label: 'Descriptive (11-15)', min: 11, max: 15, sortOrder: 3 },
+      { label: 'Max Detail (15+)', min: 16, max: 100, sortOrder: 4 }
+    ]
+  };
+  var bins = fieldBins[activeAnalysisField] || null;
+  renderComposedChart('analysis-single', getWordMetrics(data, activeAnalysisField, bins));
 }
 
 var activeTextField = 'name_wc';
@@ -1112,9 +1312,10 @@ function setTab(tab) {
   document.getElementById('tab-analysis').classList.toggle('hidden', tab !== 'analysis');
   document.getElementById('tab-questions').classList.toggle('hidden', tab !== 'questions');
   document.getElementById('tab-conclusion').classList.toggle('hidden', tab !== 'conclusion');
+  document.getElementById('tab-challenges').classList.toggle('hidden', tab !== 'challenges');
   document.getElementById('tab-datasources').classList.toggle('hidden', tab !== 'datasources');
-  document.getElementById('secondary-filters').classList.toggle('hidden', tab === 'overview' || tab === 'analysis' || tab === 'conclusion' || tab === 'questions' || tab === 'datasources' || tab === 'bizquestion');
-  document.getElementById('kpi-cards').classList.toggle('hidden', tab === 'conclusion' || tab === 'questions' || tab === 'datasources' || tab === 'bizquestion');
+  document.getElementById('secondary-filters').classList.toggle('hidden', tab === 'overview' || tab === 'analysis' || tab === 'conclusion' || tab === 'questions' || tab === 'datasources' || tab === 'bizquestion' || tab === 'challenges');
+  document.getElementById('kpi-cards').classList.toggle('hidden', tab === 'conclusion' || tab === 'questions' || tab === 'datasources' || tab === 'bizquestion' || tab === 'challenges');
   if (tab === 'overview') {
     roomTypeFilter = 'All'; bedroomFilter = 'All'; bathroomFilter = 'All'; neighborhoodFilter = 'All';
   }
@@ -1318,6 +1519,7 @@ function renderAll() {
     renderPlayTextTab();
   } else if (activeTab === 'analysis') {
     renderAnalysisTab();
+    renderWordTables();
   }
 }
 

@@ -6,29 +6,11 @@
   <title>Airbnb Market Dashboard</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
-  <style>
-    @keyframes spin { to { transform: rotate(360deg); } }
-    .animate-spin { animation: spin 1s linear infinite; }
-  </style>
+  <script src="data.js"></script>
 </head>
 <body class="bg-gray-50">
-  <!-- Upload Screen -->
-  <div id="upload-screen" class="min-h-screen flex flex-col items-center justify-center p-4">
-    <div class="max-w-md w-full bg-white rounded-2xl shadow-xl p-8 text-center space-y-6">
-      <div class="w-20 h-20 bg-rose-100 rounded-full flex items-center justify-center mx-auto">
-        <div id="upload-spinner" class="hidden animate-spin rounded-full h-10 w-10 border-b-2 border-rose-500"></div>
-        <svg id="upload-icon" class="w-10 h-10 text-rose-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-      </div>
-      <div>
-        <h1 class="text-2xl font-bold">Market Analytics Dashboard</h1>
-        <p class="text-gray-500">Upload listing CSVs to analyze correlations.</p>
-      </div>
-      <input type="file" id="file-input" accept=".csv" multiple class="block w-full text-sm text-gray-500 file:mr-4 file:py-3 file:px-6 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-rose-50 file:text-rose-700 hover:file:bg-rose-100 cursor-pointer" />
-    </div>
-  </div>
-
   <!-- Dashboard -->
-  <div id="dashboard" class="hidden min-h-screen bg-gray-50 pb-20">
+  <div id="dashboard" class="min-h-screen bg-gray-50 pb-20">
     <div class="sticky top-0 z-50 bg-gray-50/95 backdrop-blur-md border-b border-gray-200 px-4 md:px-8 py-4 shadow-sm">
       <div class="max-w-7xl mx-auto space-y-6">
         <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4">
@@ -39,7 +21,6 @@
           <div class="flex bg-white rounded-lg p-1 shadow-sm border border-gray-200">
             <button onclick="setTab('overview')" data-tab="overview" class="tab-btn px-3 py-1.5 rounded-md text-xs font-semibold transition-all flex items-center gap-2 bg-rose-500 text-white shadow-sm">Overview</button>
             <button onclick="setTab('analysis')" data-tab="analysis" class="tab-btn px-3 py-1.5 rounded-md text-xs font-semibold transition-all flex items-center gap-2 text-gray-500 hover:bg-gray-50">Text Analysis</button>
-            <button onclick="setTab('comparison')" data-tab="comparison" class="tab-btn px-3 py-1.5 rounded-md text-xs font-semibold transition-all flex items-center gap-2 text-gray-500 hover:bg-gray-50">Other Analysis</button>
           </div>
         </div>
         <div id="kpi-cards" class="grid grid-cols-2 lg:grid-cols-4 gap-4"></div>
@@ -137,6 +118,40 @@
 
       <!-- Analysis Tab -->
       <div id="tab-analysis" class="hidden flex flex-col gap-8 pb-20">
+        <div class="bg-white p-6 md:p-8 rounded-2xl border border-gray-100 shadow-sm">
+          <div class="flex items-center gap-3 mb-8">
+            <div class="p-1.5 bg-[#FF5A5F] rounded-lg text-white shadow-md">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+            </div>
+            <h3 class="font-bold text-gray-800 text-base tracking-tight">Recommendations for Hosts</h3>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="flex flex-col gap-4">
+              <div class="flex items-center gap-2 text-[#FF5A5F]">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                <p class="text-[11px] font-black uppercase tracking-widest">Wording Impact</p>
+              </div>
+              <p class="text-[15px] font-bold text-gray-900 leading-snug">How does the wording of a listing impact the number of visitors to that listing?</p>
+              <p class="text-sm text-gray-500 italic bg-gray-50 rounded-xl p-4">Detailed descriptions (100+ words) and descriptive neighborhood overviews lead to significantly higher estimated annual revenue.</p>
+            </div>
+            <div class="flex flex-col gap-4">
+              <div class="flex items-center gap-2 text-[#FF5A5F]">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+                <p class="text-[11px] font-black uppercase tracking-widest">Satisfaction Trend</p>
+              </div>
+              <p class="text-[15px] font-bold text-gray-900 leading-snug">Is there a correlation between neighborhood detail and guest ratings?</p>
+              <p class="text-sm text-gray-500 italic bg-gray-50 rounded-xl p-4">Yes, brief or minimal neighborhood overviews (0-10 words) correlate with lower average review scores compared to moderate detail.</p>
+            </div>
+            <div class="flex flex-col gap-4">
+              <div class="flex items-center gap-2 text-[#FF5A5F]">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                <p class="text-[11px] font-black uppercase tracking-widest">Optimal Length</p>
+              </div>
+              <p class="text-[15px] font-bold text-gray-900 leading-snug">What is the ideal word count for listing titles?</p>
+              <p class="text-sm text-gray-500 italic bg-gray-50 rounded-xl p-4">Titles with 11-15 words achieve peak satisfaction ratings with an average rating of 4.9 or higher.</p>
+            </div>
+          </div>
+        </div>
         <div class="space-y-12">
           <div class="bg-white p-8 rounded-2xl border border-gray-100 shadow-sm">
             <h2 class="text-2xl font-bold text-gray-900 mb-4">Listing Title</h2>
@@ -153,83 +168,39 @@
         </div>
       </div>
 
-      <!-- Comparison Tab -->
-      <div id="tab-comparison" class="hidden flex flex-col gap-8 pb-20">
-        <div class="bg-white p-4 rounded-2xl shadow-sm border border-gray-100 flex flex-wrap items-center gap-6">
-          <div class="flex items-center gap-2 text-gray-400"><span class="text-[10px] font-black uppercase">Property Filters</span></div>
-          <div class="flex-1 min-w-[150px]">
-            <label class="block text-[10px] font-bold text-gray-400 mb-1">Room Type</label>
-            <select id="filter-room" onchange="setComparisonFilter()" class="w-full bg-gray-50 border rounded-lg px-3 py-2 text-xs font-bold outline-none">
-              <option value="All">All Valid Types</option>
-              <option value="Entire home/apt">Entire home/apt</option>
-              <option value="Private room">Private room</option>
-            </select>
-          </div>
-          <div class="flex-1 min-w-[100px]">
-            <label class="block text-[10px] font-bold text-gray-400 mb-1">Bedrooms</label>
-            <select id="filter-bedrooms" onchange="setComparisonFilter()" class="w-full bg-gray-50 border rounded-lg px-3 py-2 text-xs font-bold outline-none">
-              <option value="All">All Bedrooms</option>
-            </select>
-          </div>
-          <div class="flex-1 min-w-[150px]">
-            <label class="block text-[10px] font-bold text-gray-400 mb-1">Bathrooms</label>
-            <select id="filter-bathrooms" onchange="setComparisonFilter()" class="w-full bg-gray-50 border rounded-lg px-3 py-2 text-xs font-bold outline-none">
-              <option value="All">All Bathrooms</option>
-            </select>
-          </div>
-        </div>
-        <div id="comparison-kpis" class="grid grid-cols-1 md:grid-cols-3 gap-4"></div>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-          <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
-            <h3 class="font-bold mb-6 text-gray-800">Price Yield Comparison</h3>
-            <div class="h-64"><canvas id="chart-price"></canvas></div>
-          </div>
-        </div>
-      </div>
     </div>
   </div>
 
 <script>
-const datasets = {};
+var CITIES = ['Berlin', 'Munich'];
+var ROOM_TYPES = ['Entire home/apt', 'Private room', 'Other'];
+window._amenList = D.a;
+var allData = D.d.map(function(r) {
+  return {
+    name: r[0], price_num: r[1], rating: r[2], revenue_num: r[3],
+    number_of_reviews: r[4], bedrooms_clean: r[5], bathrooms_clean: r[6],
+    neighbourhood_cleansed: D.h[r[7]], room_type: ROOM_TYPES[r[8]],
+    name_wc: r[0].split(/\s+/).filter(Boolean).length,
+    description_wc: r[9], neighborhood_wc: r[10],
+    amenities_idx: r[11], estimated_occupancy_l365d: r[12],
+    cityName: CITIES[r[13]], isSuccessful: r[2] >= 4.8
+  };
+});
+D = null;
+
 let activeTab = 'overview';
 let cityFilter = 'All';
 let neighborhoodFilter = 'All';
-let roomTypeFilter = 'All';
-let bedroomFilter = 'All';
-let bathroomFilter = 'All';
 const charts = {};
 
-function parseCSV(text) {
-  const lines = text.split(/\r?\n/);
-  if (lines.length < 2) return [];
-  const regex = /,(?=(?:(?:[^"]*"){2})*[^"]*$)/;
-  const headers = lines[0].split(regex).map(h => h.replace(/^"|"$/g, '').trim());
-  return lines.slice(1).filter(l => l.trim()).map(line => {
-    const values = line.split(regex);
-    return headers.reduce((obj, header, i) => {
-      obj[header] = values[i] ? values[i].replace(/^"|"$/g, '').trim() : '';
-      return obj;
-    }, {});
-  });
-}
-
 function getAllData() {
-  return Object.values(datasets).flat();
+  return allData;
 }
 
 function getActiveData() {
   let data = getAllData();
   if (cityFilter !== 'All') data = data.filter(d => d.cityName === cityFilter);
   if (neighborhoodFilter !== 'All') data = data.filter(d => d.neighbourhood_cleansed === neighborhoodFilter);
-  if (activeTab === 'comparison') {
-    if (roomTypeFilter !== 'All') {
-      data = data.filter(d => d.room_type === roomTypeFilter);
-    } else {
-      data = data.filter(d => ["Entire home/apt", "Private room"].includes(d.room_type));
-    }
-    if (bedroomFilter !== 'All') data = data.filter(d => String(d.bedrooms_clean) === bedroomFilter);
-    if (bathroomFilter !== 'All') data = data.filter(d => String(d.bathrooms_clean) === bathroomFilter);
-  }
   return data;
 }
 
@@ -257,21 +228,11 @@ function renderKPIs() {
 }
 
 function renderDatasetTags() {
-  document.getElementById('dataset-tags').innerHTML = Object.keys(datasets).map(function(name) {
-    var city = datasets[name] && datasets[name][0] ? datasets[name][0].cityName : name;
-    return '<span class="px-2 py-0.5 bg-white border rounded text-[10px] flex items-center gap-1.5 font-medium text-gray-600">' + city +
-      ' <button onclick="removeDataset(\'' + name.replace(/'/g, "\\'") + '\')" class="text-red-400 hover:text-red-600 font-bold">x</button></span>';
+  var seen = {};
+  allData.forEach(function(d) { seen[d.cityName] = true; });
+  document.getElementById('dataset-tags').innerHTML = Object.keys(seen).map(function(city) {
+    return '<span class="px-2 py-0.5 bg-white border rounded text-[10px] flex items-center gap-1.5 font-medium text-gray-600">' + city + '</span>';
   }).join('');
-}
-
-function removeDataset(name) {
-  delete datasets[name];
-  if (Object.keys(datasets).length === 0) {
-    document.getElementById('dashboard').classList.add('hidden');
-    document.getElementById('upload-screen').classList.remove('hidden');
-  } else {
-    renderAll();
-  }
 }
 
 function renderNeighborhoods() {
@@ -300,16 +261,12 @@ function renderAmenitiesChart() {
   var data = getActiveData();
   if (!data.length) return;
   var stats = {};
+  var amenList = window._amenList;
   data.forEach(function(d) {
-    if (!d.amenities) return;
-    var parsed = [];
-    try { parsed = JSON.parse(d.amenities.replace(/""/g, '"')); }
-    catch(e) {
-      var m = d.amenities.match(/"([^"]+)"/g);
-      parsed = m ? m.map(function(x) { return x.replace(/"/g, ''); }) : d.amenities.split(',').map(function(s) { return s.trim(); });
-    }
-    if (Array.isArray(parsed)) parsed.forEach(function(a) {
-      if (!a || typeof a !== 'string') return;
+    if (!d.amenities_idx || !d.amenities_idx.length) return;
+    d.amenities_idx.forEach(function(idx) {
+      var a = amenList[idx];
+      if (!a) return;
       if (!stats[a]) stats[a] = { name: a, revenue: 0, count: 0 };
       stats[a].revenue += d.revenue_num || 0;
       stats[a].count += 1;
@@ -358,7 +315,7 @@ function renderListingsTable() {
   }).join('');
 }
 
-function getWordMetrics(data, field, bins) {
+function getWordMetrics(data, wcField, bins) {
   bins = bins || [
     { label: 'Max Detail (200+)', min: 201, max: 5000, sortOrder: 0 },
     { label: 'Detailed (101-200)', min: 101, max: 200, sortOrder: 1 },
@@ -368,7 +325,7 @@ function getWordMetrics(data, field, bins) {
   ];
   return bins.map(function(bin) {
     var matching = data.filter(function(d) {
-      var wc = (d[field] || '').split(/\s+/).filter(Boolean).length;
+      var wc = d[wcField] || 0;
       return wc >= bin.min && wc <= bin.max;
     });
     var count = matching.length || 1;
@@ -385,15 +342,15 @@ function renderComposedChart(canvasId, metrics) {
     data: {
       labels: metrics.map(function(m) { return m.range; }),
       datasets: [
-        { type: 'bar', label: 'Avg Revenue', data: metrics.map(function(m) { return m.avgRevenue; }), backgroundColor: '#00A699', borderRadius: 4, yAxisID: 'y' },
-        { type: 'line', label: 'Avg Rating', data: metrics.map(function(m) { return m.avgRating; }), borderColor: '#f59e0b', backgroundColor: '#f59e0b', borderWidth: 3, pointRadius: 4, yAxisID: 'y1', tension: 0.3 }
+        { type: 'bar', label: 'Avg Revenue', data: metrics.map(function(m) { return m.avgRevenue; }), backgroundColor: '#00A699', borderRadius: 4, yAxisID: 'y', order: 2 },
+        { type: 'line', label: 'Avg Rating', data: metrics.map(function(m) { return m.avgRating; }), borderColor: '#f59e0b', backgroundColor: '#fff', borderWidth: 3, pointRadius: 7, pointHoverRadius: 9, pointBorderWidth: 3, pointBorderColor: '#f59e0b', pointBackgroundColor: '#fff', yAxisID: 'y1', tension: 0.3, order: 1 }
       ]
     },
     options: {
       responsive: true, maintainAspectRatio: false,
       plugins: { legend: { position: 'bottom', labels: { font: { size: 10 } } } },
       scales: {
-        y: { position: 'left', ticks: { callback: function(v) { return '€' + v; }, font: { size: 9 } }, grid: { display: false } },
+        y: { position: 'left', beginAtZero: true, ticks: { callback: function(v) { return '€' + v; }, font: { size: 9 } }, grid: { display: false } },
         y1: { position: 'right', min: 3.5, max: 5, ticks: { font: { size: 9 } }, grid: { drawOnChartArea: false } },
         x: { ticks: { font: { size: 9 }, maxRotation: 15 } }
       }
@@ -410,68 +367,9 @@ function renderAnalysisTab() {
     { label: 'Standard (4-6)', min: 4, max: 6, sortOrder: 3 },
     { label: 'Short (1-3)', min: 1, max: 3, sortOrder: 4 }
   ];
-  renderComposedChart('title', getWordMetrics(data, 'name', titleBins));
-  renderComposedChart('description', getWordMetrics(data, 'description'));
-  renderComposedChart('neighborhood', getWordMetrics(data, 'neighborhood_overview'));
-}
-
-function renderComparisonTab() {
-  var data = getActiveData();
-  var len = data.length || 1;
-  var avgEarnings = Math.round(data.reduce(function(a, d) { return a + (d.revenue_num || 0); }, 0) / len);
-  var validOcc = data.map(function(d) { return parseFloat(d.estimated_occupancy_l365d); }).filter(function(v) { return !isNaN(v); });
-  var avgOcc = validOcc.length ? (validOcc.reduce(function(a, v) { return a + v; }, 0) / validOcc.length).toFixed(1) : '0';
-  var bedMap = {};
-  data.forEach(function(d) {
-    var b = d.bedrooms_clean || 0;
-    if (!bedMap[b]) bedMap[b] = { rev: 0, count: 0 };
-    bedMap[b].rev += d.revenue_num || 0;
-    bedMap[b].count += 1;
-  });
-  var bestBeds = 'N/A', maxAvg = 0;
-  Object.entries(bedMap).forEach(function(entry) { var avg = entry[1].rev / entry[1].count; if (avg > maxAvg) { maxAvg = avg; bestBeds = entry[0]; } });
-
-  document.getElementById('comparison-kpis').innerHTML =
-    makeCard('Average Annual Earnings', '&euro;' + avgEarnings.toLocaleString(), 'bg-emerald-600') +
-    makeCard('Typical Occupancy', avgOcc, 'bg-indigo-600') +
-    makeCard('Best Setup', bestBeds + ' BR', 'bg-amber-600');
-
-  var all = getAllData();
-  var seen = {};
-  var cities = [];
-  all.forEach(function(d) { if (!seen[d.cityName]) { seen[d.cityName] = true; cities.push(d.cityName); } });
-  var cityData = cities.map(function(city) {
-    var cd = all.filter(function(d) { return d.cityName === city; });
-    return { name: city, avgPrice: parseFloat((cd.reduce(function(a, d) { return a + d.price_num; }, 0) / cd.length).toFixed(2)) };
-  });
-
-  destroyChart('price');
-  charts['price'] = new Chart(document.getElementById('chart-price'), {
-    type: 'bar',
-    data: { labels: cityData.map(function(c) { return c.name; }), datasets: [{ data: cityData.map(function(c) { return c.avgPrice; }), backgroundColor: '#00A699', borderRadius: 4 }] },
-    options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false }, tooltip: { callbacks: { label: function(ctx) { return 'Avg Price: €' + ctx.raw; } } } }, scales: { y: { ticks: { callback: function(v) { return '€' + v; } }, grid: { display: false } }, x: { grid: { display: false } } } }
-  });
-
-  updateComparisonFilters();
-}
-
-function updateComparisonFilters() {
-  var all = getAllData();
-  var base = all.filter(function(d) {
-    return (cityFilter === 'All' || d.cityName === cityFilter) && (neighborhoodFilter === 'All' || d.neighbourhood_cleansed === neighborhoodFilter);
-  });
-  var bedrooms = [], bathrooms = [], seenB = {}, seenBa = {};
-  base.forEach(function(d) {
-    var b = String(d.bedrooms_clean), ba = String(d.bathrooms_clean);
-    if (b && b !== 'NaN' && b !== 'null' && !seenB[b]) { seenB[b] = true; bedrooms.push(b); }
-    if (ba && ba !== 'NaN' && ba !== 'null' && !seenBa[ba]) { seenBa[ba] = true; bathrooms.push(ba); }
-  });
-  bedrooms.sort(function(a, b) { return parseInt(a) - parseInt(b); });
-  bathrooms.sort(function(a, b) { return parseInt(a) - parseInt(b); });
-  document.getElementById('filter-bedrooms').innerHTML = '<option value="All">All Bedrooms</option>' +
-    bedrooms.map(function(b) { return '<option value="' + b + '"' + (b === bedroomFilter ? ' selected' : '') + '>' + b + ' BR</option>'; }).join('');
-  document.getElementById('filter-bathrooms').innerHTML = '<option value="All">All Bathrooms</option>' +
-    bathrooms.map(function(b) { return '<option value="' + b + '"' + (b === bathroomFilter ? ' selected' : '') + '>' + b + ' BA</option>'; }).join('');
+  renderComposedChart('title', getWordMetrics(data, 'name_wc', titleBins));
+  renderComposedChart('description', getWordMetrics(data, 'description_wc'));
+  renderComposedChart('neighborhood', getWordMetrics(data, 'neighborhood_wc'));
 }
 
 function setTab(tab) {
@@ -481,11 +379,10 @@ function setTab(tab) {
       ? 'tab-btn px-3 py-1.5 rounded-md text-xs font-semibold transition-all flex items-center gap-2 bg-rose-500 text-white shadow-sm'
       : 'tab-btn px-3 py-1.5 rounded-md text-xs font-semibold transition-all flex items-center gap-2 text-gray-500 hover:bg-gray-50';
   });
-  var titles = { overview: 'Overview', analysis: 'Text Analysis', comparison: 'Other Analysis' };
+  var titles = { overview: 'Overview', analysis: 'Text Analysis' };
   document.getElementById('tab-title').textContent = titles[tab];
   document.getElementById('tab-overview').classList.toggle('hidden', tab !== 'overview');
   document.getElementById('tab-analysis').classList.toggle('hidden', tab !== 'analysis');
-  document.getElementById('tab-comparison').classList.toggle('hidden', tab !== 'comparison');
   renderAll();
 }
 
@@ -505,16 +402,8 @@ function setNeighborhoodFilter(val) {
   renderAll();
 }
 
-function setComparisonFilter() {
-  roomTypeFilter = document.getElementById('filter-room').value;
-  bedroomFilter = document.getElementById('filter-bedrooms').value;
-  bathroomFilter = document.getElementById('filter-bathrooms').value;
-  renderAll();
-}
-
 function renderAll() {
   renderKPIs();
-  renderDatasetTags();
   renderNeighborhoods();
   if (activeTab === 'overview') {
     renderAmenitiesChart();
@@ -522,57 +411,11 @@ function renderAll() {
     renderListingsTable();
   } else if (activeTab === 'analysis') {
     renderAnalysisTab();
-  } else if (activeTab === 'comparison') {
-    renderComparisonTab();
   }
 }
 
-document.getElementById('file-input').addEventListener('change', function(e) {
-  var files = Array.from(e.target.files);
-  if (!files.length) return;
-  document.getElementById('upload-spinner').classList.remove('hidden');
-  document.getElementById('upload-icon').classList.add('hidden');
-  var loaded = 0;
-  files.forEach(function(file) {
-    var reader = new FileReader();
-    reader.onload = function(ev) {
-      try {
-        var raw = parseCSV(ev.target.result);
-        datasets[file.name] = raw.map(function(row) {
-          var price = parseFloat((row.price || '').replace(/[€$,]/g, '')) || 0;
-          var rating = parseFloat(row.review_scores_rating) || 0;
-          var revenue = parseFloat(row.estimated_revenue_l365d) || 0;
-          var reviews = parseInt(row.number_of_reviews) || 0;
-          var cityName = file.name.toLowerCase().indexOf('munich') !== -1 ? 'Munich' :
-                         file.name.toLowerCase().indexOf('berlin') !== -1 ? 'Berlin' : 'Other';
-          var bedroomsClean = parseInt(String(row.bedrooms || '0').replace(/\D/g, '')) || 0;
-          var rawBaths = row.bathrooms || row.bathrooms_text || '0';
-          var bathMatch = String(rawBaths).match(/[\d.]+/);
-          var bathroomsClean = Math.floor(parseFloat(bathMatch ? bathMatch[0] : '0'));
-          var result = {};
-          for (var key in row) result[key] = row[key];
-          result.price_num = price;
-          result.rating = rating;
-          result.revenue_num = revenue;
-          result.number_of_reviews = reviews;
-          result.bedrooms_clean = bedroomsClean;
-          result.bathrooms_clean = bathroomsClean;
-          result.isSuccessful = rating >= 4.8;
-          result.cityName = cityName;
-          return result;
-        }).filter(function(row) { return row.price_num > 0; });
-      } finally {
-        loaded++;
-        if (loaded === files.length) {
-          document.getElementById('upload-screen').classList.add('hidden');
-          document.getElementById('dashboard').classList.remove('hidden');
-          renderAll();
-        }
-      }
-    };
-    reader.readAsText(file);
-  });
-});
+renderDatasetTags();
+renderAll();
 </script>
 </body>
 </html>

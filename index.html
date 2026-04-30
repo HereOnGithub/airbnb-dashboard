@@ -24,7 +24,7 @@
         <div class="flex gap-6">
           <button onclick="setTab('overview')" data-tab="overview" class="tab-btn pb-2 text-sm font-semibold transition-all border-b-2 border-rose-500 text-gray-900 -mb-[13px]">Overview</button>
           <button onclick="setTab('analysis')" data-tab="analysis" class="tab-btn pb-2 text-sm font-semibold transition-all border-b-2 border-transparent text-gray-400 hover:text-gray-600 -mb-[13px]">Text Analysis</button>
-          <button onclick="setTab('other')" data-tab="other" class="tab-btn pb-2 text-sm font-semibold transition-all border-b-2 border-transparent text-gray-400 hover:text-gray-600 -mb-[13px]">Other Analysis</button>
+          <button onclick="setTab('other')" data-tab="other" class="tab-btn pb-2 text-sm font-semibold transition-all border-b-2 border-transparent text-gray-400 hover:text-gray-600 -mb-[13px]">Neighborhood Analysis</button>
         </div>
         <div class="bg-white p-1.5 rounded-xl shadow-sm border border-gray-200 flex items-center">
           <div class="px-3 py-2 text-gray-400 border-r border-gray-100 mr-1">
@@ -124,32 +124,28 @@
 
       </div>
 
-      <!-- Other Analysis Tab -->
+      <!-- Neighborhood Analysis Tab -->
       <div id="tab-other" class="hidden flex flex-col gap-4 md:gap-8 pb-20">
+        <div class="flex items-center gap-3 flex-wrap">
+          <span class="text-sm font-bold text-gray-600">Compare:</span>
+          <div class="bg-white p-1.5 rounded-lg shadow-sm border border-gray-200 flex items-center min-w-[200px]">
+            <div class="w-3 h-3 rounded-full bg-[#00A699] ml-2 mr-2 shrink-0"></div>
+            <select id="hood-compare-1" onchange="renderNeighborhoodTab()" class="w-full px-1 py-1.5 rounded-lg text-xs font-bold text-gray-600 appearance-none focus:outline-none cursor-pointer bg-transparent"></select>
+          </div>
+          <span class="text-sm font-bold text-gray-400">vs</span>
+          <div class="bg-white p-1.5 rounded-lg shadow-sm border border-gray-200 flex items-center min-w-[200px]">
+            <div class="w-3 h-3 rounded-full bg-[#FF5A5F] ml-2 mr-2 shrink-0"></div>
+            <select id="hood-compare-2" onchange="renderNeighborhoodTab()" class="w-full px-1 py-1.5 rounded-lg text-xs font-bold text-gray-600 appearance-none focus:outline-none cursor-pointer bg-transparent"></select>
+          </div>
+        </div>
         <div class="bg-white p-4 md:p-6 rounded-2xl shadow-sm border border-gray-100">
           <h3 class="font-bold text-sm text-gray-400 uppercase tracking-widest mb-1">Top Rated Listings</h3>
           <p class="text-[11px] text-gray-400 mb-4">Ranked by rating, with number of reviews as tiebreaker</p>
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="listings-tables"></div>
         </div>
         <div class="bg-white p-4 md:p-6 rounded-2xl shadow-sm border border-gray-100">
-          <h3 class="font-bold text-sm text-gray-400 uppercase tracking-widest mb-1">Top Amenities</h3>
-          <p class="text-[11px] text-gray-400 mb-4">Avg rating >= 4.8, ranked by avg revenue</p>
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="regional-tables-other"></div>
-        </div>
-        <div class="bg-white p-4 md:p-6 rounded-2xl shadow-sm border border-gray-100">
           <h3 class="font-bold text-sm text-gray-400 uppercase tracking-widest mb-1">Top Amenities by Neighborhood</h3>
           <p class="text-[11px] text-gray-400 mb-4">Avg rating >= 4.8, ranked by avg revenue</p>
-          <div class="flex items-center gap-3 mb-4 flex-wrap">
-            <div class="bg-gray-50 p-1 rounded-lg border border-gray-200 flex items-center min-w-[180px]">
-              <div class="w-3 h-3 rounded-full bg-[#00A699] ml-2 mr-2 shrink-0"></div>
-              <select id="hood-compare-1" onchange="renderOtherHoodTables()" class="w-full px-1 py-1.5 rounded-lg text-xs font-bold text-gray-600 appearance-none focus:outline-none cursor-pointer bg-transparent"></select>
-            </div>
-            <span class="text-xs font-bold text-gray-400">vs</span>
-            <div class="bg-gray-50 p-1 rounded-lg border border-gray-200 flex items-center min-w-[180px]">
-              <div class="w-3 h-3 rounded-full bg-[#FF5A5F] ml-2 mr-2 shrink-0"></div>
-              <select id="hood-compare-2" onchange="renderOtherHoodTables()" class="w-full px-1 py-1.5 rounded-lg text-xs font-bold text-gray-600 appearance-none focus:outline-none cursor-pointer bg-transparent"></select>
-            </div>
-          </div>
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="trend-tables-berlin-other"></div>
         </div>
       </div>
@@ -481,11 +477,13 @@ function renderListingsTable() {
     }).join('');
     return '<div><div class="flex items-center gap-2 mb-3"><div class="w-3 h-3 rounded-full ' + color + '"></div><p class="text-xs font-black uppercase tracking-widest text-gray-600">' + city + '</p></div><table class="w-full"><thead><tr><th class="text-left text-[10px] font-black text-gray-400 uppercase pb-2 pr-2">#</th><th class="text-left text-[10px] font-black text-gray-400 uppercase pb-2">Listing</th><th class="text-center text-[10px] font-black text-gray-400 uppercase pb-2 pl-2">Rating</th><th class="text-right text-[10px] font-black text-gray-400 uppercase pb-2 pl-2">Price</th><th class="text-right text-[10px] font-black text-gray-400 uppercase pb-2 pl-2">Est. Revenue</th></tr></thead><tbody>' + rows + '</tbody></table></div>';
   }
-  var berlinData = data.filter(function(d) { return d.cityName === 'Berlin'; });
-  var munichData = data.filter(function(d) { return d.cityName === 'Munich'; });
+  var hood1 = document.getElementById('hood-compare-1').value;
+  var hood2 = document.getElementById('hood-compare-2').value;
+  var hood1Data = data.filter(function(d) { return d.neighbourhood_cleansed === hood1; });
+  var hood2Data = data.filter(function(d) { return d.neighbourhood_cleansed === hood2; });
   document.getElementById('listings-tables').innerHTML =
-    makeListingTable('Berlin', getTopListings(berlinData, 5), 'bg-[#00A699]') +
-    makeListingTable('Munich', getTopListings(munichData, 5), 'bg-[#FF5A5F]');
+    makeListingTable(hood1, getTopListings(hood1Data, 5), 'bg-[#00A699]') +
+    makeListingTable(hood2, getTopListings(hood2Data, 5), 'bg-[#FF5A5F]');
 }
 
 function getWordMetrics(data, wcField, bins) {
@@ -708,10 +706,11 @@ function renderOtherCharts() {
   sel1.innerHTML = validHoods.map(function(h) { return '<option value="' + h + '"' + (h === cur1 ? ' selected' : '') + '>' + h + '</option>'; }).join('');
   sel2.innerHTML = validHoods.map(function(h) { return '<option value="' + h + '"' + (h === cur2 ? ' selected' : '') + '>' + h + '</option>'; }).join('');
 
-  renderOtherHoodTables();
+  renderNeighborhoodTab();
 }
 
-function renderOtherHoodTables() {
+function renderNeighborhoodTab() {
+  renderListingsTable();
   var data = getActiveData();
   var amenList = window._amenList;
   function getHoodTop(hoodName, n) {
@@ -753,8 +752,8 @@ function renderAll() {
   if (activeTab === 'overview') {
     renderRecommendationCharts();
   } else if (activeTab === 'other') {
-    renderListingsTable();
     renderOtherCharts();
+    renderNeighborhoodTab();
   } else if (activeTab === 'analysis') {
     renderAnalysisTab();
   }

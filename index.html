@@ -578,7 +578,29 @@
             </div>
             <h3 class="font-bold text-gray-800 text-base tracking-tight">New Fine Tunes to Project Scope</h3>
           </div>
-          <div class="space-y-4">
+          <ul class="list-disc pl-4 space-y-1 text-sm text-gray-700 mb-4">
+            <li>The original project scope included an HTML file dashboard that had to be downloaded and opened locally</li>
+            <li>Both dashboards were interactive, with filters to explore the data by city, property type, bedrooms, and bathrooms</li>
+            <li>When we discovered the wrong data file was used (a smaller subset of the full data), the HTML dashboard could not be corrected due to hardcoding</li>
+            <li>The original team members were transitioned off the dashboard task due to limited availability and unwillingness to investigate and correct the data source issue. They were unresponsive for days and left the team without visibility into progress until the deadline, at which point the issue could have been caught earlier had they been transparent about the shortcuts they were taking. A team member stepped in to build the online dashboard from scratch to meet the project's needs</li>
+          </ul>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="bg-rose-50 rounded-xl p-5">
+              <p class="text-xs font-bold text-rose-500 uppercase tracking-widest mb-3">HTML Dashboard File</p>
+              <div class="space-y-2">
+                <div class="flex items-start gap-2"><span class="text-rose-500 font-bold shrink-0">&#10007;</span><p class="text-sm text-gray-700"><span class="font-bold">Access:</span> Required downloading a file and opening it locally</p></div>
+                <div class="flex items-start gap-2"><span class="text-rose-500 font-bold shrink-0">&#10007;</span><p class="text-sm text-gray-700"><span class="font-bold">Sharing:</span> Difficult to share with others (must send the file)</p></div>
+                <div class="flex items-start gap-2"><span class="text-rose-500 font-bold shrink-0">&#10007;</span><p class="text-sm text-gray-700"><span class="font-bold">Inflexible:</span> Unable to update the data source</p></div>
+              </div>
+            </div>
+            <div class="bg-emerald-50 rounded-xl p-5">
+              <p class="text-xs font-bold text-emerald-600 uppercase tracking-widest mb-3">Online Dashboard</p>
+              <div class="space-y-2">
+                <div class="flex items-start gap-2"><span class="text-emerald-600 font-bold shrink-0">&#10003;</span><p class="text-sm text-gray-700"><span class="font-bold">Access:</span> Accessible via URL, no download needed</p></div>
+                <div class="flex items-start gap-2"><span class="text-emerald-600 font-bold shrink-0">&#10003;</span><p class="text-sm text-gray-700"><span class="font-bold">Sharing:</span> Shareable link that works on any device</p></div>
+                <div class="flex items-start gap-2"><span class="text-emerald-600 font-bold shrink-0">&#10003;</span><p class="text-sm text-gray-700"><span class="font-bold">Flexible:</span> Source data can be updated with a simple file upload. Visuals designed to answer specific business questions</p></div>
+              </div>
+            </div>
           </div>
         </div>
 

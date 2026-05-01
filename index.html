@@ -23,16 +23,26 @@
     <!-- Scrollable controls area -->
     <div class="max-w-7xl mx-auto px-4 md:px-8 pt-4 md:pt-6 space-y-4 md:space-y-6">
       <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 border-b border-gray-200 pb-3">
-        <div class="flex gap-6">
+        <div class="flex gap-6 items-end">
           <button onclick="setTab('overview')" data-tab="overview" class="tab-btn pb-2 text-sm font-semibold transition-all border-b-2 border-rose-500 text-gray-900 -mb-[13px]">Characteristics Analysis</button>
           <button onclick="setTab('analysis')" data-tab="analysis" class="tab-btn pb-2 text-sm font-semibold transition-all border-b-2 border-transparent text-gray-400 hover:text-gray-600 -mb-[13px]">Text Analysis</button>
-          <button onclick="setTab('amenities')" data-tab="amenities" class="tab-btn pb-2 text-sm font-semibold transition-all border-b-2 border-transparent text-gray-400 hover:text-gray-600 -mb-[13px]">Explore Amenities Data</button>
-          <button onclick="setTab('playtext')" data-tab="playtext" class="tab-btn pb-2 text-sm font-semibold transition-all border-b-2 border-transparent text-gray-400 hover:text-gray-600 -mb-[13px]">Explore Text Data</button>
-          <button onclick="setTab('bizquestion')" data-tab="bizquestion" class="tab-btn pb-2 text-sm font-semibold transition-all border-b-2 border-transparent text-gray-400 hover:text-gray-600 -mb-[13px]">Business Question</button>
-          <button onclick="setTab('questions')" data-tab="questions" class="tab-btn pb-2 text-sm font-semibold transition-all border-b-2 border-transparent text-gray-400 hover:text-gray-600 -mb-[13px]">Analysis Questions</button>
-          <button onclick="setTab('conclusion')" data-tab="conclusion" class="tab-btn pb-2 text-sm font-semibold transition-all border-b-2 border-transparent text-gray-400 hover:text-gray-600 -mb-[13px]">Conclusion & Summary</button>
-          <button onclick="setTab('challenges')" data-tab="challenges" class="tab-btn pb-2 text-sm font-semibold transition-all border-b-2 border-transparent text-gray-400 hover:text-gray-600 -mb-[13px]">Challenges</button>
-          <button onclick="setTab('datasources')" data-tab="datasources" class="tab-btn pb-2 text-sm font-semibold transition-all border-b-2 border-transparent text-gray-400 hover:text-gray-600 -mb-[13px]">Data Sources</button>
+          <div class="relative -mb-[13px]">
+            <button onclick="toggleDropdown('explore-dropdown')" id="explore-trigger" class="tab-btn-dropdown pb-2 text-sm font-semibold transition-all border-b-2 border-transparent text-gray-400 hover:text-gray-600 flex items-center gap-1">Explore Data <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></button>
+            <div id="explore-dropdown" class="hidden absolute top-full left-0 mt-2 bg-white rounded-lg shadow-lg border border-gray-200 py-1 z-50 min-w-[200px]">
+              <button onclick="setTab('amenities'); closeDropdowns()" class="tab-btn block w-full text-left px-4 py-2 text-sm font-semibold text-gray-600 hover:bg-gray-50" data-tab="amenities">Explore Amenities Data</button>
+              <button onclick="setTab('playtext'); closeDropdowns()" class="tab-btn block w-full text-left px-4 py-2 text-sm font-semibold text-gray-600 hover:bg-gray-50" data-tab="playtext">Explore Text Data</button>
+            </div>
+          </div>
+          <div class="relative -mb-[13px]">
+            <button onclick="toggleDropdown('more-dropdown')" id="more-trigger" class="tab-btn-dropdown pb-2 text-sm font-semibold transition-all border-b-2 border-transparent text-gray-400 hover:text-gray-600 flex items-center gap-1">More <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></button>
+            <div id="more-dropdown" class="hidden absolute top-full right-0 mt-2 bg-white rounded-lg shadow-lg border border-gray-200 py-1 z-50 min-w-[200px]">
+              <button onclick="setTab('bizquestion'); closeDropdowns()" class="tab-btn block w-full text-left px-4 py-2 text-sm font-semibold text-gray-600 hover:bg-gray-50" data-tab="bizquestion">Business Question</button>
+              <button onclick="setTab('questions'); closeDropdowns()" class="tab-btn block w-full text-left px-4 py-2 text-sm font-semibold text-gray-600 hover:bg-gray-50" data-tab="questions">Analysis Questions</button>
+              <button onclick="setTab('conclusion'); closeDropdowns()" class="tab-btn block w-full text-left px-4 py-2 text-sm font-semibold text-gray-600 hover:bg-gray-50" data-tab="conclusion">Conclusion & Summary</button>
+              <button onclick="setTab('challenges'); closeDropdowns()" class="tab-btn block w-full text-left px-4 py-2 text-sm font-semibold text-gray-600 hover:bg-gray-50" data-tab="challenges">Challenges</button>
+              <button onclick="setTab('datasources'); closeDropdowns()" class="tab-btn block w-full text-left px-4 py-2 text-sm font-semibold text-gray-600 hover:bg-gray-50" data-tab="datasources">Data Sources</button>
+            </div>
+          </div>
         </div>
         <div class="bg-white p-1.5 rounded-xl shadow-sm border border-gray-200 flex items-center">
           <div class="px-3 py-2 text-gray-400 border-r border-gray-100 mr-1">
@@ -126,24 +136,26 @@
             </div>
           </div>
         </div>
-        <div class="grid grid-cols-1 gap-4 md:gap-6">
-          <div class="bg-white p-4 md:p-6 rounded-2xl shadow-sm border border-gray-100">
-            <h3 class="font-bold text-sm text-gray-400 uppercase tracking-widest mb-4">Revenue &amp; Rating by Number of Reviews</h3>
+        <div class="bg-white p-4 md:p-6 rounded-2xl shadow-sm border border-gray-100">
+          <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-4">
+            <h3 id="overview-view-title" class="font-bold text-sm text-gray-400 uppercase tracking-widest">Revenue & Rating by Number of Reviews</h3>
+            <div class="bg-gray-50 p-1 rounded-lg border border-gray-200 flex items-center">
+              <button onclick="setOverviewView('revenue')" data-overviewview="revenue" class="overview-view-btn px-3 py-1.5 rounded-md text-xs font-bold transition-all bg-gray-900 text-white">Revenue & Rating</button>
+              <button onclick="setOverviewView('city')" data-overviewview="city" class="overview-view-btn px-3 py-1.5 rounded-md text-xs font-bold transition-all text-gray-500 hover:bg-gray-100">By City</button>
+              <button onclick="setOverviewView('neighborhood')" data-overviewview="neighborhood" class="overview-view-btn px-3 py-1.5 rounded-md text-xs font-bold transition-all text-gray-500 hover:bg-gray-100">By Neighborhood</button>
+            </div>
+          </div>
+          <div id="overview-view-revenue">
             <div class="h-56 md:h-64"><canvas id="chart-success"></canvas></div>
           </div>
-          <div class="bg-white p-4 md:p-6 rounded-2xl shadow-sm border border-gray-100">
-            <h3 class="font-bold text-sm text-gray-400 uppercase tracking-widest mb-1">Top 5 Amenities: Berlin vs Munich</h3>
+          <div id="overview-view-city" class="hidden">
             <p class="text-[11px] text-gray-400 mb-4">Avg rating >= 4.8, ranked by avg revenue</p>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="regional-tables"></div>
           </div>
-          <div class="bg-white p-4 md:p-6 rounded-2xl shadow-sm border border-gray-100">
-            <h3 class="font-bold text-sm text-gray-400 uppercase tracking-widest mb-1">Top 5 Amenities by Neighborhood: Berlin</h3>
+          <div id="overview-view-neighborhood" class="hidden">
             <p class="text-[11px] text-gray-400 mb-4">Avg rating >= 4.8, ranked by avg revenue</p>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="trend-tables-berlin"></div>
-          </div>
-          <div class="bg-white p-4 md:p-6 rounded-2xl shadow-sm border border-gray-100">
-            <h3 class="font-bold text-sm text-gray-400 uppercase tracking-widest mb-1">Top 5 Amenities by Neighborhood: Munich</h3>
-            <p class="text-[11px] text-gray-400 mb-4">Avg rating >= 4.8, ranked by avg revenue</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6" id="trend-tables-berlin"></div>
+            <hr class="border-gray-100 mb-6">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="trend-tables-munich"></div>
           </div>
         </div>
@@ -480,8 +492,8 @@
         </div>
 
         <!-- Technical Challenges (collapsible) -->
-        <details class="bg-white rounded-2xl border border-gray-100 shadow-sm">
-          <summary class="p-4 md:p-8 cursor-pointer flex items-center gap-3">
+        <details class="bg-white rounded-2xl border border-gray-100 shadow-sm" onclick="return false;">
+          <summary class="p-4 md:p-8 cursor-default flex items-center gap-3 opacity-50">
             <div class="p-1.5 bg-rose-500 rounded-lg text-white shadow-md">
               <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
             </div>
@@ -858,7 +870,7 @@
               </div>
             </div>
             <div>
-              <h4 class="font-bold text-sm text-rose-500 uppercase tracking-widest mb-2">German Words</h4>
+              <h4 class="font-bold text-sm text-blue-500 uppercase tracking-widest mb-2">German Words</h4>
               <div class="overflow-y-auto max-h-[320px]">
                 <table class="w-full text-left table-fixed">
                   <colgroup><col class="w-[40px]"><col><col class="w-[70px]"></colgroup>
@@ -1053,9 +1065,9 @@ function renderRecommendationCharts() {
   var munichData = data.filter(function(d) { return d.cityName === 'Munich'; });
   function makeAmenTable(city, top, color) {
     var rows = top.map(function(a, i) {
-      return '<tr class="border-t border-gray-100"><td class="py-2 pr-2 text-xs text-gray-400 font-bold">#' + (i+1) + '</td><td class="py-2 text-sm font-semibold text-gray-800">' + a.name + '</td><td class="py-2 pl-2 text-sm font-bold text-center text-amber-500">' + a.avgRat + '</td><td class="py-2 pl-2 text-sm font-bold text-right text-gray-600">&euro;' + a.avg.toLocaleString() + '</td></tr>';
+      return '<tr class="border-t border-gray-100"><td class="py-2 pr-2 text-xs text-gray-400">' + (i+1) + '</td><td class="py-2 text-sm text-gray-700">' + a.name + '</td><td class="py-2 pl-2 text-sm text-center text-amber-500">' + a.avgRat + '</td><td class="py-2 pl-2 text-sm text-right text-gray-500">&euro;' + a.avg.toLocaleString() + '</td></tr>';
     }).join('');
-    return '<div><div class="flex items-center gap-2 mb-3"><div class="w-3 h-3 rounded-full ' + color + '"></div><p class="text-xs font-black uppercase tracking-widest text-gray-600">' + city + '</p></div><table class="w-full"><thead><tr><th class="text-left text-[10px] font-black text-gray-400 uppercase pb-2 pr-2">#</th><th class="text-left text-[10px] font-black text-gray-400 uppercase pb-2">Amenity</th><th class="text-center text-[10px] font-black text-gray-400 uppercase pb-2 pl-2">Avg Rating</th><th class="text-right text-[10px] font-black text-gray-400 uppercase pb-2 pl-2">Avg Revenue</th></tr></thead><tbody>' + rows + '</tbody></table></div>';
+    return '<div><div class="flex items-center gap-2 mb-3"><div class="w-3 h-3 rounded-full ' + color + '"></div><p class="text-xs font-bold uppercase tracking-widest text-gray-600">' + city + '</p></div><table class="w-full"><thead><tr><th class="text-left text-[10px] font-bold text-gray-400 uppercase pb-2 pr-2">#</th><th class="text-left text-[10px] font-bold text-gray-400 uppercase pb-2">Amenity</th><th class="text-center text-[10px] font-bold text-gray-400 uppercase pb-2 pl-2">Rating</th><th class="text-right text-[10px] font-bold text-gray-400 uppercase pb-2 pl-2">Revenue</th></tr></thead><tbody>' + rows + '</tbody></table></div>';
   }
   document.getElementById('regional-tables').innerHTML =
     makeAmenTable('Berlin', getTopAmenities(berlinData, 5), 'bg-[#00A699]') +
@@ -1084,9 +1096,9 @@ function renderRecommendationCharts() {
   }
   function makeHoodTable(hood, top, color) {
     var rows = top.map(function(a, i) {
-      return '<tr class="border-t border-gray-100"><td class="py-2 pr-2 text-xs text-gray-400 font-bold">#' + (i+1) + '</td><td class="py-2 text-sm font-semibold text-gray-800">' + a.name + '</td><td class="py-2 pl-2 text-sm font-bold text-center text-amber-500">' + a.avgRat + '</td><td class="py-2 pl-2 text-sm font-bold text-right text-gray-600">&euro;' + a.avg.toLocaleString() + '</td></tr>';
+      return '<tr class="border-t border-gray-100"><td class="py-2 pr-2 text-xs text-gray-400">' + (i+1) + '</td><td class="py-2 text-sm text-gray-700">' + a.name + '</td><td class="py-2 pl-2 text-sm text-center text-amber-500">' + a.avgRat + '</td><td class="py-2 pl-2 text-sm text-right text-gray-500">&euro;' + a.avg.toLocaleString() + '</td></tr>';
     }).join('');
-    return '<div><div class="flex items-center gap-2 mb-3"><div class="w-3 h-3 rounded-full ' + color + '"></div><p class="text-xs font-black uppercase tracking-widest text-gray-600">' + hood + '</p></div><table class="w-full"><thead><tr><th class="text-left text-[10px] font-black text-gray-400 uppercase pb-2 pr-2">#</th><th class="text-left text-[10px] font-black text-gray-400 uppercase pb-2">Amenity</th><th class="text-center text-[10px] font-black text-gray-400 uppercase pb-2 pl-2">Avg Rating</th><th class="text-right text-[10px] font-black text-gray-400 uppercase pb-2 pl-2">Avg Revenue</th></tr></thead><tbody>' + rows + '</tbody></table></div>';
+    return '<div><div class="flex items-center gap-2 mb-3"><div class="w-3 h-3 rounded-full ' + color + '"></div><p class="text-xs font-bold uppercase tracking-widest text-gray-600">' + hood + '</p></div><table class="w-full"><thead><tr><th class="text-left text-[10px] font-bold text-gray-400 uppercase pb-2 pr-2">#</th><th class="text-left text-[10px] font-bold text-gray-400 uppercase pb-2">Amenity</th><th class="text-center text-[10px] font-bold text-gray-400 uppercase pb-2 pl-2">Rating</th><th class="text-right text-[10px] font-bold text-gray-400 uppercase pb-2 pl-2">Revenue</th></tr></thead><tbody>' + rows + '</tbody></table></div>';
   }
   document.getElementById('trend-tables-berlin').innerHTML =
     makeHoodTable('Tempelhofer Vorstadt', getHoodTopAmenities('Tempelhofer Vorstadt', 5), 'bg-[#00A699]') +
@@ -1298,13 +1310,64 @@ function renderPlayTextTab() {
   renderComposedChart('text-play', metrics);
 }
 
+function toggleDropdown(id) {
+  var dropdown = document.getElementById(id);
+  var otherId = id === 'explore-dropdown' ? 'more-dropdown' : 'explore-dropdown';
+  document.getElementById(otherId).classList.add('hidden');
+  dropdown.classList.toggle('hidden');
+}
+
+function closeDropdowns() {
+  document.getElementById('explore-dropdown').classList.add('hidden');
+  document.getElementById('more-dropdown').classList.add('hidden');
+}
+
+document.addEventListener('click', function(e) {
+  if (!e.target.closest('.relative') && !e.target.classList.contains('tab-btn-dropdown')) {
+    closeDropdowns();
+  }
+});
+
+var activeOverviewView = 'revenue';
+
+function setOverviewView(view) {
+  activeOverviewView = view;
+  document.querySelectorAll('.overview-view-btn').forEach(function(btn) {
+    btn.className = btn.dataset.overviewview === view
+      ? 'overview-view-btn px-3 py-1.5 rounded-md text-xs font-bold transition-all bg-gray-900 text-white'
+      : 'overview-view-btn px-3 py-1.5 rounded-md text-xs font-bold transition-all text-gray-500 hover:bg-gray-100';
+  });
+  document.getElementById('overview-view-revenue').classList.toggle('hidden', view !== 'revenue');
+  document.getElementById('overview-view-city').classList.toggle('hidden', view !== 'city');
+  document.getElementById('overview-view-neighborhood').classList.toggle('hidden', view !== 'neighborhood');
+  var titles = { revenue: 'Revenue & Rating by Number of Reviews', city: 'Top 5 Amenities: Berlin vs Munich', neighborhood: 'Top 5 Amenities by Neighborhood' };
+  document.getElementById('overview-view-title').textContent = titles[view];
+}
+
 function setTab(tab) {
   activeTab = tab;
+  var exploreTabs = ['amenities', 'playtext'];
+  var moreTabs = ['bizquestion', 'questions', 'conclusion', 'challenges', 'datasources'];
   document.querySelectorAll('.tab-btn').forEach(function(btn) {
-    btn.className = btn.dataset.tab === tab
-      ? 'tab-btn pb-2 text-sm font-semibold transition-all border-b-2 border-rose-500 text-gray-900 -mb-[13px]'
-      : 'tab-btn pb-2 text-sm font-semibold transition-all border-b-2 border-transparent text-gray-400 hover:text-gray-600 -mb-[13px]';
+    if (!btn.dataset.tab) return;
+    var isActive = btn.dataset.tab === tab;
+    var inDropdown = btn.closest('.relative');
+    if (inDropdown) {
+      btn.className = isActive
+        ? 'tab-btn block w-full text-left px-4 py-2 text-sm font-semibold text-rose-500 bg-rose-50'
+        : 'tab-btn block w-full text-left px-4 py-2 text-sm font-semibold text-gray-600 hover:bg-gray-50';
+    } else {
+      btn.className = isActive
+        ? 'tab-btn pb-2 text-sm font-semibold transition-all border-b-2 border-rose-500 text-gray-900 -mb-[13px]'
+        : 'tab-btn pb-2 text-sm font-semibold transition-all border-b-2 border-transparent text-gray-400 hover:text-gray-600 -mb-[13px]';
+    }
   });
+  var exploreActive = exploreTabs.indexOf(tab) !== -1;
+  var moreActive = moreTabs.indexOf(tab) !== -1;
+  document.getElementById('explore-trigger').className = 'tab-btn-dropdown pb-2 text-sm font-semibold transition-all border-b-2 flex items-center gap-1 ' +
+    (exploreActive ? 'border-rose-500 text-gray-900' : 'border-transparent text-gray-400 hover:text-gray-600');
+  document.getElementById('more-trigger').className = 'tab-btn-dropdown pb-2 text-sm font-semibold transition-all border-b-2 flex items-center gap-1 ' +
+    (moreActive ? 'border-rose-500 text-gray-900' : 'border-transparent text-gray-400 hover:text-gray-600');
   document.getElementById('tab-bizquestion').classList.toggle('hidden', tab !== 'bizquestion');
   document.getElementById('tab-overview').classList.toggle('hidden', tab !== 'overview');
   document.getElementById('tab-amenities').classList.toggle('hidden', tab !== 'amenities');

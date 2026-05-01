@@ -33,12 +33,16 @@
               <button onclick="setTab('questions'); closeDropdowns()" class="tab-btn block w-full text-left px-4 py-2 text-sm font-semibold text-gray-600 hover:bg-gray-50" data-tab="questions">Analysis Questions</button>
               <button onclick="setTab('conclusion'); closeDropdowns()" class="tab-btn block w-full text-left px-4 py-2 text-sm font-semibold text-gray-600 hover:bg-gray-50" data-tab="conclusion">Conclusion & Summary</button>
               <button onclick="setTab('challenges'); closeDropdowns()" class="tab-btn block w-full text-left px-4 py-2 text-sm font-semibold text-gray-600 hover:bg-gray-50" data-tab="challenges">Challenges</button>
-              <button class="block w-full text-left px-4 py-2 text-sm font-semibold text-gray-300 cursor-default" data-tab="datasources">Data Sources</button>
+              <button onclick="setTab('temporary'); closeDropdowns()" class="tab-btn block w-full text-left px-4 py-2 text-sm font-semibold text-gray-600 hover:bg-gray-50" data-tab="temporary">Information</button>
             </div>
           </div>
           <div class="relative -mb-[13px]">
             <button id="explore-trigger" class="tab-btn-dropdown pb-2 text-sm font-semibold transition-all border-b-2 border-transparent text-gray-300 cursor-default flex items-center gap-1">Placeholder <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></button>
-            <div id="explore-dropdown" class="hidden"></div>
+            <div id="explore-dropdown" class="hidden absolute top-full right-0 mt-2 bg-white rounded-lg shadow-lg border border-gray-200 py-1 z-50 min-w-[200px]">
+              <button onclick="setTab('amenities'); closeDropdowns()" class="tab-btn block w-full text-left px-4 py-2 text-sm font-semibold text-gray-600 hover:bg-gray-50" data-tab="amenities">Explore Amenities Data</button>
+              <button onclick="setTab('playtext'); closeDropdowns()" class="tab-btn block w-full text-left px-4 py-2 text-sm font-semibold text-gray-600 hover:bg-gray-50" data-tab="playtext">Explore Text Data</button>
+              <button onclick="setTab('datasources'); closeDropdowns()" class="tab-btn block w-full text-left px-4 py-2 text-sm font-semibold text-gray-600 hover:bg-gray-50" data-tab="datasources">Data Sources</button>
+            </div>
           </div>
         </div>
         <div id="city-filter" class="bg-white p-1.5 rounded-xl shadow-sm border border-gray-200 flex items-center">
@@ -563,6 +567,70 @@
         </details>
           </div>
         </details>
+      </div>
+
+      <!-- Temporary Tab -->
+      <div id="tab-temporary" class="hidden flex flex-col gap-4 md:gap-8 pb-20">
+        <div class="bg-white p-4 md:p-8 rounded-2xl border border-gray-100 shadow-sm">
+          <div class="flex items-center gap-3 mb-4 md:mb-8">
+            <div class="p-1.5 bg-gray-800 rounded-lg text-white shadow-md">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            </div>
+            <h3 class="font-bold text-gray-800 text-base tracking-tight">Data Sources</h3>
+          </div>
+          <p class="text-sm text-gray-600 mb-6">This dashboard analyzes Airbnb listing data from two German cities, sourced from Inside Airbnb CSV exports. Both files share an identical schema of 79 columns.</p>
+          <div class="overflow-x-auto mb-8">
+            <table class="w-full text-left">
+              <thead class="bg-gray-50">
+                <tr>
+                  <th class="px-4 py-3 text-[10px] font-black text-gray-400 uppercase"></th>
+                  <th class="px-4 py-3 text-[10px] font-black text-gray-400 uppercase">Berlin</th>
+                  <th class="px-4 py-3 text-[10px] font-black text-gray-400 uppercase">Munich</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-gray-100">
+                <tr><td class="px-4 py-3 text-sm font-bold text-gray-600">File</td><td class="px-4 py-3 text-sm text-gray-800">zip_berlin_listings.csv</td><td class="px-4 py-3 text-sm text-gray-800">zip_munich_listings.csv</td></tr>
+                <tr><td class="px-4 py-3 text-sm font-bold text-gray-600">Rows</td><td class="px-4 py-3 text-sm text-gray-800">14,274</td><td class="px-4 py-3 text-sm text-gray-800">8,274</td></tr>
+                <tr><td class="px-4 py-3 text-sm font-bold text-gray-600">Columns</td><td class="px-4 py-3 text-sm text-gray-800">79</td><td class="px-4 py-3 text-sm text-gray-800">79</td></tr>
+                <tr><td class="px-4 py-3 text-sm font-bold text-gray-600">Schema Match</td><td class="px-4 py-3 text-sm text-emerald-600 font-bold" colspan="2">Identical (all 79 columns shared)</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="bg-white p-4 md:p-8 rounded-2xl border border-gray-100 shadow-sm">
+          <h4 class="font-bold text-sm text-gray-400 uppercase tracking-widest mb-3">About The Data</h4>
+          <div class="space-y-4">
+            <div class="bg-gray-50 rounded-xl p-4">
+              <p class="text-xs font-black text-gray-400 uppercase mb-1">Bathroom Data</p>
+              <p class="text-sm text-gray-700">Two columns contain bathroom information: <span class="font-bold">bathrooms_text</span> (99.9% fill rate) is the primary source, with <span class="font-bold">bathrooms</span> (66.3% fill rate) used as a fallback. Of 22,548 total listings, 22 are missing bathrooms_text. Of those, 10 have data in the bathrooms column, recovering those listings. Only 12 listings (0.05%) have no bathroom data at all.</p>
+            </div>
+            <div class="bg-gray-50 rounded-xl p-4">
+              <p class="text-xs font-black text-gray-400 uppercase mb-1">Ratings</p>
+              <p class="text-sm text-gray-700">The <span class="font-bold">review_scores_rating</span> column has a 76.8% fill rate. Listings without ratings (typically new listings with no reviews) are excluded from all rating calculations in the dashboard to avoid skewing averages.</p>
+            </div>
+            <div class="bg-gray-50 rounded-xl p-4">
+              <p class="text-xs font-black text-gray-400 uppercase mb-1">Revenue</p>
+              <p class="text-sm text-gray-700">The <span class="font-bold">estimated_revenue_l365d</span> column has a 65.9% fill rate. Only listings with a valid price (and therefore revenue estimate) are included in the dashboard, resulting in 14,867 listings used for analysis.</p>
+            </div>
+          </div>
+        </div>
+        <div class="bg-white p-4 md:p-8 rounded-2xl border border-gray-100 shadow-sm">
+          <h4 class="font-bold text-sm text-gray-400 uppercase tracking-widest mb-3">All 79 Columns</h4>
+          <div class="overflow-x-auto max-h-[400px] overflow-y-auto">
+            <table class="w-full text-left table-fixed">
+              <colgroup><col class="w-[50px]"><col><col class="w-[90px]"><col class="w-[120px]"></colgroup>
+              <thead class="bg-gray-50 sticky top-0">
+                <tr>
+                  <th class="px-4 py-3 text-[10px] font-black text-gray-400 uppercase">#</th>
+                  <th class="px-4 py-3 text-[10px] font-black text-gray-400 uppercase">Column Name</th>
+                  <th class="px-4 py-3 text-[10px] font-black text-gray-400 uppercase text-right">Data Available</th>
+                  <th class="px-4 py-3 text-[10px] font-black text-gray-400 uppercase">Used in Dashboard</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-gray-50" id="columns-tbody-temp"></tbody>
+            </table>
+          </div>
+        </div>
       </div>
 
       <!-- Data Sources Tab -->
@@ -1385,8 +1453,8 @@ function setOverviewView(view) {
 
 function setTab(tab) {
   activeTab = tab;
-  var exploreTabs = ['amenities', 'playtext'];
-  var moreTabs = ['bizquestion', 'questions', 'conclusion', 'challenges', 'datasources'];
+  var exploreTabs = ['amenities', 'playtext', 'datasources'];
+  var moreTabs = ['bizquestion', 'questions', 'conclusion', 'challenges', 'temporary'];
   document.querySelectorAll('.tab-btn').forEach(function(btn) {
     if (!btn.dataset.tab) return;
     var isActive = btn.dataset.tab === tab;
@@ -1416,9 +1484,13 @@ function setTab(tab) {
   document.getElementById('tab-conclusion').classList.toggle('hidden', tab !== 'conclusion');
   document.getElementById('tab-challenges').classList.toggle('hidden', tab !== 'challenges');
   document.getElementById('tab-datasources').classList.toggle('hidden', tab !== 'datasources');
+  document.getElementById('tab-temporary').classList.toggle('hidden', tab !== 'temporary');
+  if (tab === 'temporary' && document.getElementById('columns-tbody-temp').innerHTML === '') {
+    document.getElementById('columns-tbody-temp').innerHTML = document.getElementById('columns-tbody').innerHTML;
+  }
   document.getElementById('secondary-filters').classList.toggle('hidden', tab === 'overview' || tab === 'analysis' || tab === 'conclusion' || tab === 'questions' || tab === 'datasources' || tab === 'bizquestion' || tab === 'challenges');
-  document.getElementById('kpi-cards').classList.toggle('hidden', tab === 'conclusion' || tab === 'questions' || tab === 'datasources' || tab === 'bizquestion' || tab === 'challenges');
-  document.getElementById('city-filter').classList.toggle('hidden', tab === 'overview' || tab === 'analysis' || tab === 'bizquestion' || tab === 'questions' || tab === 'conclusion' || tab === 'challenges' || tab === 'datasources');
+  document.getElementById('kpi-cards').classList.toggle('hidden', tab === 'conclusion' || tab === 'questions' || tab === 'datasources' || tab === 'bizquestion' || tab === 'challenges' || tab === 'temporary');
+  document.getElementById('city-filter').classList.toggle('hidden', tab === 'overview' || tab === 'analysis' || tab === 'bizquestion' || tab === 'questions' || tab === 'conclusion' || tab === 'challenges' || tab === 'datasources' || tab === 'temporary');
   if (tab === 'overview') {
     roomTypeFilter = 'All'; bedroomFilter = 'All'; bathroomFilter = 'All'; neighborhoodFilter = 'All';
   }

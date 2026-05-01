@@ -572,6 +572,47 @@
       <!-- Temporary Tab -->
       <div id="tab-temporary" class="hidden flex flex-col gap-4 md:gap-8 pb-20">
         <div class="bg-white p-4 md:p-8 rounded-2xl border border-gray-100 shadow-sm">
+          <div class="flex items-center gap-3 mb-4 md:mb-6">
+            <div class="p-1.5 bg-indigo-500 rounded-lg text-white shadow-md">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+            </div>
+            <h3 class="font-bold text-gray-800 text-base tracking-tight">New Fine Tunes to Project Scope</h3>
+          </div>
+          <div class="space-y-4">
+          </div>
+        </div>
+
+        <div class="bg-white p-4 md:p-8 rounded-2xl border border-gray-100 shadow-sm">
+          <div class="flex items-center gap-3 mb-4 md:mb-8">
+            <div class="p-1.5 bg-gray-800 rounded-lg text-white shadow-md">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 22h14a2 2 0 002-2V7.5L14.5 2H6a2 2 0 00-2 2v4"/><polyline points="14 2 14 8 20 8"/></svg>
+            </div>
+            <h3 class="font-bold text-gray-800 text-base tracking-tight">Available Data Sources</h3>
+          </div>
+          <p class="text-sm text-gray-600 mb-6">The following files were available from Inside Airbnb for each city. This dashboard uses the listings files (highlighted).</p>
+          <div class="overflow-x-auto">
+            <table class="w-full text-left">
+              <thead class="bg-gray-50">
+                <tr>
+                  <th class="px-4 py-3 text-[10px] font-black text-gray-400 uppercase">File</th>
+                  <th class="px-4 py-3 text-[10px] font-black text-gray-400 uppercase">Berlin</th>
+                  <th class="px-4 py-3 text-[10px] font-black text-gray-400 uppercase">Munich</th>
+                  <th class="px-4 py-3 text-[10px] font-black text-gray-400 uppercase">Description</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-gray-100">
+                <tr class="bg-emerald-50"><td class="px-4 py-3 text-sm font-bold text-emerald-700">listings.csv</td><td class="px-4 py-3 text-sm text-emerald-600">&#10003;</td><td class="px-4 py-3 text-sm text-emerald-600">&#10003;</td><td class="px-4 py-3 text-sm text-gray-600">Detailed listing data with 79 columns (used in this dashboard)</td></tr>
+                <tr><td class="px-4 py-3 text-sm font-bold text-gray-600">calendar.csv</td><td class="px-4 py-3 text-sm text-gray-500">&#10003;</td><td class="px-4 py-3 text-sm text-gray-500">&#10003;</td><td class="px-4 py-3 text-sm text-gray-500">Daily availability and pricing for each listing</td></tr>
+                <tr><td class="px-4 py-3 text-sm font-bold text-gray-600">reviews.csv</td><td class="px-4 py-3 text-sm text-gray-500">&#10003;</td><td class="px-4 py-3 text-sm text-gray-500">&#10003;</td><td class="px-4 py-3 text-sm text-gray-500">Individual guest reviews with text and date</td></tr>
+                <tr><td class="px-4 py-3 text-sm font-bold text-gray-600">listings_summary.csv</td><td class="px-4 py-3 text-sm text-gray-500">&#10003;</td><td class="px-4 py-3 text-sm text-gray-500">&#10003;</td><td class="px-4 py-3 text-sm text-gray-500">Condensed listing data with fewer columns</td></tr>
+                <tr><td class="px-4 py-3 text-sm font-bold text-gray-600">reviews_summary.csv</td><td class="px-4 py-3 text-sm text-gray-500">&#10003;</td><td class="px-4 py-3 text-sm text-gray-500">&#10003;</td><td class="px-4 py-3 text-sm text-gray-500">Condensed review data with date and listing ID</td></tr>
+                <tr><td class="px-4 py-3 text-sm font-bold text-gray-600">neighbourhoods.csv</td><td class="px-4 py-3 text-sm text-gray-500">&#10003;</td><td class="px-4 py-3 text-sm text-gray-500">&#10003;</td><td class="px-4 py-3 text-sm text-gray-500">List of neighbourhood names and groupings</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="bg-white p-4 md:p-8 rounded-2xl border border-gray-100 shadow-sm">
           <div class="flex items-center gap-3 mb-4 md:mb-8">
             <div class="p-1.5 bg-gray-800 rounded-lg text-white shadow-md">
               <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>

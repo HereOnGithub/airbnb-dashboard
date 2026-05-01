@@ -37,11 +37,12 @@
             </div>
           </div>
           <div class="relative -mb-[13px]">
-            <button id="explore-trigger" class="tab-btn-dropdown pb-2 text-sm font-semibold transition-all border-b-2 border-transparent text-gray-300 cursor-default flex items-center gap-1">Placeholder <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></button>
+            <button onclick="openPlaceholder()" id="explore-trigger" class="tab-btn-dropdown pb-2 text-sm font-semibold transition-all border-b-2 border-transparent text-gray-400 hover:text-gray-600 flex items-center gap-1">Placeholder <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></button>
             <div id="explore-dropdown" class="hidden absolute top-full right-0 mt-2 bg-white rounded-lg shadow-lg border border-gray-200 py-1 z-50 min-w-[200px]">
               <button onclick="setTab('amenities'); closeDropdowns()" class="tab-btn block w-full text-left px-4 py-2 text-sm font-semibold text-gray-600 hover:bg-gray-50" data-tab="amenities">Explore Amenities Data</button>
               <button onclick="setTab('playtext'); closeDropdowns()" class="tab-btn block w-full text-left px-4 py-2 text-sm font-semibold text-gray-600 hover:bg-gray-50" data-tab="playtext">Explore Text Data</button>
               <button onclick="setTab('datasources'); closeDropdowns()" class="tab-btn block w-full text-left px-4 py-2 text-sm font-semibold text-gray-600 hover:bg-gray-50" data-tab="datasources">Data Sources</button>
+              <button onclick="setTab('analysisfiles'); closeDropdowns()" class="tab-btn block w-full text-left px-4 py-2 text-sm font-semibold text-gray-600 hover:bg-gray-50" data-tab="analysisfiles">Analysis Difficulty</button>
             </div>
           </div>
         </div>
@@ -579,10 +580,10 @@
             <h3 class="font-bold text-gray-800 text-base tracking-tight">New Fine Tunes to Project Scope</h3>
           </div>
           <ul class="list-disc pl-4 space-y-1 text-sm text-gray-700 mb-4">
-            <li>The original project scope included an HTML file dashboard that had to be downloaded and opened locally</li>
-            <li>Both dashboards were interactive, with filters to explore the data by city, property type, bedrooms, and bathrooms</li>
-            <li>When we discovered the wrong data file was used (a smaller subset of the full data), the HTML dashboard could not be corrected due to hardcoding</li>
-            <li>The original team members were transitioned off the dashboard task due to limited availability and unwillingness to investigate and correct the data source issue. They were unresponsive for days and left the team without visibility into progress until the deadline, at which point the issue could have been caught earlier had they been transparent about the shortcuts they were taking. A team member stepped in to build the online dashboard from scratch to meet the project's needs</li>
+            <li><span class="font-bold">Original Scope:</span> The original project scope included an HTML file dashboard that had to be downloaded and opened locally</li>
+            <li><span class="font-bold">Shared Capability:</span> Both dashboards were interactive, with filters to explore the data by city, property type, bedrooms, and bathrooms</li>
+            <li><span class="font-bold">Data Issue:</span> When we discovered the wrong data file was used (a smaller subset of the full data), the HTML dashboard could not be corrected due to hardcoding</li>
+            <li><span class="font-bold">Team Transition:</span> The original team members were transitioned off the dashboard task due to limited availability and unwillingness to investigate and correct the data source issue. They were unresponsive for days and left the team without visibility into progress until the deadline, at which point the issue could have been caught earlier had they been transparent about the shortcuts they were taking. A team member stepped in to build the online dashboard from scratch to meet the project's needs</li>
           </ul>
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div class="bg-rose-50 rounded-xl p-5">
@@ -713,12 +714,76 @@
                 </tr>
               </thead>
               <tbody class="divide-y divide-gray-100">
-                <tr><td class="px-4 py-3 text-sm text-gray-400">1</td><td class="px-4 py-3 text-sm font-semibold text-gray-800">Success Factors</td><td class="px-4 py-3 text-sm text-gray-600">Excel</td><td class="px-4 py-3 text-sm text-gray-600">Binned review counts into ranges and computed average revenue per bin using a pivot table</td></tr>
-                <tr><td class="px-4 py-3 text-sm text-gray-400">2</td><td class="px-4 py-3 text-sm font-semibold text-gray-800">Regional Observation</td><td class="px-4 py-3 text-sm text-gray-600">Python</td><td class="px-4 py-3 text-sm text-gray-600">Parsed amenities stored in a single cell into individual items, then grouped by city to rank by revenue</td></tr>
-                <tr><td class="px-4 py-3 text-sm text-gray-400">3</td><td class="px-4 py-3 text-sm font-semibold text-gray-800">Interesting Trend</td><td class="px-4 py-3 text-sm text-gray-600">Python</td><td class="px-4 py-3 text-sm text-gray-600">Same amenity parsing as above, filtered per neighborhood to compare top amenities across areas</td></tr>
-                <tr><td class="px-4 py-3 text-sm text-gray-400">4</td><td class="px-4 py-3 text-sm font-semibold text-gray-800">Wording Impact</td><td class="px-4 py-3 text-sm text-gray-600">Python</td><td class="px-4 py-3 text-sm text-gray-600">Counted words in descriptions, binned into ranges, and computed average revenue per bin</td></tr>
-                <tr><td class="px-4 py-3 text-sm text-gray-400">5</td><td class="px-4 py-3 text-sm font-semibold text-gray-800">Satisfaction Trend</td><td class="px-4 py-3 text-sm text-gray-600">Python</td><td class="px-4 py-3 text-sm text-gray-600">Correlated neighborhood overview word count with average rating across bins</td></tr>
-                <tr><td class="px-4 py-3 text-sm text-gray-400">6</td><td class="px-4 py-3 text-sm font-semibold text-gray-800">Optimal Length</td><td class="px-4 py-3 text-sm text-gray-600">Excel</td><td class="px-4 py-3 text-sm text-gray-600">Binned title word counts into ranges and identified the bin with the highest average rating</td></tr>
+                <tr><td class="px-4 py-3 text-sm text-gray-400">1</td><td class="px-4 py-3 text-sm font-semibold text-gray-800">Success Factors</td><td class="px-4 py-3 text-sm text-gray-600">Excel</td><td class="px-4 py-3 text-sm text-gray-600">Grouped listings by number of reviews and calculated the average revenue for each group</td></tr>
+                <tr><td class="px-4 py-3 text-sm text-gray-400">2</td><td class="px-4 py-3 text-sm font-semibold text-gray-800">Regional Observation</td><td class="px-4 py-3 text-sm text-gray-600">Python</td><td class="px-4 py-3 text-sm text-gray-600">Split amenity lists apart, then found which amenities appear in the highest-earning listings per city</td></tr>
+                <tr><td class="px-4 py-3 text-sm text-gray-400">3</td><td class="px-4 py-3 text-sm font-semibold text-gray-800">Interesting Trend</td><td class="px-4 py-3 text-sm text-gray-600">Python</td><td class="px-4 py-3 text-sm text-gray-600">Same as above, but compared top amenities across different neighborhoods</td></tr>
+                <tr><td class="px-4 py-3 text-sm text-gray-400">4</td><td class="px-4 py-3 text-sm font-semibold text-gray-800">Wording Impact</td><td class="px-4 py-3 text-sm text-gray-600">Python</td><td class="px-4 py-3 text-sm text-gray-600">Counted words in each description, grouped by length, and compared average revenue across groups</td></tr>
+                <tr><td class="px-4 py-3 text-sm text-gray-400">5</td><td class="px-4 py-3 text-sm font-semibold text-gray-800">Satisfaction Trend</td><td class="px-4 py-3 text-sm text-gray-600">Python</td><td class="px-4 py-3 text-sm text-gray-600">Checked whether listings with longer neighborhood descriptions tend to have higher ratings</td></tr>
+                <tr><td class="px-4 py-3 text-sm text-gray-400">6</td><td class="px-4 py-3 text-sm font-semibold text-gray-800">Optimal Length</td><td class="px-4 py-3 text-sm text-gray-600">Excel</td><td class="px-4 py-3 text-sm text-gray-600">Grouped listing titles by word count and found which length gets the best ratings</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Analysis Difficulty Tab -->
+      <div id="tab-analysisfiles" class="hidden flex flex-col gap-4 md:gap-8 pb-20">
+        <div class="bg-white p-4 md:p-8 rounded-2xl border border-gray-100 shadow-sm">
+          <div class="flex items-center gap-3 mb-4 md:mb-6">
+            <div class="p-1.5 bg-gray-800 rounded-lg text-white shadow-md">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            </div>
+            <h3 class="font-bold text-gray-800 text-base tracking-tight">Analysis Difficulty</h3>
+          </div>
+          <p class="text-sm text-gray-600 mb-6">Ordered from easiest to most difficult analytical technique.</p>
+          <div class="overflow-x-auto">
+            <table class="w-full text-left">
+              <thead class="bg-gray-50">
+                <tr>
+                  <th class="px-4 py-3 text-[10px] font-bold text-gray-400 uppercase">#</th>
+                  <th class="px-4 py-3 text-[10px] font-bold text-gray-400 uppercase">Analysis</th>
+                  <th class="px-4 py-3 text-[10px] font-bold text-gray-400 uppercase">Software</th>
+                  <th class="px-4 py-3 text-[10px] font-bold text-gray-400 uppercase">Difficulty</th>
+                  <th class="px-4 py-3 text-[10px] font-bold text-gray-400 uppercase">Method</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-gray-100">
+                <tr><td class="px-4 py-3 text-sm text-gray-400">1</td><td class="px-4 py-3 text-sm font-semibold text-gray-800">Success Factors</td><td class="px-4 py-3 text-sm text-gray-600">Excel</td><td class="px-4 py-3 text-sm text-emerald-600">Easy</td><td class="px-4 py-3 text-sm text-gray-600">Pivot table with review count bins</td></tr>
+                <tr><td class="px-4 py-3 text-sm text-gray-400">2</td><td class="px-4 py-3 text-sm font-semibold text-gray-800">Optimal Length</td><td class="px-4 py-3 text-sm text-gray-600">Excel</td><td class="px-4 py-3 text-sm text-emerald-600">Easy</td><td class="px-4 py-3 text-sm text-gray-600">Binned title word counts, computed avg rating per bin</td></tr>
+                <tr><td class="px-4 py-3 text-sm text-gray-400">3</td><td class="px-4 py-3 text-sm font-semibold text-gray-800">Satisfaction Trend</td><td class="px-4 py-3 text-sm text-gray-600">Python</td><td class="px-4 py-3 text-sm text-amber-500">Medium</td><td class="px-4 py-3 text-sm text-gray-600">Correlation between word count and rating</td></tr>
+                <tr><td class="px-4 py-3 text-sm text-gray-400">4</td><td class="px-4 py-3 text-sm font-semibold text-gray-800">Wording Impact</td><td class="px-4 py-3 text-sm text-gray-600">Python</td><td class="px-4 py-3 text-sm text-amber-500">Medium</td><td class="px-4 py-3 text-sm text-gray-600">Word count binning + linear regression</td></tr>
+                <tr><td class="px-4 py-3 text-sm text-gray-400">5</td><td class="px-4 py-3 text-sm font-semibold text-gray-800">Regional Observation</td><td class="px-4 py-3 text-sm text-gray-600">Python</td><td class="px-4 py-3 text-sm text-rose-500">Hard</td><td class="px-4 py-3 text-sm text-gray-600">Parsed amenities from single cell, grouped by city, ranked by revenue</td></tr>
+                <tr><td class="px-4 py-3 text-sm text-gray-400">6</td><td class="px-4 py-3 text-sm font-semibold text-gray-800">Interesting Trend</td><td class="px-4 py-3 text-sm text-gray-600">Python</td><td class="px-4 py-3 text-sm text-rose-500">Hard</td><td class="px-4 py-3 text-sm text-gray-600">Same amenity parsing, filtered per neighborhood, compared across areas</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="bg-white p-4 md:p-8 rounded-2xl border border-gray-100 shadow-sm">
+          <div class="flex items-center gap-3 mb-4 md:mb-6">
+            <div class="p-1.5 bg-gray-800 rounded-lg text-white shadow-md">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            </div>
+            <h3 class="font-bold text-gray-800 text-base tracking-tight">List of Files</h3>
+          </div>
+          <div class="overflow-x-auto">
+            <table class="w-full text-left">
+              <thead class="bg-gray-50">
+                <tr>
+                  <th class="px-4 py-3 text-[10px] font-bold text-gray-400 uppercase">#</th>
+                  <th class="px-4 py-3 text-[10px] font-bold text-gray-400 uppercase">File</th>
+                  <th class="px-4 py-3 text-[10px] font-bold text-gray-400 uppercase">Analysis</th>
+                  <th class="px-4 py-3 text-[10px] font-bold text-gray-400 uppercase">City</th>
+                  <th class="px-4 py-3 text-[10px] font-bold text-gray-400 uppercase">Download</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-gray-100">
+                <tr><td class="px-4 py-3 text-sm text-gray-400">1</td><td class="px-4 py-3 text-sm font-semibold text-gray-800">success_factors.xlsx</td><td class="px-4 py-3 text-sm text-gray-600">Success Factors</td><td class="px-4 py-3 text-sm text-gray-600">Berlin & Munich</td><td class="px-4 py-3"><a href="analysis/success_factors.xlsx" download class="text-sm font-bold text-indigo-500 hover:text-indigo-700">Download</a></td></tr>
+                <tr><td class="px-4 py-3 text-sm text-gray-400">2</td><td class="px-4 py-3 text-sm font-semibold text-gray-800">optimal_length.xlsx</td><td class="px-4 py-3 text-sm text-gray-600">Optimal Length</td><td class="px-4 py-3 text-sm text-gray-600">Berlin & Munich</td><td class="px-4 py-3"><a href="analysis/optimal_length.xlsx" download class="text-sm font-bold text-indigo-500 hover:text-indigo-700">Download</a></td></tr>
+                <tr><td class="px-4 py-3 text-sm text-gray-400">3</td><td class="px-4 py-3 text-sm font-semibold text-gray-800">satisfaction_trend.ipynb</td><td class="px-4 py-3 text-sm text-gray-600">Satisfaction Trend</td><td class="px-4 py-3 text-sm text-gray-600">Berlin & Munich</td><td class="px-4 py-3"><a href="analysis/satisfaction_trend.ipynb" download class="text-sm font-bold text-indigo-500 hover:text-indigo-700">Download</a></td></tr>
+                <tr><td class="px-4 py-3 text-sm text-gray-400">4</td><td class="px-4 py-3 text-sm font-semibold text-gray-800">wording_impact.xlsx</td><td class="px-4 py-3 text-sm text-gray-600">Wording Impact</td><td class="px-4 py-3 text-sm text-gray-600">Berlin & Munich</td><td class="px-4 py-3"><a href="analysis/wording_impact.xlsx" download class="text-sm font-bold text-indigo-500 hover:text-indigo-700">Download</a></td></tr>
+                <tr><td class="px-4 py-3 text-sm text-gray-400">5</td><td class="px-4 py-3 text-sm font-semibold text-gray-800">regional_observation.ipynb</td><td class="px-4 py-3 text-sm text-gray-600">Regional Observation</td><td class="px-4 py-3 text-sm text-gray-600">Berlin & Munich</td><td class="px-4 py-3"><a href="analysis/regional_observation.ipynb" download class="text-sm font-bold text-indigo-500 hover:text-indigo-700">Download</a></td></tr>
+                <tr><td class="px-4 py-3 text-sm text-gray-400">6</td><td class="px-4 py-3 text-sm font-semibold text-gray-800">interesting_trend.ipynb</td><td class="px-4 py-3 text-sm text-gray-600">Interesting Trend</td><td class="px-4 py-3 text-sm text-gray-600">Berlin & Munich</td><td class="px-4 py-3"><a href="analysis/interesting_trend.ipynb" download class="text-sm font-bold text-indigo-500 hover:text-indigo-700">Download</a></td></tr>
               </tbody>
             </table>
           </div>
@@ -949,6 +1014,35 @@
                 <p class="text-sm text-gray-700">A random forest or gradient boosting model could use title word count as a feature to predict ratings. Feature importance scores would confirm whether title length is a meaningful predictor.</p>
               </div>
             </div>
+          </div>
+        </div>
+
+        <div class="bg-white p-4 md:p-8 rounded-2xl border border-gray-100 shadow-sm">
+          <div class="flex items-center gap-3 mb-4 md:mb-6">
+            <div class="p-1.5 bg-emerald-500 rounded-lg text-white shadow-md">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+            </div>
+            <h3 class="font-bold text-gray-800 text-base tracking-tight">Analytical Techniques Used</h3>
+          </div>
+          <div class="overflow-x-auto">
+            <table class="w-full text-left">
+              <thead class="bg-gray-50">
+                <tr>
+                  <th class="px-4 py-3 text-[10px] font-bold text-gray-400 uppercase">#</th>
+                  <th class="px-4 py-3 text-[10px] font-bold text-gray-400 uppercase">Analysis</th>
+                  <th class="px-4 py-3 text-[10px] font-bold text-gray-400 uppercase">Software</th>
+                  <th class="px-4 py-3 text-[10px] font-bold text-gray-400 uppercase">Method</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-gray-100">
+                <tr><td class="px-4 py-3 text-sm text-gray-400">1</td><td class="px-4 py-3 text-sm font-semibold text-gray-800">Success Factors</td><td class="px-4 py-3 text-sm text-gray-600">Excel</td><td class="px-4 py-3 text-sm text-gray-600">Binned review counts into ranges and computed average revenue per bin using a pivot table</td></tr>
+                <tr><td class="px-4 py-3 text-sm text-gray-400">2</td><td class="px-4 py-3 text-sm font-semibold text-gray-800">Regional Observation</td><td class="px-4 py-3 text-sm text-gray-600">Python</td><td class="px-4 py-3 text-sm text-gray-600">Parsed amenities stored in a single cell into individual items, then grouped by city to rank by revenue</td></tr>
+                <tr><td class="px-4 py-3 text-sm text-gray-400">3</td><td class="px-4 py-3 text-sm font-semibold text-gray-800">Interesting Trend</td><td class="px-4 py-3 text-sm text-gray-600">Python</td><td class="px-4 py-3 text-sm text-gray-600">Same amenity parsing as above, filtered per neighborhood to compare top amenities across areas</td></tr>
+                <tr><td class="px-4 py-3 text-sm text-gray-400">4</td><td class="px-4 py-3 text-sm font-semibold text-gray-800">Wording Impact</td><td class="px-4 py-3 text-sm text-gray-600">Python</td><td class="px-4 py-3 text-sm text-gray-600">Counted words in descriptions, binned into ranges, and computed average revenue per bin</td></tr>
+                <tr><td class="px-4 py-3 text-sm text-gray-400">5</td><td class="px-4 py-3 text-sm font-semibold text-gray-800">Satisfaction Trend</td><td class="px-4 py-3 text-sm text-gray-600">Python</td><td class="px-4 py-3 text-sm text-gray-600">Correlated neighborhood overview word count with average rating across bins</td></tr>
+                <tr><td class="px-4 py-3 text-sm text-gray-400">6</td><td class="px-4 py-3 text-sm font-semibold text-gray-800">Optimal Length</td><td class="px-4 py-3 text-sm text-gray-600">Excel</td><td class="px-4 py-3 text-sm text-gray-600">Binned title word counts into ranges and identified the bin with the highest average rating</td></tr>
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
@@ -1509,6 +1603,22 @@ function renderPlayTextTab() {
   renderComposedChart('text-play', metrics);
 }
 
+var placeholderUnlocked = false;
+
+function openPlaceholder() {
+  if (placeholderUnlocked) {
+    toggleDropdown('explore-dropdown');
+    return;
+  }
+  var pw = prompt('Enter password to access Placeholder:');
+  if (pw === '2026project') {
+    placeholderUnlocked = true;
+    toggleDropdown('explore-dropdown');
+  } else if (pw !== null) {
+    alert('Incorrect password.');
+  }
+}
+
 function toggleDropdown(id) {
   var dropdown = document.getElementById(id);
   var otherId = id === 'explore-dropdown' ? 'more-dropdown' : 'explore-dropdown';
@@ -1545,7 +1655,7 @@ function setOverviewView(view) {
 
 function setTab(tab) {
   activeTab = tab;
-  var exploreTabs = ['amenities', 'playtext', 'datasources'];
+  var exploreTabs = ['amenities', 'playtext', 'datasources', 'analysisfiles'];
   var moreTabs = ['bizquestion', 'questions', 'conclusion', 'challenges', 'temporary'];
   document.querySelectorAll('.tab-btn').forEach(function(btn) {
     if (!btn.dataset.tab) return;
@@ -1576,13 +1686,14 @@ function setTab(tab) {
   document.getElementById('tab-conclusion').classList.toggle('hidden', tab !== 'conclusion');
   document.getElementById('tab-challenges').classList.toggle('hidden', tab !== 'challenges');
   document.getElementById('tab-datasources').classList.toggle('hidden', tab !== 'datasources');
+  document.getElementById('tab-analysisfiles').classList.toggle('hidden', tab !== 'analysisfiles');
   document.getElementById('tab-temporary').classList.toggle('hidden', tab !== 'temporary');
   if (tab === 'temporary' && document.getElementById('columns-tbody-temp').innerHTML === '') {
     document.getElementById('columns-tbody-temp').innerHTML = document.getElementById('columns-tbody').innerHTML;
   }
   document.getElementById('secondary-filters').classList.toggle('hidden', tab === 'overview' || tab === 'analysis' || tab === 'conclusion' || tab === 'questions' || tab === 'datasources' || tab === 'bizquestion' || tab === 'challenges');
-  document.getElementById('kpi-cards').classList.toggle('hidden', tab === 'conclusion' || tab === 'questions' || tab === 'datasources' || tab === 'bizquestion' || tab === 'challenges' || tab === 'temporary');
-  document.getElementById('city-filter').classList.toggle('hidden', tab === 'overview' || tab === 'analysis' || tab === 'bizquestion' || tab === 'questions' || tab === 'conclusion' || tab === 'challenges' || tab === 'datasources' || tab === 'temporary');
+  document.getElementById('kpi-cards').classList.toggle('hidden', tab === 'conclusion' || tab === 'questions' || tab === 'datasources' || tab === 'bizquestion' || tab === 'challenges' || tab === 'temporary' || tab === 'analysisfiles');
+  document.getElementById('city-filter').classList.toggle('hidden', tab === 'overview' || tab === 'analysis' || tab === 'bizquestion' || tab === 'questions' || tab === 'conclusion' || tab === 'challenges' || tab === 'datasources' || tab === 'temporary' || tab === 'analysisfiles');
   if (tab === 'overview') {
     roomTypeFilter = 'All'; bedroomFilter = 'All'; bathroomFilter = 'All'; neighborhoodFilter = 'All';
   }

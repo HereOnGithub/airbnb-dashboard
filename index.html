@@ -27,13 +27,6 @@
           <button onclick="setTab('overview')" data-tab="overview" class="tab-btn pb-2 text-sm font-semibold transition-all border-b-2 border-rose-500 text-gray-900 -mb-[13px]">Characteristics Analysis</button>
           <button onclick="setTab('analysis')" data-tab="analysis" class="tab-btn pb-2 text-sm font-semibold transition-all border-b-2 border-transparent text-gray-400 hover:text-gray-600 -mb-[13px]">Text Analysis</button>
           <div class="relative -mb-[13px]">
-            <button onclick="toggleDropdown('explore-dropdown')" id="explore-trigger" class="tab-btn-dropdown pb-2 text-sm font-semibold transition-all border-b-2 border-transparent text-gray-400 hover:text-gray-600 flex items-center gap-1">Explore Data <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></button>
-            <div id="explore-dropdown" class="hidden absolute top-full left-0 mt-2 bg-white rounded-lg shadow-lg border border-gray-200 py-1 z-50 min-w-[200px]">
-              <button onclick="setTab('amenities'); closeDropdowns()" class="tab-btn block w-full text-left px-4 py-2 text-sm font-semibold text-gray-600 hover:bg-gray-50" data-tab="amenities">Explore Amenities Data</button>
-              <button onclick="setTab('playtext'); closeDropdowns()" class="tab-btn block w-full text-left px-4 py-2 text-sm font-semibold text-gray-600 hover:bg-gray-50" data-tab="playtext">Explore Text Data</button>
-            </div>
-          </div>
-          <div class="relative -mb-[13px]">
             <button onclick="toggleDropdown('more-dropdown')" id="more-trigger" class="tab-btn-dropdown pb-2 text-sm font-semibold transition-all border-b-2 border-transparent text-gray-400 hover:text-gray-600 flex items-center gap-1">More <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></button>
             <div id="more-dropdown" class="hidden absolute top-full right-0 mt-2 bg-white rounded-lg shadow-lg border border-gray-200 py-1 z-50 min-w-[200px]">
               <button onclick="setTab('bizquestion'); closeDropdowns()" class="tab-btn block w-full text-left px-4 py-2 text-sm font-semibold text-gray-600 hover:bg-gray-50" data-tab="bizquestion">Business Question</button>
@@ -42,6 +35,10 @@
               <button onclick="setTab('challenges'); closeDropdowns()" class="tab-btn block w-full text-left px-4 py-2 text-sm font-semibold text-gray-600 hover:bg-gray-50" data-tab="challenges">Challenges</button>
               <button class="block w-full text-left px-4 py-2 text-sm font-semibold text-gray-300 cursor-default" data-tab="datasources">Data Sources</button>
             </div>
+          </div>
+          <div class="relative -mb-[13px]">
+            <button id="explore-trigger" class="tab-btn-dropdown pb-2 text-sm font-semibold transition-all border-b-2 border-transparent text-gray-300 cursor-default flex items-center gap-1">Placeholder <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></button>
+            <div id="explore-dropdown" class="hidden"></div>
           </div>
         </div>
         <div id="city-filter" class="bg-white p-1.5 rounded-xl shadow-sm border border-gray-200 flex items-center">
@@ -154,8 +151,6 @@
           </div>
           <div id="overview-view-neighborhood" class="hidden">
             <p class="text-[11px] text-gray-400 mb-4">Avg rating >= 4.8, ranked by avg revenue</p>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6" id="trend-tables-berlin"></div>
-            <hr class="border-gray-100 mb-6">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="trend-tables-munich"></div>
           </div>
         </div>
@@ -869,29 +864,20 @@
             <h3 class="font-bold text-gray-800 text-base tracking-tight">Language Breakdown</h3>
           </div>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-          <div class="bg-gray-50 p-4 rounded-xl flex items-center space-x-3">
-            <div class="p-2 rounded-lg bg-rose-500"><div class="w-5 h-5"></div></div>
-            <div>
-              <p class="text-[10px] font-bold text-gray-400 uppercase">Titles with German</p>
-              <p class="text-xl font-bold text-gray-900">22.5%</p>
-              <p class="text-[10px] text-gray-400">5,083 of 22,548</p>
-            </div>
+          <div class="bg-gray-50 p-4 rounded-xl">
+            <p class="text-[10px] font-bold text-gray-400 uppercase">Titles with German</p>
+            <p class="text-xl font-bold text-gray-900">22.5%</p>
+            <p class="text-[10px] text-gray-400">5,083 of 22,548</p>
           </div>
-          <div class="bg-gray-50 p-4 rounded-xl flex items-center space-x-3">
-            <div class="p-2 rounded-lg bg-amber-500"><div class="w-5 h-5"></div></div>
-            <div>
-              <p class="text-[10px] font-bold text-gray-400 uppercase">Descriptions with German</p>
-              <p class="text-xl font-bold text-gray-900">19.3%</p>
-              <p class="text-[10px] text-gray-400">4,177 of 21,659</p>
-            </div>
+          <div class="bg-gray-50 p-4 rounded-xl">
+            <p class="text-[10px] font-bold text-gray-400 uppercase">Descriptions with German</p>
+            <p class="text-xl font-bold text-gray-900">19.3%</p>
+            <p class="text-[10px] text-gray-400">4,177 of 21,659</p>
           </div>
-          <div class="bg-gray-50 p-4 rounded-xl flex items-center space-x-3">
-            <div class="p-2 rounded-lg bg-indigo-500"><div class="w-5 h-5"></div></div>
-            <div>
-              <p class="text-[10px] font-bold text-gray-400 uppercase">Neighborhood Overviews with German</p>
-              <p class="text-xl font-bold text-gray-900">33.5%</p>
-              <p class="text-[10px] text-gray-400">2,977 of 8,886</p>
-            </div>
+          <div class="bg-gray-50 p-4 rounded-xl">
+            <p class="text-[10px] font-bold text-gray-400 uppercase">Neighborhood Overviews with German</p>
+            <p class="text-xl font-bold text-gray-900">33.5%</p>
+            <p class="text-[10px] text-gray-400">2,977 of 8,886</p>
           </div>
         </div>
           <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-4">
@@ -981,15 +967,21 @@ function getActiveData() {
   return data;
 }
 
-function makeCard(title, value, colorClass, subtitle) {
+function makeCard(title, value, icon, subtitle) {
   return '<div class="bg-white p-4 rounded-xl shadow-sm border border-gray-100 flex items-center space-x-3 h-full">' +
-    '<div class="p-2 rounded-lg ' + colorClass + '"><div class="w-5 h-5"></div></div>' +
+    '<div class="p-2 rounded-lg bg-indigo-50 text-indigo-500">' + icon + '</div>' +
     '<div>' +
       '<p class="text-[10px] font-bold text-gray-400 uppercase tracking-wider">' + title + '</p>' +
       '<p class="text-xl font-bold text-gray-900 leading-tight">' + value + '</p>' +
       (subtitle ? '<p class="text-[10px] text-gray-400">' + subtitle + '</p>' : '') +
     '</div></div>';
 }
+var ICONS = {
+  home: '<svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>',
+  euro: '<svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>',
+  star: '<svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>',
+  chat: '<svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>'
+};
 
 function renderKPIs() {
   const data = getActiveData();
@@ -1001,10 +993,10 @@ function renderKPIs() {
   const berlinCount = data.filter(d => d.cityName === 'Berlin').length;
   const munichCount = data.filter(d => d.cityName === 'Munich').length;
   document.getElementById('kpi-cards').innerHTML =
-    makeCard('Listings', data.length.toLocaleString(), 'bg-blue-500', berlinCount.toLocaleString() + ' Berlin · ' + munichCount.toLocaleString() + ' Munich') +
-    makeCard('Avg Price', '&euro;' + avgPrice.toFixed(0), 'bg-emerald-500', 'Per night') +
-    makeCard('Highly Rated Listings', highPct + '%', 'bg-rose-500', 'Ratings >= 4.8') +
-    makeCard('Avg # of Reviews', avgReviews, 'bg-amber-500', 'Per listing');
+    makeCard('Listings', data.length.toLocaleString(), ICONS.home, berlinCount.toLocaleString() + ' Berlin · ' + munichCount.toLocaleString() + ' Munich') +
+    makeCard('Avg Price', '&euro;' + avgPrice.toFixed(0), ICONS.euro, 'Per night') +
+    makeCard('Highly Rated Listings', highPct + '%', ICONS.star, 'Ratings >= 4.8') +
+    makeCard('Avg # of Reviews', avgReviews, ICONS.chat, 'Per listing');
 }
 
 
@@ -1150,9 +1142,6 @@ function renderRecommendationCharts() {
     }).join('');
     return '<div><div class="flex items-center gap-2 mb-3"><div class="w-3 h-3 rounded-full ' + color + '"></div><p class="text-xs font-bold uppercase tracking-widest text-gray-600">' + hood + '</p></div><table class="w-full"><thead><tr><th class="text-left text-[10px] font-bold text-gray-400 uppercase pb-2 pr-2">#</th><th class="text-left text-[10px] font-bold text-gray-400 uppercase pb-2">Amenity</th><th class="text-center text-[10px] font-bold text-gray-400 uppercase pb-2 pl-2">Rating</th><th class="text-right text-[10px] font-bold text-gray-400 uppercase pb-2 pl-2">Revenue</th></tr></thead><tbody>' + rows + '</tbody></table></div>';
   }
-  document.getElementById('trend-tables-berlin').innerHTML =
-    makeHoodTable('Tempelhofer Vorstadt', getHoodTopAmenities('Tempelhofer Vorstadt', 5), 'bg-[#00A699]') +
-    makeHoodTable('südliche Luisenstadt', getHoodTopAmenities('südliche Luisenstadt', 5), 'bg-[#FF5A5F]');
   document.getElementById('trend-tables-munich').innerHTML =
     makeHoodTable('Ludwigsvorstadt-Isarvorstadt', getHoodTopAmenities('Ludwigsvorstadt-Isarvorstadt', 5), 'bg-[#00A699]') +
     makeHoodTable('Schwabing-West', getHoodTopAmenities('Schwabing-West', 5), 'bg-[#FF5A5F]');
@@ -1267,7 +1256,7 @@ function renderComposedChart(canvasId, metrics) {
   });
 }
 
-var WORD_DATA = {"name":{"eng":[["in",7778],["apartment",4605],["room",3303],["berlin",2531],["wohnung",1814],["cozy",1633],["zimmer",1582],["the",1481],["with",1438],["flat",1421],["mit",1378],["central",1244],["studio",1236],["im",1157],["to",1016],["of",1001],["munich",961],["city",930],["and",888],["near",861],["oktoberfest",837],["kreuzberg",773],["mitte",748],["balcony",712],["bright",704],["center",700],["cosy",696],["spacious",675],["beautiful",648],["heart",637],["am",624],["quiet",589],["loft",565],["berg",543],["for",542],["modern",536],["prenzlauer",526],["friedrichshain",523],["private",509],["und",424],["balkon",417],["sunny",394],["location",391],["min",389],["bedroom",375],["stylish",370],["home",368],["close",346],["nice",328],["at",325]],"ger":[["neukölln",564],["münchen",541],["schöne",406],["für",327],["nähe",320],["gemütliche",318],["gemütliches",297],["schönes",254],["schöneberg",157],["großes",114],["grünen",111],["münchens",110],["große",85],["kurfürstendamm",79],["kreuzkölln",72],["wunderschöne",72],["über",66],["küche",64],["münchner",62],["gemütlich",45],["wunderschönes",40],["gästezimmer",39],["grüne",38],["großer",35],["süden",35],["dächern",34],["frühstück",31],["gäste",29],["schönen",29],["möbliertes",28],["großem",28],["schöner",27],["großzügige",26],["gärtnerplatz",26],["wohlfühlen",24],["görlitzer",23],["köpenick",23],["großzügiges",22],["wohlfühloase",21],["möblierte",20],["fuß",19],["grün",18],["schönhauser",17],["isarnähe",17],["berlinneukölln",16],["schönem",16],["geräumiges",16],["geräumige",16],["luxuriöses",15],["süße",14]]},"description":{"eng":[["the",69684],["and",49108],["in",34726],["to",26984],["is",25163],["with",24136],["br",20754],["of",20317],["apartment",18138],["for",15188],["you",13594],["room",10825],["are",8468],["located",7840],["this",7654],["berlin",7552],["from",7465],["kitchen",7182],["on",6918],["minutes",6694],["bed",5890],["quiet",5610],["can",5583],["or",5276],["our",5171],["as",5131],["at",4979],["bathroom",4954],["living",4943],["city",4807],["it",4780],["your",4753],["very",4596],["equipped",4537],["by",4292],["fully",4154],["be",4098],["has",4020],["restaurants",3986],["cozy",3918],["walk",3853],["station",3828],["beautiful",3718],["area",3660],["all",3630],["an",3558],["there",3489],["large",3407],["just",3371],["balcony",3339]],"ger":[["neukölln",802],["kurfürstendamm",276],["straße",243],["schöneberg",220],["münchen",197],["görlitzer",130],["schönhauser",128],["friedrichstraße",92],["münchner",86],["gärtnerplatz",85],["kreuzkölln",70],["köpenick",63],["müggelsee",57],["bergmannstraße",46],["schwanthalerhöhe",44],["schönleinstraße",42],["königsplatz",41],["hackerbrücke",40],["turmstraße",39],["neuköllnbr",37],["spätis",35],["für",34],["gründerzeit",32],["späti",32],["weißensee",31],["weserstraße",29],["hofbräuhaus",29],["universität",28],["maximilianstraße",27],["invalidenstraße",26],["schönefeld",25],["körnerpark",24],["gräfekiez",23],["oberbaumbrücke",22],["torstraße",22],["höfe",21],["oberschöneweide",21],["leopoldstraße",21],["neuköllner",20],["südstern",20],["hermannstraße",20],["schillerstraße",20],["schönebergbr",19],["schloßstraße",19],["waldbühne",19],["bürgerpark",19],["berlinneukölln",19],["grünau",18],["böhmischrixdorf",17],["samariterstraße",17]]},"neighborhood_overview":{"eng":[["the",38313],["and",23388],["is",14169],["in",13890],["of",13104],["to",10125],["you",6974],["br",6277],["are",5786],["with",5631],["berlin",4822],["restaurants",4520],["for",4434],["as",3579],["minutes",3447],["can",3266],["from",3198],["there",3009],["located",3003],["on",2948],["by",2819],["bars",2738],["walk",2726],["or",2692],["also",2633],["area",2558],["apartment",2506],["neighborhood",2390],["its",2383],["very",2328],["away",2263],["walking",2249],["shops",2179],["just",2165],["cafes",2147],["city",2134],["at",2117],["within",2057],["it",1969],["many",1844],["quiet",1835],["all",1812],["distance",1798],["around",1731],["shopping",1697],["park",1680],["one",1626],["this",1514],["station",1508],["street",1498]],"ger":[["neukölln",532],["straße",357],["kurfürstendamm",282],["schöneberg",181],["görlitzer",141],["schönhauser",110],["weißensee",109],["friedrichstraße",79],["kreuzkölln",69],["torstraße",57],["bergmannstraße",49],["köpenick",47],["gerichtstraße",47],["späti",46],["oberbaumbrücke",46],["müggelsee",46],["weserstraße",45],["spätis",44],["neuköllns",44],["invalidenstraße",43],["höfe",41],["gärtnerplatz",41],["oranienstraße",36],["münchner",36],["schönefeld",34],["schaubühne",33],["oberschöneweide",32],["über",32],["kantstraße",30],["königsplatz",30],["hofbräuhaus",29],["schwanthalerhöhe",29],["münchen",29],["rawgelände",28],["gründerzeit",27],["schloßstraße",27],["hermannstraße",26],["müllerstraße",24],["körnerpark",23],["simondachstraße",23],["neuköllner",20],["berlinweißensee",20],["plötzensee",19],["visionäre",19],["bötzowviertel",18],["milchhäuschen",17],["schillerstraße",17],["schäfersee",16],["döner",16],["südpark",16]]}};
+var WORD_DATA = {"name":{"eng":[["in",7778],["apartment",4605],["room",3303],["berlin",2531],["cozy",1633],["the",1481],["with",1438],["flat",1421],["central",1244],["studio",1236],["to",1016],["of",1001],["munich",961],["city",930],["and",888],["near",861],["oktoberfest",837],["kreuzberg",773],["mitte",748],["balcony",712],["bright",704],["center",700],["cosy",696],["spacious",675],["beautiful",648],["heart",637],["am",624],["quiet",589],["loft",565],["berg",543],["for",542],["modern",536],["prenzlauer",526],["friedrichshain",523],["private",509],["sunny",394],["location",391],["min",389],["bedroom",375],["stylish",370],["home",368],["close",346],["nice",328],["at",325],["apt",324],["penthouse",314],["lovely",310],["blueground",310],["altbauwohnung",309],["big",298]],"ger":[["wohnung",1814],["zimmer",1582],["mit",1378],["im",1157],["neukölln",564],["münchen",541],["und",424],["balkon",417],["schöne",406],["für",327],["nähe",320],["gemütliche",318],["der",317],["lage",314],["gemütliches",297],["zentral",295],["schönes",254],["garten",216],["von",189],["platz",187],["ruhig",160],["schöneberg",157],["zum",152],["direkt",128],["haus",115],["großes",114],["grünen",111],["münchens",110],["zu",105],["zur",91],["große",85],["kurfürstendamm",79],["sehr",78],["kreuzkölln",72],["wunderschöne",72],["über",66],["küche",64],["münchner",62],["vom",59],["blick",57],["auf",56],["bis",51],["den",49],["neu",47],["schlafzimmer",46],["gemütlich",45],["nur",43],["ein",41],["wunderschönes",40],["gästezimmer",39]]},"description":{"eng":[["the",69684],["and",49108],["in",34726],["to",26984],["is",25163],["with",24136],["br",20754],["of",20317],["apartment",18138],["for",15188],["you",13594],["room",10825],["are",8468],["located",7840],["this",7654],["berlin",7552],["from",7465],["kitchen",7182],["on",6918],["minutes",6694],["bed",5890],["quiet",5610],["can",5583],["or",5276],["our",5171],["as",5131],["at",4979],["bathroom",4954],["living",4943],["city",4807],["it",4780],["your",4753],["very",4596],["equipped",4537],["by",4292],["fully",4154],["be",4098],["has",4020],["restaurants",3986],["cozy",3918],["walk",3853],["station",3828],["beautiful",3718],["area",3660],["all",3630],["an",3558],["there",3489],["large",3407],["just",3371],["balcony",3339]],"ger":[["neukölln",802],["platz",787],["im",444],["kurfürstendamm",276],["straße",243],["schöneberg",220],["münchen",197],["ein",169],["und",131],["görlitzer",130],["schönhauser",128],["garten",113],["friedrichstraße",92],["münchner",86],["gärtnerplatz",85],["der",81],["mit",70],["kreuzkölln",70],["ist",70],["köpenick",63],["müggelsee",57],["die",49],["bergmannstraße",46],["schwanthalerhöhe",44],["schönleinstraße",42],["königsplatz",41],["hackerbrücke",40],["turmstraße",39],["neuköllnbr",37],["spätis",35],["wohnung",35],["den",35],["für",34],["gründerzeit",32],["späti",32],["weißensee",31],["weserstraße",29],["hofbräuhaus",29],["das",28],["zimmer",28],["universität",28],["maximilianstraße",27],["zu",26],["invalidenstraße",26],["schönefeld",25],["zum",25],["von",24],["her",24],["körnerpark",24],["gräfekiez",23]]},"neighborhood_overview":{"eng":[["the",38313],["and",23388],["is",14169],["in",13890],["of",13104],["to",10125],["you",6974],["br",6277],["are",5786],["with",5631],["berlin",4822],["restaurants",4520],["for",4434],["as",3579],["minutes",3447],["can",3266],["from",3198],["there",3009],["located",3003],["on",2948],["by",2819],["bars",2738],["walk",2726],["or",2692],["also",2633],["area",2558],["apartment",2506],["neighborhood",2390],["its",2383],["very",2328],["away",2263],["walking",2249],["shops",2179],["just",2165],["cafes",2147],["city",2134],["at",2117],["within",2057],["it",1969],["many",1844],["quiet",1835],["all",1812],["distance",1798],["around",1731],["shopping",1697],["park",1680],["one",1626],["this",1514],["station",1508],["street",1498]],"ger":[["platz",821],["neukölln",532],["straße",357],["kurfürstendamm",282],["schöneberg",181],["görlitzer",141],["schönhauser",110],["weißensee",109],["garten",97],["der",82],["friedrichstraße",79],["kreuzkölln",69],["den",64],["und",57],["torstraße",57],["bergmannstraße",49],["im",47],["köpenick",47],["gerichtstraße",47],["späti",46],["oberbaumbrücke",46],["müggelsee",46],["weserstraße",45],["spätis",44],["neuköllns",44],["invalidenstraße",43],["höfe",41],["ist",41],["gärtnerplatz",41],["oranienstraße",36],["münchner",36],["schönefeld",34],["schaubühne",33],["oberschöneweide",32],["über",32],["des",30],["kantstraße",30],["königsplatz",30],["hofbräuhaus",29],["schwanthalerhöhe",29],["münchen",29],["rawgelände",28],["gründerzeit",27],["schloßstraße",27],["die",26],["hermannstraße",26],["müllerstraße",24],["körnerpark",23],["simondachstraße",23],["neuköllner",20]]}};
 var activeWordField = 'name';
 
 function setWordField(field) {

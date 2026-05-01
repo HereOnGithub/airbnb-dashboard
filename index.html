@@ -631,6 +631,35 @@
             </table>
           </div>
         </div>
+
+        <div class="bg-white p-4 md:p-8 rounded-2xl border border-gray-100 shadow-sm">
+          <div class="flex items-center gap-3 mb-4 md:mb-6">
+            <div class="p-1.5 bg-emerald-500 rounded-lg text-white shadow-md">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+            </div>
+            <h3 class="font-bold text-gray-800 text-base tracking-tight">Analytical Techniques Used</h3>
+          </div>
+          <div class="overflow-x-auto">
+            <table class="w-full text-left">
+              <thead class="bg-gray-50">
+                <tr>
+                  <th class="px-4 py-3 text-[10px] font-bold text-gray-400 uppercase">#</th>
+                  <th class="px-4 py-3 text-[10px] font-bold text-gray-400 uppercase">Analysis</th>
+                  <th class="px-4 py-3 text-[10px] font-bold text-gray-400 uppercase">Software</th>
+                  <th class="px-4 py-3 text-[10px] font-bold text-gray-400 uppercase">Method</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-gray-100">
+                <tr><td class="px-4 py-3 text-sm text-gray-400">1</td><td class="px-4 py-3 text-sm font-semibold text-gray-800">Success Factors</td><td class="px-4 py-3 text-sm text-gray-600">Excel</td><td class="px-4 py-3 text-sm text-gray-600">Binned review counts into ranges and computed average revenue per bin using a pivot table</td></tr>
+                <tr><td class="px-4 py-3 text-sm text-gray-400">2</td><td class="px-4 py-3 text-sm font-semibold text-gray-800">Regional Observation</td><td class="px-4 py-3 text-sm text-gray-600">Python</td><td class="px-4 py-3 text-sm text-gray-600">Parsed amenities stored in a single cell into individual items, then grouped by city to rank by revenue</td></tr>
+                <tr><td class="px-4 py-3 text-sm text-gray-400">3</td><td class="px-4 py-3 text-sm font-semibold text-gray-800">Interesting Trend</td><td class="px-4 py-3 text-sm text-gray-600">Python</td><td class="px-4 py-3 text-sm text-gray-600">Same amenity parsing as above, filtered per neighborhood to compare top amenities across areas</td></tr>
+                <tr><td class="px-4 py-3 text-sm text-gray-400">4</td><td class="px-4 py-3 text-sm font-semibold text-gray-800">Wording Impact</td><td class="px-4 py-3 text-sm text-gray-600">Python</td><td class="px-4 py-3 text-sm text-gray-600">Counted words in descriptions, binned into ranges, and computed average revenue per bin</td></tr>
+                <tr><td class="px-4 py-3 text-sm text-gray-400">5</td><td class="px-4 py-3 text-sm font-semibold text-gray-800">Satisfaction Trend</td><td class="px-4 py-3 text-sm text-gray-600">Python</td><td class="px-4 py-3 text-sm text-gray-600">Correlated neighborhood overview word count with average rating across bins</td></tr>
+                <tr><td class="px-4 py-3 text-sm text-gray-400">6</td><td class="px-4 py-3 text-sm font-semibold text-gray-800">Optimal Length</td><td class="px-4 py-3 text-sm text-gray-600">Excel</td><td class="px-4 py-3 text-sm text-gray-600">Binned title word counts into ranges and identified the bin with the highest average rating</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
       </div>
 
       <!-- Data Sources Tab -->

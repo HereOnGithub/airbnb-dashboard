@@ -432,41 +432,84 @@
 
       <!-- Challenges Tab -->
       <div id="tab-challenges" class="hidden flex flex-col gap-4 md:gap-8 pb-20">
-        <!-- Analytical Challenges -->
+        <!-- Key Challenges -->
         <div class="bg-white p-4 md:p-8 rounded-2xl border border-gray-100 shadow-sm">
           <div class="flex items-center gap-3 mb-4 md:mb-6">
+            <div class="p-1.5 bg-[#FF5A5F] rounded-lg text-white shadow-md">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+            </div>
+            <h3 class="font-bold text-gray-800 text-base tracking-tight">Key Challenges</h3>
+          </div>
+          <div class="space-y-4">
+            <div class="bg-gray-50 rounded-xl p-4">
+              <p class="text-xs font-black text-[#FF5A5F] uppercase mb-2">Defining "Success"</p>
+              <p class="text-[10px] font-black text-gray-400 uppercase mb-1">Challenge</p>
+              <p class="text-sm text-gray-700 mb-3">Ranking amenities by pure rating produced unintuitive results (BBQ grill at #1 with only 5 listings). Ranking by pure revenue ignored quality entirely.</p>
+              <p class="text-[10px] font-black text-gray-400 uppercase mb-1">Solution</p>
+              <p class="text-sm text-gray-700">Filter for amenities with avg rating >= 4.8 first, then rank by revenue. This balances quality with business impact and filters out low-sample outliers.</p>
+            </div>
+            <div class="bg-gray-50 rounded-xl p-4">
+              <p class="text-xs font-black text-[#FF5A5F] uppercase mb-2">Excel Limitations for Amenity Analysis</p>
+              <p class="text-[10px] font-black text-gray-400 uppercase mb-1">Challenge</p>
+              <p class="text-sm text-gray-700 mb-3">Each listing's amenities are stored as a single text field containing a list (["Wifi","Kitchen","Dryer"]). Opening this in Excel shows the entire list crammed into one cell, making individual amenity analysis impossible with standard pivot tables.</p>
+              <p class="text-[10px] font-black text-gray-400 uppercase mb-1">Solution</p>
+              <p class="text-sm text-gray-700">Used Python to read each list, break it apart into separate items, and handle formatting inconsistencies like extra quotes. This produced 3,092 unique amenities across all listings. Simpler analyses like review count binning worked well in Excel, but amenity analysis required Python (pandas).</p>
+            </div>
+            <div class="bg-gray-50 rounded-xl p-4">
+              <p class="text-xs font-black text-[#FF5A5F] uppercase mb-2">Unrated Listings Processed as Zero</p>
+              <p class="text-[10px] font-black text-gray-400 uppercase mb-1">Challenge</p>
+              <p class="text-sm text-gray-700 mb-3">3,465 listings had no rating data. These were initially processed as 0, which dragged down all average rating calculations across the dashboard.</p>
+              <p class="text-[10px] font-black text-gray-400 uppercase mb-1">Solution</p>
+              <p class="text-sm text-gray-700">Stored missing ratings as -1 and excluded them from all rating computations. This required regenerating the entire embedded dataset.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Placeholder -->
+        <details class="bg-white rounded-2xl border border-gray-100 shadow-sm" onclick="return false;">
+          <summary class="p-4 md:p-8 cursor-default flex items-center gap-3 opacity-50">
+            <div class="p-1.5 bg-gray-400 rounded-lg text-white shadow-md">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            </div>
+            <h3 class="font-bold text-gray-800 text-base tracking-tight">Placeholder</h3>
+          </summary>
+          <div class="px-4 md:px-8 pb-4 md:pb-8 space-y-4">
+
+        <!-- Analytical Challenges -->
+        <details class="bg-white rounded-2xl border border-gray-100 shadow-sm" onclick="return false;">
+          <summary class="p-4 md:p-8 cursor-default flex items-center gap-3 opacity-50">
             <div class="p-1.5 bg-indigo-500 rounded-lg text-white shadow-md">
               <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
             </div>
             <h3 class="font-bold text-gray-800 text-base tracking-tight">Analytical Decisions</h3>
-          </div>
-          <div class="space-y-4">
+          </summary>
+          <div class="px-4 md:px-8 pb-4 md:pb-8 space-y-4">
             <div class="bg-gray-50 rounded-xl p-4">
               <p class="text-xs font-black text-indigo-500 uppercase mb-2">Defining "Success"</p>
               <p class="text-[10px] font-black text-gray-400 uppercase mb-1">Challenge</p>
-              <p class="text-sm text-gray-700 mb-3">Ranking amenities by pure rating produced unintuitive results (e.g., BBQ grill at #1 with only 5 listings). Ranking by pure revenue ignored quality entirely.</p>
+              <p class="text-sm text-gray-700 mb-3">Ranking amenities by pure rating produced unintuitive results (BBQ grill at #1 with only 5 listings). Ranking by pure revenue ignored quality entirely.</p>
               <p class="text-[10px] font-black text-gray-400 uppercase mb-1">Solution</p>
               <p class="text-sm text-gray-700">Filter for amenities with avg rating >= 4.8 first, then rank by revenue. This balances quality with business impact and filters out low-sample outliers.</p>
             </div>
             <div class="bg-gray-50 rounded-xl p-4">
               <p class="text-xs font-black text-indigo-500 uppercase mb-2">Excel Limitations for Amenity Analysis</p>
               <p class="text-[10px] font-black text-gray-400 uppercase mb-1">Challenge</p>
-              <p class="text-sm text-gray-700 mb-3">Each listing's amenities are stored as a single text field containing a list (e.g., ["Wifi","Kitchen","Dryer"]). Opening this in Excel shows the entire list crammed into one cell, making individual amenity analysis impossible with standard pivot tables.</p>
+              <p class="text-sm text-gray-700 mb-3">Each listing's amenities are stored as a single text field containing a list (["Wifi","Kitchen","Dryer"]). Opening this in Excel shows the entire list crammed into one cell, making individual amenity analysis impossible with standard pivot tables.</p>
               <p class="text-[10px] font-black text-gray-400 uppercase mb-1">Solution</p>
               <p class="text-sm text-gray-700">Used Python to read each list, break it apart into separate items, and handle formatting inconsistencies like extra quotes. This produced 3,092 unique amenities across all listings. Simpler analyses like review count binning worked well in Excel, but amenity analysis required Python (pandas).</p>
             </div>
           </div>
-        </div>
+        </details>
 
         <!-- Data Cleaning -->
-        <div class="bg-white p-4 md:p-8 rounded-2xl border border-gray-100 shadow-sm">
-          <div class="flex items-center gap-3 mb-4 md:mb-6">
+        <details class="bg-white rounded-2xl border border-gray-100 shadow-sm" onclick="return false;">
+          <summary class="p-4 md:p-8 cursor-default flex items-center gap-3 opacity-50">
             <div class="p-1.5 bg-amber-500 rounded-lg text-white shadow-md">
               <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
             </div>
             <h3 class="font-bold text-gray-800 text-base tracking-tight">Data Cleaning & Transformation</h3>
-          </div>
-          <div class="space-y-4">
+          </summary>
+          <div class="px-4 md:px-8 pb-4 md:pb-8 space-y-4">
             <div class="bg-gray-50 rounded-xl p-4">
               <p class="text-xs font-black text-amber-600 uppercase mb-2">Unrated Listings Stored as Zero</p>
               <p class="text-[10px] font-black text-gray-400 uppercase mb-1">Challenge</p>
@@ -489,7 +532,7 @@
               <p class="text-sm text-gray-700">Word count analysis captures all text equally regardless of language, so no special handling was needed for the current dashboard. Any future keyword or sentiment analysis would need multilingual support.</p>
             </div>
           </div>
-        </div>
+        </details>
 
         <!-- Technical Challenges (collapsible) -->
         <details class="bg-white rounded-2xl border border-gray-100 shadow-sm" onclick="return false;">
@@ -521,6 +564,8 @@
               <p class="text-[10px] font-black text-gray-400 uppercase mb-1">Solution</p>
               <p class="text-sm text-gray-700">Added a .nojekyll file to bypass Jekyll processing entirely. Also disconnected a conflicting Vercel integration.</p>
             </div>
+          </div>
+        </details>
           </div>
         </details>
       </div>
@@ -632,7 +677,7 @@
               <p class="text-sm text-gray-600 mb-2"><span class="font-bold">Software:</span> Python (pandas)</p>
               <div class="bg-white rounded-lg p-3 border border-gray-100 mb-2">
                 <p class="text-[10px] font-black text-gray-400 uppercase mb-1">Setup</p>
-                <p class="text-sm text-gray-700">Each listing stores amenities as a list (e.g., "Wifi, Kitchen, Dryer"). Parse each listing's amenity list and split into individual items so each amenity can be analyzed separately.</p>
+                <p class="text-sm text-gray-700">Each listing stores amenities as a list ("Wifi, Kitchen, Dryer"). Parse each listing's amenity list and split into individual items so each amenity can be analyzed separately.</p>
               </div>
               <div class="bg-white rounded-lg p-3 border border-gray-100">
                 <p class="text-[10px] font-black text-gray-400 uppercase mb-1">Steps</p>

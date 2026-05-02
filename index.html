@@ -101,12 +101,13 @@
       <div id="tab-bizquestion" class="hidden flex flex-col gap-4 md:gap-8 pb-20">
         <div class="bg-white p-4 md:p-8 rounded-2xl border border-gray-100 shadow-sm">
           <div class="flex items-center gap-3 mb-4 md:mb-6">
-            <div class="p-1.5 bg-indigo-500 rounded-lg text-white shadow-md">
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+            <div class="p-1.5 bg-red-600 rounded-lg text-white shadow-md">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="16" rx="1.5" stroke-width="2"/><line x1="6" y1="7" x2="18" y2="7" stroke-width="2" opacity="0.7"/><rect x="6" y="10" width="12" height="6" rx="0.5" stroke-width="1" opacity="0.7"/></svg>
             </div>
             <h3 class="font-bold text-gray-800 text-base tracking-tight">Business Question</h3>
           </div>
           <p class="text-sm font-bold text-gray-900 mb-3">What makes an Airbnb listing successful in Berlin and Munich, and what can hosts do to improve their performance?</p>
+          <p class="text-sm text-gray-500 mb-3">To answer this, we explored the following sub-questions:</p>
           <ul class="list-disc pl-4 space-y-1 text-sm text-gray-600">
             <li>What drives revenue? Is it ratings, reviews, amenities, or something else?</li>
             <li>Does listing quality matter? Do better descriptions and titles translate to higher earnings?</li>
@@ -131,7 +132,7 @@
                 <p class="text-[11px] font-black uppercase tracking-widest">Success Factors</p>
               </div>
               <p class="text-[15px] font-bold text-gray-900 leading-snug">What are the characteristics that determine whether a given listing is successful?</p>
-              <div class="text-sm text-gray-500 bg-gray-50 rounded-xl p-4"><p class="mb-2 italic text-gray-600">Success is driven by review volume</p><ul class="list-disc pl-4 space-y-1"><li>Listings with more reviews earn higher annual revenue</li><li>Ratings stay consistent (~4.77) regardless of review count, but revenue increases</li></ul><p class="mt-2 text-xs text-gray-400">Metric: estimated annual revenue</p></div>
+              <div class="text-sm text-gray-500 bg-gray-50 rounded-xl p-4"><p class="mb-2 font-bold italic text-gray-900">Success is driven by review volume</p><ul class="list-disc pl-4 space-y-1"><li>Listings with more reviews earn higher annual revenue</li><li>Ratings stay consistent (~4.77) regardless of review count, but revenue increases</li></ul><p class="mt-2 text-xs text-gray-400">Metric: estimated annual revenue</p></div>
             </div>
             <div class="flex flex-col gap-4">
               <div class="flex items-center gap-2 text-rose-400">
@@ -139,7 +140,7 @@
                 <p class="text-[11px] font-black uppercase tracking-widest">Regional Observation</p>
               </div>
               <p class="text-[15px] font-bold text-gray-900 leading-snug">What are the top amenity characteristics for listings in different regions?</p>
-              <div class="text-sm text-gray-500 bg-gray-50 rounded-xl p-4"><p class="mb-2 italic text-gray-600">Top amenity characteristics do vary by region</p><ul class="list-disc pl-4 space-y-1"><li>Berlin top 3: Free washer, Children's dinnerware, Free dryer</li><li>Munich top 3: Free washer, Private entrance, Portable fans</li></ul><p class="mt-2 text-xs text-gray-400">Metric: avg rating >= 4.8, ranked by avg revenue</p></div>
+              <div class="text-sm text-gray-500 bg-gray-50 rounded-xl p-4"><p class="mb-2 font-bold italic text-gray-900">Top amenity characteristics do vary by region</p><ul class="list-disc pl-4 space-y-1"><li>Berlin top 3: Free washer, Children's dinnerware, Free dryer</li><li>Munich top 3: Free washer, Private entrance, Portable fans</li></ul><p class="mt-2 text-xs text-gray-400">Metric: avg rating >= 4.8, ranked by avg revenue</p></div>
             </div>
             <div class="flex flex-col gap-4">
               <div class="flex items-center gap-2 text-rose-400">
@@ -147,7 +148,7 @@
                 <p class="text-[11px] font-black uppercase tracking-widest">Interesting Trend</p>
               </div>
               <p class="text-[15px] font-bold text-gray-900 leading-snug">How do top characteristics vary between specific neighborhoods in Berlin?</p>
-              <div class="text-sm text-gray-500 bg-gray-50 rounded-xl p-4"><p class="mb-2 italic text-gray-600">Top characteristics vary by neighborhood</p><ul class="list-disc pl-4 space-y-1"><li>Tempelhofer Vorstadt #1: "55 inch HDTV"</li><li>Südliche Luisenstadt #1: "Noise decibel monitors"</li></ul><p class="mt-2 text-xs text-gray-400">Metric: avg rating >= 4.8, ranked by avg revenue</p></div>
+              <div class="text-sm text-gray-500 bg-gray-50 rounded-xl p-4"><p class="mb-2 font-bold italic text-gray-900">Top characteristics vary by neighborhood</p><ul class="list-disc pl-4 space-y-1"><li>Tempelhofer Vorstadt #1: "55 inch HDTV"</li><li>Südliche Luisenstadt #1: "Noise decibel monitors"</li></ul><p class="mt-2 text-xs text-gray-400">Metric: avg rating >= 4.8, ranked by avg revenue</p></div>
             </div>
           </div>
         </div>
@@ -182,8 +183,8 @@
         <!-- Characteristics Questions -->
         <div class="bg-white p-4 md:p-8 rounded-2xl border border-gray-100 shadow-sm">
           <div class="flex items-center gap-3 mb-4 md:mb-8">
-            <div class="p-1.5 bg-indigo-500 rounded-lg text-white shadow-md">
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+            <div class="p-1.5 bg-red-600 rounded-lg text-white shadow-md">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="16" rx="1.5" stroke-width="2"/><line x1="6" y1="7" x2="18" y2="7" stroke-width="2" opacity="0.7"/><rect x="6" y="10" width="12" height="6" rx="0.5" stroke-width="1" opacity="0.7"/></svg>
             </div>
             <h3 class="font-bold text-gray-800 text-base tracking-tight">Characteristics Questions</h3>
           </div>
@@ -221,8 +222,8 @@
         <!-- Text Questions -->
         <div class="bg-white p-4 md:p-8 rounded-2xl border border-gray-100 shadow-sm">
           <div class="flex items-center gap-3 mb-4 md:mb-8">
-            <div class="p-1.5 bg-indigo-500 rounded-lg text-white shadow-md">
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+            <div class="p-1.5 bg-red-600 rounded-lg text-white shadow-md">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="16" rx="1.5" stroke-width="2"/><line x1="6" y1="7" x2="18" y2="7" stroke-width="2" opacity="0.7"/><rect x="6" y="10" width="12" height="6" rx="0.5" stroke-width="1" opacity="0.7"/></svg>
             </div>
             <h3 class="font-bold text-gray-800 text-base tracking-tight">Text Questions</h3>
           </div>
@@ -1087,7 +1088,7 @@
           </div>
           <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div class="flex flex-col gap-4">
-              <div class="flex items-center gap-2 text-indigo-500">
+              <div class="flex items-center gap-2 text-rose-400">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
                 <p class="text-[11px] font-black uppercase tracking-widest">Wording Impact</p>
               </div>
@@ -1095,7 +1096,7 @@
               <p class="text-sm text-gray-500 bg-gray-50 rounded-xl p-4 flex-1">Detailed descriptions (100+ words) and descriptive neighborhood overviews lead to higher estimated annual revenue.</p>
             </div>
             <div class="flex flex-col gap-4">
-              <div class="flex items-center gap-2 text-indigo-500">
+              <div class="flex items-center gap-2 text-rose-400">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
                 <p class="text-[11px] font-black uppercase tracking-widest">Satisfaction Trend</p>
               </div>
@@ -1103,7 +1104,7 @@
               <p class="text-sm text-gray-500 bg-gray-50 rounded-xl p-4 flex-1">Yes, brief or minimal neighborhood overviews (0-10 words) correlate with lower average review scores compared to moderate detail.</p>
             </div>
             <div class="flex flex-col gap-4">
-              <div class="flex items-center gap-2 text-indigo-500">
+              <div class="flex items-center gap-2 text-rose-400">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
                 <p class="text-[11px] font-black uppercase tracking-widest">Optimal Length</p>
               </div>
@@ -1161,7 +1162,7 @@
           </div>
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <h4 class="font-bold text-sm text-emerald-600 uppercase tracking-widest mb-2">English Words</h4>
+              <h4 class="font-bold text-sm text-blue-500 uppercase tracking-widest mb-2">English Words</h4>
               <div class="overflow-y-auto max-h-[320px]">
                 <table class="w-full text-left table-fixed">
                   <colgroup><col class="w-[40px]"><col><col class="w-[70px]"></colgroup>
@@ -1543,10 +1544,10 @@ function setWordField(field) {
 function renderWordTables() {
   var data = WORD_DATA[activeWordField];
   document.getElementById('eng-words-tbody').innerHTML = data.eng.map(function(w, i) {
-    return '<tr class="hover:bg-gray-50/50"><td class="px-3 py-2 text-xs text-gray-400 font-bold">' + (i+1) + '</td><td class="px-3 py-2 text-sm font-semibold text-gray-800">' + w[0] + '</td><td class="px-3 py-2 text-sm font-bold text-right text-gray-600">' + w[1].toLocaleString() + '</td></tr>';
+    return '<tr class="hover:bg-gray-50/50"><td class="px-3 py-2 text-xs text-gray-400">' + (i+1) + '</td><td class="px-3 py-2 text-sm text-gray-700">' + w[0] + '</td><td class="px-3 py-2 text-sm text-right text-gray-500">' + w[1].toLocaleString() + '</td></tr>';
   }).join('');
   document.getElementById('ger-words-tbody').innerHTML = data.ger.map(function(w, i) {
-    return '<tr class="hover:bg-gray-50/50"><td class="px-3 py-2 text-xs text-gray-400 font-bold">' + (i+1) + '</td><td class="px-3 py-2 text-sm font-semibold text-gray-800">' + w[0] + '</td><td class="px-3 py-2 text-sm font-bold text-right text-gray-600">' + w[1].toLocaleString() + '</td></tr>';
+    return '<tr class="hover:bg-gray-50/50"><td class="px-3 py-2 text-xs text-gray-400">' + (i+1) + '</td><td class="px-3 py-2 text-sm text-gray-700">' + w[0] + '</td><td class="px-3 py-2 text-sm text-right text-gray-500">' + w[1].toLocaleString() + '</td></tr>';
   }).join('');
 }
 

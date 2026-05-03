@@ -29,6 +29,15 @@
           <span class="px-2 py-0.5 bg-gray-100 text-gray-400 rounded text-[10px] font-medium">2 Cities</span>
           <span class="px-2 py-0.5 bg-gray-100 text-gray-400 rounded text-[10px] font-medium">79 Columns</span>
           <span class="px-2 py-0.5 bg-gray-100 text-gray-400 rounded text-[10px] font-medium">1.8M Data Points</span>
+          <div class="relative">
+            <button onclick="openPlaceholder()" id="explore-trigger" class="px-2 py-0.5 bg-gray-100 text-gray-400 rounded text-[10px] font-medium hover:bg-gray-200 transition-colors cursor-pointer flex items-center gap-1">Placeholder <svg class="w-2.5 h-2.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></button>
+            <div id="explore-dropdown" class="hidden absolute top-full right-0 mt-2 bg-white rounded-lg shadow-lg border border-gray-200 py-1 z-50 min-w-[200px]">
+              <button onclick="setTab('amenities'); closeDropdowns()" class="tab-btn block w-full text-left px-4 py-2 text-sm font-semibold text-gray-600 hover:bg-gray-50" data-tab="amenities">Explore Amenities Data</button>
+              <button onclick="setTab('playtext'); closeDropdowns()" class="tab-btn block w-full text-left px-4 py-2 text-sm font-semibold text-gray-600 hover:bg-gray-50" data-tab="playtext">Explore Text Data</button>
+              <button onclick="setTab('datasources'); closeDropdowns()" class="tab-btn block w-full text-left px-4 py-2 text-sm font-semibold text-gray-600 hover:bg-gray-50" data-tab="datasources">Data Sources</button>
+              <button onclick="setTab('analysisfiles'); closeDropdowns()" class="tab-btn block w-full text-left px-4 py-2 text-sm font-semibold text-gray-600 hover:bg-gray-50" data-tab="analysisfiles">Analysis Difficulty</button>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -48,15 +57,6 @@
               <button onclick="setTab('conclusion'); closeDropdowns()" class="tab-btn block w-full text-left px-4 py-2 text-sm font-semibold text-gray-600 hover:bg-gray-50" data-tab="conclusion">Conclusion & Summary</button>
               <button onclick="setTab('challenges'); closeDropdowns()" class="tab-btn block w-full text-left px-4 py-2 text-sm font-semibold text-gray-600 hover:bg-gray-50" data-tab="challenges">Challenges</button>
               <button onclick="setTab('temporary'); closeDropdowns()" class="tab-btn block w-full text-left px-4 py-2 text-sm font-semibold text-gray-600 hover:bg-gray-50" data-tab="temporary">Information</button>
-            </div>
-          </div>
-          <div class="relative -mb-[13px]">
-            <button onclick="openPlaceholder()" id="explore-trigger" class="tab-btn-dropdown pb-2 text-sm font-semibold transition-colors border-b-2 border-transparent text-gray-400 hover:text-gray-600 flex items-center gap-1 flex-shrink-0">Placeholder <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></button>
-            <div id="explore-dropdown" class="hidden absolute top-full right-0 mt-2 bg-white rounded-lg shadow-lg border border-gray-200 py-1 z-50 min-w-[200px]">
-              <button onclick="setTab('amenities'); closeDropdowns()" class="tab-btn block w-full text-left px-4 py-2 text-sm font-semibold text-gray-600 hover:bg-gray-50" data-tab="amenities">Explore Amenities Data</button>
-              <button onclick="setTab('playtext'); closeDropdowns()" class="tab-btn block w-full text-left px-4 py-2 text-sm font-semibold text-gray-600 hover:bg-gray-50" data-tab="playtext">Explore Text Data</button>
-              <button onclick="setTab('datasources'); closeDropdowns()" class="tab-btn block w-full text-left px-4 py-2 text-sm font-semibold text-gray-600 hover:bg-gray-50" data-tab="datasources">Data Sources</button>
-              <button onclick="setTab('analysisfiles'); closeDropdowns()" class="tab-btn block w-full text-left px-4 py-2 text-sm font-semibold text-gray-600 hover:bg-gray-50" data-tab="analysisfiles">Analysis Difficulty</button>
             </div>
           </div>
         </div>
@@ -635,7 +635,7 @@
             <li><span class="font-bold">Original Scope:</span> The original project scope included an HTML file dashboard that had to be downloaded and opened locally</li>
             <li><span class="font-bold">Shared Capability:</span> Both dashboards were interactive, with filters to explore the data by city, property type, bedrooms, and bathrooms</li>
             <li><span class="font-bold">Data Issue:</span> When we discovered the wrong data file was used (a smaller subset of the full data), the HTML dashboard could not be corrected due to hardcoding</li>
-            <li><span class="font-bold">Team Transition:</span> The original team members were transitioned off the dashboard task due to limited availability and unwillingness to investigate and correct the data source issue. They were unresponsive for days and left the team without visibility into progress until the deadline, at which point the issue could have been caught earlier had they been transparent about the shortcuts they were taking. A team member stepped in to build the online dashboard from scratch to meet the project's needs</li>
+            <li><span class="font-bold">Task Handoff:</span> The original team members were transitioned off the dashboard task due to limited availability and unwillingness to investigate and correct the data source issue. They were unresponsive for days and left the team without visibility into progress until the deadline, at which point the issue could have been caught earlier had they been transparent about the shortcuts they were taking. A team member stepped in to build the online dashboard from scratch to meet the project's needs</li>
           </ul>
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div class="bg-rose-50 rounded-xl p-5">
@@ -1844,8 +1844,8 @@ function setTab(tab) {
   });
   var exploreActive = exploreTabs.indexOf(tab) !== -1;
   var moreActive = moreTabs.indexOf(tab) !== -1;
-  document.getElementById('explore-trigger').className = 'tab-btn-dropdown pb-2 text-sm font-semibold transition-colors border-b-2 flex items-center gap-1 flex-shrink-0 ' +
-    (exploreActive ? 'border-rose-500 text-gray-900' : 'border-transparent text-gray-400 hover:text-gray-600');
+  document.getElementById('explore-trigger').className = 'px-2 py-0.5 rounded text-[10px] font-medium transition-colors cursor-pointer flex items-center gap-1 ' +
+    (exploreActive ? 'bg-rose-100 text-rose-500' : 'bg-gray-100 text-gray-400 hover:bg-gray-200');
   document.getElementById('more-trigger').className = 'tab-btn-dropdown pb-2 text-sm font-semibold transition-colors border-b-2 flex items-center gap-1 flex-shrink-0 ' +
     (moreActive ? 'border-rose-500 text-gray-900' : 'border-transparent text-gray-400 hover:text-gray-600');
   document.getElementById('tab-bizquestion').classList.toggle('hidden', tab !== 'bizquestion');

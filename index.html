@@ -26,9 +26,9 @@
           </div>
         </div>
         <div class="hidden sm:flex items-center gap-2">
-          <span class="px-2 py-0.5 bg-gray-100 text-gray-400 rounded text-[10px] font-medium">14,867 Listings</span>
-          <span class="px-2 py-0.5 bg-gray-100 text-gray-400 rounded text-[10px] font-medium">79 Columns</span>
           <span class="px-2 py-0.5 bg-gray-100 text-gray-400 rounded text-[10px] font-medium">2 Cities</span>
+          <span class="px-2 py-0.5 bg-gray-100 text-gray-400 rounded text-[10px] font-medium">79 Columns</span>
+          <span class="px-2 py-0.5 bg-gray-100 text-gray-400 rounded text-[10px] font-medium">1.8M Data Points</span>
         </div>
       </div>
     </div>
@@ -39,6 +39,7 @@
         <div class="flex gap-6 items-end">
           <button onclick="setTab('overview')" data-tab="overview" class="tab-btn pb-2 text-sm font-semibold transition-all border-b-2 border-rose-500 text-gray-900 -mb-[13px]">Characteristics Analysis</button>
           <button onclick="setTab('analysis')" data-tab="analysis" class="tab-btn pb-2 text-sm font-semibold transition-all border-b-2 border-transparent text-gray-400 hover:text-gray-600 -mb-[13px]">Text Analysis</button>
+          <button onclick="setTab('exploredata')" data-tab="exploredata" class="tab-btn pb-2 text-sm font-semibold transition-all border-b-2 border-transparent text-gray-400 hover:text-gray-600 -mb-[13px]">Explore Data</button>
           <div class="relative -mb-[13px]">
             <button onclick="toggleDropdown('more-dropdown')" id="more-trigger" class="tab-btn-dropdown pb-2 text-sm font-semibold transition-all border-b-2 border-transparent text-gray-400 hover:text-gray-600 flex items-center gap-1">More <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></button>
             <div id="more-dropdown" class="hidden absolute top-full right-0 mt-2 bg-white rounded-lg shadow-lg border border-gray-200 py-1 z-50 min-w-[200px]">
@@ -153,24 +154,62 @@
           </div>
         </div>
         <div class="bg-white p-4 md:p-6 rounded-2xl shadow-sm border border-gray-100">
-          <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-4">
-            <h3 id="overview-view-title" class="font-bold text-sm text-gray-900 uppercase tracking-widest">Revenue & Rating by Number of Reviews</h3>
+          <h3 class="font-bold text-base md:text-lg text-gray-900 tracking-tight mb-4">Revenue & Rating by Number of Reviews</h3>
+          <div class="bg-gray-50 rounded-xl p-4">
+            <div class="h-56 md:h-64"><canvas id="chart-success"></canvas></div>
+          </div>
+        </div>
+
+        <div class="bg-white p-4 md:p-6 rounded-2xl shadow-sm border border-gray-100">
+          <div class="flex flex-col sm:flex-row justify-between items-center gap-3 mb-4">
+            <div>
+              <h3 id="overview-view-title" class="font-bold text-base md:text-lg text-gray-900 tracking-tight">Top Amenities: Berlin vs. Munich</h3>
+              <p id="overview-view-subtitle" class="font-bold text-base md:text-lg text-gray-900 tracking-tight"></p>
+            </div>
             <div class="bg-gray-50 p-1 rounded-lg border border-gray-200 flex items-center">
-              <button onclick="setOverviewView('revenue')" data-overviewview="revenue" class="overview-view-btn px-3 py-1.5 rounded-md text-xs font-bold transition-all bg-gray-900 text-white">Revenue & Rating</button>
-              <button onclick="setOverviewView('city')" data-overviewview="city" class="overview-view-btn px-3 py-1.5 rounded-md text-xs font-bold transition-all text-gray-500 hover:bg-gray-100">By City</button>
+              <button onclick="setOverviewView('city')" data-overviewview="city" class="overview-view-btn px-3 py-1.5 rounded-md text-xs font-bold transition-all bg-gray-900 text-white">By City</button>
               <button onclick="setOverviewView('neighborhood')" data-overviewview="neighborhood" class="overview-view-btn px-3 py-1.5 rounded-md text-xs font-bold transition-all text-gray-500 hover:bg-gray-100">By Neighborhood</button>
             </div>
           </div>
-          <div id="overview-view-revenue">
-            <div class="h-56 md:h-64"><canvas id="chart-success"></canvas></div>
-          </div>
-          <div id="overview-view-city" class="hidden">
-            <p class="text-[11px] text-gray-400 mb-4">Avg rating >= 4.8, ranked by avg revenue</p>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="regional-tables"></div>
+          <div id="overview-view-city">
+            <div class="bg-gray-50 rounded-xl p-4 mb-4">
+              <p class="text-[11px] text-gray-400 mb-3">Only includes amenities found in highly rated listings (4.8+), sorted by highest earning</p>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="regional-tables"></div>
+            </div>
+            <div class="bg-gray-50 rounded-xl p-4">
+              <p class="text-[11px] text-gray-400">Avg Rating: the average rating of all listings that include this amenity.</p>
+              <p class="text-[11px] text-gray-400">Avg Revenue: the average annual revenue of all listings that include this amenity.</p>
+            </div>
           </div>
           <div id="overview-view-neighborhood" class="hidden">
-            <p class="text-[11px] text-gray-400 mb-4">Avg rating >= 4.8, ranked by avg revenue</p>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="trend-tables-munich"></div>
+            <div class="bg-gray-50 rounded-xl p-4 mb-4">
+              <p class="text-[11px] text-gray-400 mb-3">Only includes amenities found in highly rated listings (4.8+), sorted by highest earning</p>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="trend-tables-munich"></div>
+            </div>
+            <div class="bg-gray-50 rounded-xl p-4">
+              <p class="text-[11px] text-gray-400">Avg Rating: the average rating of all listings that include this amenity.</p>
+              <p class="text-[11px] text-gray-400">Avg Revenue: the average annual revenue of all listings that include this amenity.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- By City Bar Charts -->
+        <div class="bg-white p-4 md:p-6 rounded-2xl shadow-sm border border-gray-100">
+          <h3 class="font-bold text-base md:text-lg text-gray-900 tracking-tight mb-1">Top 5 Amenities by City</h3>
+          <p class="text-[11px] text-gray-400 mb-4">Only includes amenities found in highly rated listings (4.8+), sorted by highest earning</p>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="h-64"><canvas id="chart-city-berlin"></canvas></div>
+            <div class="h-64"><canvas id="chart-city-munich"></canvas></div>
+          </div>
+        </div>
+
+        <!-- By Neighborhood Bar Charts -->
+        <div class="bg-white p-4 md:p-6 rounded-2xl shadow-sm border border-gray-100">
+          <h3 class="font-bold text-base md:text-lg text-gray-900 tracking-tight mb-1">Top 5 Amenities by Neighborhood</h3>
+          <p class="text-[11px] text-gray-400 mb-4">Only includes amenities found in highly rated listings (4.8+), sorted by highest earning</p>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="h-64"><canvas id="chart-hood-1"></canvas></div>
+            <div class="h-64"><canvas id="chart-hood-2"></canvas></div>
           </div>
         </div>
 
@@ -1077,6 +1116,52 @@
         </div>
       </div>
 
+      <!-- Explore Data Tab -->
+      <div id="tab-exploredata" class="hidden flex flex-col gap-4 md:gap-8 pb-20">
+        <!-- Compare selector -->
+        <div class="flex flex-col gap-3">
+          <div class="flex items-center gap-3 flex-wrap">
+            <span class="text-sm font-bold text-gray-600">Compare by:</span>
+            <div class="bg-white p-1 rounded-lg shadow-sm border border-gray-200 flex items-center">
+              <button onclick="setCompareMode('city')" data-comparemode="city" class="compare-mode-btn px-3 py-1.5 rounded-md text-xs font-bold transition-all bg-indigo-500 text-white">Cities</button>
+              <button onclick="setCompareMode('neighborhood')" data-comparemode="neighborhood" class="compare-mode-btn px-3 py-1.5 rounded-md text-xs font-bold transition-all text-gray-500 hover:bg-gray-100">Neighborhoods</button>
+            </div>
+          </div>
+          <div class="flex items-center gap-3 flex-wrap">
+            <div class="bg-white p-1.5 rounded-lg shadow-sm border border-gray-200 flex items-center min-w-[200px]">
+              <div class="w-3 h-3 rounded-full bg-[#00A699] ml-2 mr-2 shrink-0"></div>
+              <select id="explore-compare-1" onchange="renderExploreData()" class="w-full px-1 py-1.5 rounded-lg text-xs font-bold text-gray-600 focus:outline-none cursor-pointer bg-transparent"></select>
+            </div>
+            <span class="text-sm font-bold text-gray-400">vs</span>
+            <div class="bg-white p-1.5 rounded-lg shadow-sm border border-gray-200 flex items-center min-w-[200px]">
+              <div class="w-3 h-3 rounded-full bg-[#FF5A5F] ml-2 mr-2 shrink-0"></div>
+              <select id="explore-compare-2" onchange="renderExploreData()" class="w-full px-1 py-1.5 rounded-lg text-xs font-bold text-gray-600 focus:outline-none cursor-pointer bg-transparent"></select>
+            </div>
+          </div>
+          <div class="flex items-center gap-2 flex-wrap">
+            <span class="text-[10px] font-bold text-gray-400 uppercase tracking-wider">Narrow by:</span>
+            <div class="bg-white p-1 rounded-lg shadow-sm border border-gray-200 flex items-center min-w-[140px]">
+              <select id="explore-roomtype-select" onchange="renderExploreData()" class="w-full px-2 py-1 rounded-lg text-xs font-bold text-gray-600 focus:outline-none cursor-pointer bg-transparent">
+                <option value="All">All Property Types</option>
+                <option value="Entire home/apt">Entire home/apt</option>
+                <option value="Private room">Private room</option>
+              </select>
+            </div>
+            <div class="bg-white p-1 rounded-lg shadow-sm border border-gray-200 flex items-center min-w-[110px]">
+              <select id="explore-bedroom-select" onchange="renderExploreData()" class="w-full px-2 py-1 rounded-lg text-xs font-bold text-gray-600 focus:outline-none cursor-pointer bg-transparent">
+                <option value="All">All Bedrooms</option>
+              </select>
+            </div>
+            <div class="bg-white p-1 rounded-lg shadow-sm border border-gray-200 flex items-center min-w-[110px]">
+              <select id="explore-bathroom-select" onchange="renderExploreData()" class="w-full px-2 py-1 rounded-lg text-xs font-bold text-gray-600 focus:outline-none cursor-pointer bg-transparent">
+                <option value="All">All Bathrooms</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div id="explore-content"></div>
+      </div>
+
       <!-- Analysis Tab -->
       <div id="tab-analysis" class="hidden flex flex-col gap-4 md:gap-8 pb-20">
         <div class="bg-white p-4 md:p-8 rounded-2xl border border-gray-100 shadow-sm">
@@ -1346,11 +1431,26 @@ function renderRecommendationCharts() {
     },
     options: {
       responsive: true, maintainAspectRatio: false,
-      plugins: { legend: { position: 'bottom', labels: { font: { size: 12 } } }, tooltip: { callbacks: { label: function(ctx) { return ctx.datasetIndex === 1 ? 'Rating: ' + ctx.raw : '€' + ctx.raw.toLocaleString(); } } } },
+      hover: { mode: null },
+      plugins: { legend: { position: 'bottom', labels: { font: { size: 12 } } }, tooltip: { enabled: false } },
       scales: {
         y: { position: 'left', beginAtZero: true, title: { display: true, text: 'Avg Revenue (€)', font: { size: 12, weight: 'bold' } }, ticks: { callback: function(v) { return '€' + (v >= 1000 ? Math.round(v/1000) + 'K' : v); }, font: { size: 12 }, maxTicksLimit: 5 }, grid: { display: false } },
         y1: { position: 'right', min: 4, max: 5, title: { display: true, text: 'Avg Rating', font: { size: 12, weight: 'bold' } }, ticks: { font: { size: 12 }, maxTicksLimit: 5 }, grid: { drawOnChartArea: false } },
         x: { title: { display: true, text: 'Number of Reviews', font: { size: 12, weight: 'bold' } }, ticks: { font: { size: 13, weight: 'bold' } }, grid: { display: false } }
+      },
+      animation: {
+        onComplete: function() {
+          var chart = this;
+          var ctx = chart.ctx;
+          var meta = chart.getDatasetMeta(1);
+          ctx.font = 'bold 11px sans-serif';
+          ctx.fillStyle = '#f59e0b';
+          ctx.textAlign = 'center';
+          meta.data.forEach(function(point, i) {
+            var val = ratingData[i];
+            if (val) ctx.fillText(val.toFixed(2), point.x, point.y - 16);
+          });
+        }
       }
     }
   });
@@ -1379,7 +1479,7 @@ function renderRecommendationCharts() {
   var munichData = data.filter(function(d) { return d.cityName === 'Munich'; });
   function makeAmenTable(city, top, color) {
     var rows = top.map(function(a, i) {
-      return '<tr class="border-t border-gray-100"><td class="py-2 pr-2 text-xs text-gray-400">' + (i+1) + '</td><td class="py-2 text-sm text-gray-700">' + a.name + '</td><td class="py-2 pl-2 text-sm text-center text-amber-500">' + a.avgRat + '</td><td class="py-2 pl-2 text-sm text-right text-gray-500">&euro;' + a.avg.toLocaleString() + '</td></tr>';
+      return '<tr class="border-t border-gray-100"><td class="py-2 pr-2 text-xs text-gray-400">' + (i+1) + '</td><td class="py-2 text-sm text-gray-700">' + a.name + '</td><td class="py-2 pl-2 text-sm text-center text-gray-500">' + a.avgRat + '</td><td class="py-2 pl-2 text-sm text-right text-gray-500">&euro;' + a.avg.toLocaleString() + '</td></tr>';
     }).join('');
     return '<div><div class="flex items-center gap-2 mb-3"><div class="w-3 h-3 rounded-full ' + color + '"></div><p class="text-xs font-bold uppercase tracking-widest text-gray-600">' + city + '</p></div><table class="w-full"><thead><tr><th class="text-left text-[10px] font-bold text-gray-400 uppercase pb-2 pr-2">#</th><th class="text-left text-[10px] font-bold text-gray-400 uppercase pb-2">Amenity</th><th class="text-center text-[10px] font-bold text-gray-400 uppercase pb-2 pl-2">Rating</th><th class="text-right text-[10px] font-bold text-gray-400 uppercase pb-2 pl-2">Revenue</th></tr></thead><tbody>' + rows + '</tbody></table></div>';
   }
@@ -1410,13 +1510,66 @@ function renderRecommendationCharts() {
   }
   function makeHoodTable(hood, top, color) {
     var rows = top.map(function(a, i) {
-      return '<tr class="border-t border-gray-100"><td class="py-2 pr-2 text-xs text-gray-400">' + (i+1) + '</td><td class="py-2 text-sm text-gray-700">' + a.name + '</td><td class="py-2 pl-2 text-sm text-center text-amber-500">' + a.avgRat + '</td><td class="py-2 pl-2 text-sm text-right text-gray-500">&euro;' + a.avg.toLocaleString() + '</td></tr>';
+      return '<tr class="border-t border-gray-100"><td class="py-2 pr-2 text-xs text-gray-400">' + (i+1) + '</td><td class="py-2 text-sm text-gray-700">' + a.name + '</td><td class="py-2 pl-2 text-sm text-center text-gray-500">' + a.avgRat + '</td><td class="py-2 pl-2 text-sm text-right text-gray-500">&euro;' + a.avg.toLocaleString() + '</td></tr>';
     }).join('');
     return '<div><div class="flex items-center gap-2 mb-3"><div class="w-3 h-3 rounded-full ' + color + '"></div><p class="text-xs font-bold uppercase tracking-widest text-gray-600">' + hood + '</p></div><table class="w-full"><thead><tr><th class="text-left text-[10px] font-bold text-gray-400 uppercase pb-2 pr-2">#</th><th class="text-left text-[10px] font-bold text-gray-400 uppercase pb-2">Amenity</th><th class="text-center text-[10px] font-bold text-gray-400 uppercase pb-2 pl-2">Rating</th><th class="text-right text-[10px] font-bold text-gray-400 uppercase pb-2 pl-2">Revenue</th></tr></thead><tbody>' + rows + '</tbody></table></div>';
   }
   document.getElementById('trend-tables-munich').innerHTML =
     makeHoodTable('Ludwigsvorstadt-Isarvorstadt', getHoodTopAmenities('Ludwigsvorstadt-Isarvorstadt', 5), 'bg-[#00A699]') +
     makeHoodTable('Schwabing-West', getHoodTopAmenities('Schwabing-West', 5), 'bg-[#FF5A5F]');
+
+  // Horizontal bar charts - By City
+  function renderAmenityBarChart(canvasId, amenData, label, color) {
+    var reversed = amenData.slice();
+    destroyChart(canvasId);
+    charts[canvasId] = new Chart(document.getElementById(canvasId), {
+      type: 'bar',
+      data: {
+        labels: reversed.map(function(a) { return a.name; }),
+        datasets: [{ data: reversed.map(function(a) { return a.avg; }), backgroundColor: color, borderRadius: 4, barThickness: 20 }]
+      },
+      options: {
+        indexAxis: 'y', responsive: true, maintainAspectRatio: false,
+        plugins: {
+          title: { display: true, text: label, font: { size: 12, weight: 'bold' }, color: '#6b7280' },
+          legend: { display: false },
+          tooltip: { enabled: false },
+          datalabels: false
+        },
+        scales: { x: { beginAtZero: true, title: { display: true, text: 'Avg Revenue (€)', font: { size: 10 }, color: '#9ca3af' }, ticks: { callback: function(v) { return '€' + (v >= 1000 ? Math.round(v/1000) + 'K' : v); }, font: { size: 10 } }, grid: { display: false } }, y: { grid: { display: false }, ticks: { font: { size: 10 } } } },
+        animation: {
+          onComplete: function() {
+            var chart = this;
+            var ctx = chart.ctx;
+            ctx.font = '10px sans-serif';
+            ctx.fillStyle = '#fff';
+            ctx.textAlign = 'right';
+            ctx.textBaseline = 'middle';
+            chart.data.datasets[0].data.forEach(function(val, i) {
+              var meta = chart.getDatasetMeta(0);
+              var bar = meta.data[i];
+              var label = '€' + (val / 1000).toFixed(1) + 'k';
+              var barWidth = bar.width || (bar.x - bar.base);
+              if (barWidth > 40) {
+                ctx.fillText(label, bar.x - 4, bar.y);
+              }
+            });
+          }
+        }
+      }
+    });
+  }
+
+  var berlinTop = getTopAmenities(berlinData, 5);
+  var munichTop = getTopAmenities(munichData, 5);
+  renderAmenityBarChart('chart-city-berlin', berlinTop, 'Berlin', '#00A699');
+  renderAmenityBarChart('chart-city-munich', munichTop, 'Munich', '#FF5A5F');
+
+  // Horizontal bar charts - By Neighborhood
+  var tempelTop = getHoodTopAmenities('Tempelhofer Vorstadt', 5);
+  var luisenstadtTop = getHoodTopAmenities('südliche Luisenstadt', 5);
+  renderAmenityBarChart('chart-hood-1', tempelTop, 'Tempelhofer Vorstadt', '#00A699');
+  renderAmenityBarChart('chart-hood-2', luisenstadtTop, 'südliche Luisenstadt', '#FF5A5F');
 }
 
 function renderAmenitiesChart() {
@@ -1664,11 +1817,12 @@ function setOverviewView(view) {
       ? 'overview-view-btn px-3 py-1.5 rounded-md text-xs font-bold transition-all bg-gray-900 text-white'
       : 'overview-view-btn px-3 py-1.5 rounded-md text-xs font-bold transition-all text-gray-500 hover:bg-gray-100';
   });
-  document.getElementById('overview-view-revenue').classList.toggle('hidden', view !== 'revenue');
   document.getElementById('overview-view-city').classList.toggle('hidden', view !== 'city');
   document.getElementById('overview-view-neighborhood').classList.toggle('hidden', view !== 'neighborhood');
-  var titles = { revenue: 'Revenue & Rating by Number of Reviews', city: 'Top 5 Amenities: Berlin vs Munich', neighborhood: 'Top 5 Amenities by Neighborhood' };
+  var titles = { city: 'Top Amenities: Berlin vs. Munich', neighborhood: 'Top 5 Amenities by Neighborhood' };
+  var subtitles = { city: '', neighborhood: 'Tempelhofer Vorstadt vs südliche Luisenstadt' };
   document.getElementById('overview-view-title').textContent = titles[view];
+  document.getElementById('overview-view-subtitle').textContent = subtitles[view];
 }
 
 function setTab(tab) {
@@ -1700,6 +1854,7 @@ function setTab(tab) {
   document.getElementById('tab-amenities').classList.toggle('hidden', tab !== 'amenities');
   document.getElementById('tab-playtext').classList.toggle('hidden', tab !== 'playtext');
   document.getElementById('tab-analysis').classList.toggle('hidden', tab !== 'analysis');
+  document.getElementById('tab-exploredata').classList.toggle('hidden', tab !== 'exploredata');
   document.getElementById('tab-questions').classList.toggle('hidden', tab !== 'questions');
   document.getElementById('tab-conclusion').classList.toggle('hidden', tab !== 'conclusion');
   document.getElementById('tab-challenges').classList.toggle('hidden', tab !== 'challenges');
@@ -1709,9 +1864,9 @@ function setTab(tab) {
   if (tab === 'temporary' && document.getElementById('columns-tbody-temp').innerHTML === '') {
     document.getElementById('columns-tbody-temp').innerHTML = document.getElementById('columns-tbody').innerHTML;
   }
-  document.getElementById('secondary-filters').classList.toggle('hidden', tab === 'overview' || tab === 'analysis' || tab === 'conclusion' || tab === 'questions' || tab === 'datasources' || tab === 'bizquestion' || tab === 'challenges');
-  document.getElementById('kpi-cards').classList.toggle('hidden', tab === 'conclusion' || tab === 'questions' || tab === 'datasources' || tab === 'bizquestion' || tab === 'challenges' || tab === 'temporary' || tab === 'analysisfiles');
-  document.getElementById('city-filter').classList.toggle('hidden', tab === 'overview' || tab === 'analysis' || tab === 'bizquestion' || tab === 'questions' || tab === 'conclusion' || tab === 'challenges' || tab === 'datasources' || tab === 'temporary' || tab === 'analysisfiles');
+  document.getElementById('secondary-filters').classList.toggle('hidden', tab === 'overview' || tab === 'analysis' || tab === 'conclusion' || tab === 'questions' || tab === 'datasources' || tab === 'bizquestion' || tab === 'challenges' || tab === 'exploredata');
+  document.getElementById('kpi-cards').classList.toggle('hidden', tab === 'conclusion' || tab === 'questions' || tab === 'datasources' || tab === 'bizquestion' || tab === 'challenges' || tab === 'temporary' || tab === 'analysisfiles' || tab === 'exploredata');
+  document.getElementById('city-filter').classList.toggle('hidden', tab === 'overview' || tab === 'analysis' || tab === 'bizquestion' || tab === 'questions' || tab === 'conclusion' || tab === 'challenges' || tab === 'datasources' || tab === 'temporary' || tab === 'analysisfiles' || tab === 'exploredata');
   if (tab === 'overview') {
     roomTypeFilter = 'All'; bedroomFilter = 'All'; bathroomFilter = 'All'; neighborhoodFilter = 'All';
   }
@@ -1821,7 +1976,7 @@ function renderNeighborhoodTab() {
   }
   function makeAmenTable(label, top, color) {
     var rows = top.map(function(a, i) {
-      return '<tr class="border-t border-gray-100"><td class="py-2 pr-2 text-xs text-gray-400 font-bold">#' + (i+1) + '</td><td class="py-2 text-sm font-semibold text-gray-800">' + a.name + '</td><td class="py-2 pl-2 text-sm font-bold text-center text-amber-500">' + a.avgRat + '</td><td class="py-2 pl-2 text-sm font-bold text-right text-gray-600">&euro;' + a.avg.toLocaleString() + '</td></tr>';
+      return '<tr class="border-t border-gray-100"><td class="py-2 pr-2 text-xs text-gray-400 font-bold">#' + (i+1) + '</td><td class="py-2 text-sm font-semibold text-gray-800">' + a.name + '</td><td class="py-2 pl-2 text-sm font-bold text-center text-gray-500">' + a.avgRat + '</td><td class="py-2 pl-2 text-sm font-bold text-right text-gray-600">&euro;' + a.avg.toLocaleString() + '</td></tr>';
     }).join('');
     return '<div><div class="flex items-center gap-2 mb-3"><div class="w-3 h-3 rounded-full ' + color + '"></div><p class="text-xs font-black uppercase tracking-widest text-gray-600">' + label + '</p></div><table class="w-full"><thead><tr><th class="text-left text-[10px] font-black text-gray-400 uppercase pb-2 pr-2">#</th><th class="text-left text-[10px] font-black text-gray-400 uppercase pb-2">Amenity</th><th class="text-center text-[10px] font-black text-gray-400 uppercase pb-2 pl-2">Avg Rating</th><th class="text-right text-[10px] font-black text-gray-400 uppercase pb-2 pl-2">Avg Revenue</th></tr></thead><tbody>' + rows + '</tbody></table></div>';
   }
@@ -1875,7 +2030,7 @@ function renderAmenitiesTab() {
     return '<tr class="hover:bg-gray-50/50">' +
       '<td class="px-3 py-2 text-xs text-gray-400 font-bold">' + (i + 1) + '</td>' +
       '<td class="px-3 py-2 text-sm font-semibold text-gray-800">' + a.name + '</td>' +
-      '<td class="px-3 py-2 text-sm font-bold text-center text-amber-500">' + a.avgRat + '</td>' +
+      '<td class="px-3 py-2 text-sm font-bold text-center text-gray-500">' + a.avgRat + '</td>' +
       '<td class="px-3 py-2 text-sm font-bold text-right text-gray-600">' + a.count.toLocaleString() + '</td>' +
       '<td class="px-3 py-2 text-sm font-bold text-right text-gray-600">&euro;' + a.avgRev.toLocaleString() + '</td></tr>';
   }).join('');
@@ -1903,6 +2058,315 @@ function renderAmenitiesTab() {
   }).join('');
 })();
 
+var exploreCompareMode = 'city';
+
+function setCompareMode(mode) {
+  exploreCompareMode = mode;
+  document.querySelectorAll('.compare-mode-btn').forEach(function(btn) {
+    btn.className = btn.dataset.comparemode === mode
+      ? 'compare-mode-btn px-3 py-1.5 rounded-md text-xs font-bold transition-all bg-indigo-500 text-white'
+      : 'compare-mode-btn px-3 py-1.5 rounded-md text-xs font-bold transition-all text-gray-500 hover:bg-gray-100';
+  });
+  populateCompareDropdowns();
+  renderExploreData();
+}
+
+function populateCompareDropdowns() {
+  var sel1 = document.getElementById('explore-compare-1');
+  var sel2 = document.getElementById('explore-compare-2');
+
+  if (exploreCompareMode === 'city') {
+    var cities = ['Berlin', 'Munich'];
+    var cur1 = sel1.value || 'Berlin';
+    var cur2 = sel2.value || 'Munich';
+    sel1.innerHTML = cities.map(function(c) { return '<option value="' + c + '"' + (c === cur1 ? ' selected' : '') + '>' + c + '</option>'; }).join('');
+    sel2.innerHTML = cities.map(function(c) { return '<option value="' + c + '"' + (c === cur2 ? ' selected' : '') + '>' + c + '</option>'; }).join('');
+  } else {
+    var hoodCounts = {};
+    allData.forEach(function(d) { var h = d.neighbourhood_cleansed; if (h) hoodCounts[h] = (hoodCounts[h] || 0) + 1; });
+    var hoods = Object.keys(hoodCounts).filter(function(h) { return hoodCounts[h] >= 30; }).sort();
+    var cur1 = sel1.value && hoods.indexOf(sel1.value) !== -1 ? sel1.value : (hoods[0] || '');
+    var cur2 = sel2.value && hoods.indexOf(sel2.value) !== -1 ? sel2.value : (hoods[1] || '');
+    sel1.innerHTML = hoods.map(function(h) { return '<option value="' + h + '"' + (h === cur1 ? ' selected' : '') + '>' + h + '</option>'; }).join('');
+    sel2.innerHTML = hoods.map(function(h) { return '<option value="' + h + '"' + (h === cur2 ? ' selected' : '') + '>' + h + '</option>'; }).join('');
+  }
+
+  // Populate narrow-by filters
+  var bedrooms = [], bathrooms = [], seenB = {}, seenBa = {};
+  allData.forEach(function(d) {
+    var b = String(d.bedrooms_clean), ba = String(d.bathrooms_clean);
+    if (b && b !== 'NaN' && b !== 'null' && !seenB[b]) { seenB[b] = true; bedrooms.push(b); }
+    if (ba && ba !== 'NaN' && ba !== 'null' && parseFloat(ba) >= 0 && !seenBa[ba]) { seenBa[ba] = true; bathrooms.push(ba); }
+  });
+  bedrooms.sort(function(a,b) { return parseInt(a) - parseInt(b); });
+  bathrooms.sort(function(a,b) { return parseFloat(a) - parseFloat(b); });
+  var curBed = document.getElementById('explore-bedroom-select').value;
+  var curBath = document.getElementById('explore-bathroom-select').value;
+  document.getElementById('explore-bedroom-select').innerHTML = '<option value="All">All Bedrooms</option>' +
+    bedrooms.map(function(b) { return '<option value="' + b + '"' + (b === curBed ? ' selected' : '') + '>' + (b === '0' ? 'Studio' : b + ' Bedrooms') + '</option>'; }).join('');
+  document.getElementById('explore-bathroom-select').innerHTML = '<option value="All">All Bathrooms</option>' +
+    bathrooms.map(function(b) { return '<option value="' + b + '"' + (b === curBath ? ' selected' : '') + '>' + b + ' Bathrooms</option>'; }).join('');
+}
+
+function getFilteredData(data) {
+  var rt = document.getElementById('explore-roomtype-select').value;
+  var bed = document.getElementById('explore-bedroom-select').value;
+  var bath = document.getElementById('explore-bathroom-select').value;
+  if (rt !== 'All') data = data.filter(function(d) { return d.room_type === rt; });
+  if (bed !== 'All') data = data.filter(function(d) { return String(d.bedrooms_clean) === bed; });
+  if (bath !== 'All') data = data.filter(function(d) { return String(d.bathrooms_clean) === bath || d.bathrooms_clean === parseFloat(bath); });
+  return data;
+}
+
+function exploreKPICard(label, data, color) {
+  var len = data.length || 1;
+  var avgPrice = Math.round(data.reduce(function(a,d){return a+d.price_num;},0) / len);
+  var rated = data.filter(function(d) { return d.rating > 0; });
+  var avgRating = rated.length ? (rated.reduce(function(a,d){return a+d.rating;},0) / rated.length).toFixed(2) : 'N/A';
+  var avgRev = Math.round(data.reduce(function(a,d){return a+(d.revenue_num||0);},0) / len);
+  return '<div><div class="flex items-center gap-2 mb-3"><div class="w-3 h-3 rounded-full ' + color + '"></div><p class="text-xs font-bold uppercase tracking-widest text-gray-600">' + label + '</p></div>' +
+    '<div class="grid grid-cols-2 gap-3">' +
+    '<div class="bg-gray-50 rounded-lg p-3"><p class="text-[10px] font-bold text-gray-400 uppercase">Listings</p><p class="text-lg font-bold text-gray-900">' + data.length.toLocaleString() + '</p></div>' +
+    '<div class="bg-gray-50 rounded-lg p-3"><p class="text-[10px] font-bold text-gray-400 uppercase">Avg Price</p><p class="text-lg font-bold text-gray-900">&euro;' + avgPrice.toLocaleString() + '</p></div>' +
+    '<div class="bg-gray-50 rounded-lg p-3"><p class="text-[10px] font-bold text-gray-400 uppercase">Avg Rating</p><p class="text-lg font-bold text-gray-900">' + avgRating + '</p></div>' +
+    '<div class="bg-gray-50 rounded-lg p-3"><p class="text-[10px] font-bold text-gray-400 uppercase">Avg Revenue</p><p class="text-lg font-bold text-gray-900">&euro;' + avgRev.toLocaleString() + '</p></div>' +
+    '</div></div>';
+}
+
+function renderExploreData() {
+  var sel1 = document.getElementById('explore-compare-1');
+  var sel2 = document.getElementById('explore-compare-2');
+  var label1 = sel1.value;
+  var label2 = sel2.value;
+  if (!label1) return;
+
+  var amenList = window._amenList;
+  var isCity = exploreCompareMode === 'city';
+  var color1 = '#00A699';
+  var color2 = '#FF5A5F';
+
+  var raw1 = allData.filter(function(d) {
+    return isCity ? d.cityName === label1 : d.neighbourhood_cleansed === label1;
+  });
+  var data1 = getFilteredData(raw1);
+
+  var hasTwo = label2 && label2 !== label1;
+  var data2 = null;
+  if (hasTwo) {
+    var raw2 = allData.filter(function(d) {
+      return isCity ? d.cityName === label2 : d.neighbourhood_cleansed === label2;
+    });
+    data2 = getFilteredData(raw2);
+  }
+
+  // Destroy old explore charts
+  ['success-explore', 'chart-explore-bar-1', 'chart-explore-bar-2'].forEach(function(k) { destroyChart(k); });
+
+  // Build HTML dynamically
+  var html = '<div class="flex flex-col gap-4 md:gap-8">';
+
+  // KPI tiles
+  html += '<div class="grid grid-cols-1 ' + (hasTwo ? 'md:grid-cols-2' : '') + ' gap-4">';
+  html += '<div class="bg-white p-4 md:p-6 rounded-2xl shadow-sm border border-gray-100">' + exploreKPICard(label1, data1, 'bg-[' + color1 + ']') + '</div>';
+  if (hasTwo) {
+    html += '<div class="bg-white p-4 md:p-6 rounded-2xl shadow-sm border border-gray-100">' + exploreKPICard(label2, data2, 'bg-[' + color2 + ']') + '</div>';
+  }
+  html += '</div>';
+
+  // Revenue & Rating chart
+  html += '<div class="bg-white p-4 md:p-6 rounded-2xl shadow-sm border border-gray-100">';
+  html += '<h3 class="font-bold text-base md:text-lg text-gray-900 tracking-tight mb-4">Revenue & Rating by Number of Reviews</h3>';
+  html += '<div class="bg-gray-50 rounded-xl p-4"><div class="h-56 md:h-64"><canvas id="chart-success-explore"></canvas></div></div>';
+  html += '</div>';
+
+  // Amenity tables
+  var tableSub = hasTwo ? label1 + ' vs. ' + label2 : label1;
+  html += '<div class="bg-white p-4 md:p-6 rounded-2xl shadow-sm border border-gray-100">';
+  html += '<h3 class="font-bold text-base md:text-lg text-gray-900 tracking-tight">Top Amenities</h3>';
+  html += '<p class="font-bold text-base md:text-lg text-gray-900 tracking-tight mb-4">' + tableSub + '</p>';
+  html += '<div class="bg-gray-50 rounded-xl p-4 mb-4">';
+  html += '<p class="text-[11px] text-gray-400 mb-3">Only includes amenities found in highly rated listings (4.8+), sorted by highest earning</p>';
+  html += '<div class="grid grid-cols-1 ' + (hasTwo ? 'md:grid-cols-2' : '') + ' gap-4" id="explore-amenity-tables"></div>';
+  html += '</div>';
+  html += '<div class="bg-gray-50 rounded-xl p-4">';
+  html += '<p class="text-[11px] text-gray-400">Avg Rating: the average rating of all listings that include this amenity.</p>';
+  html += '<p class="text-[11px] text-gray-400">Avg Revenue: the average annual revenue of all listings that include this amenity.</p>';
+  html += '</div></div>';
+
+  // Bar charts
+  var barSub = hasTwo ? label1 + ' vs. ' + label2 : label1;
+  html += '<div class="bg-white p-4 md:p-6 rounded-2xl shadow-sm border border-gray-100">';
+  html += '<h3 class="font-bold text-base md:text-lg text-gray-900 tracking-tight">Top 5 Amenities</h3>';
+  html += '<p class="font-bold text-base md:text-lg text-gray-900 tracking-tight mb-1">' + barSub + '</p>';
+  html += '<p class="text-[11px] text-gray-400 mb-4">Only includes amenities found in highly rated listings (4.8+), sorted by highest earning</p>';
+  html += '<div class="grid grid-cols-1 ' + (hasTwo ? 'md:grid-cols-2' : '') + ' gap-4">';
+  html += '<div class="h-64"><canvas id="chart-explore-bar-1"></canvas></div>';
+  if (hasTwo) html += '<div class="h-64"><canvas id="chart-explore-bar-2"></canvas></div>';
+  html += '</div></div>';
+
+  html += '</div>';
+  document.getElementById('explore-content').innerHTML = html;
+
+  // --- Compute review buckets for each entity ---
+  var reviewBuckets = [
+    { label: '0–10', min: 0, max: 10 },
+    { label: '11–25', min: 11, max: 25 },
+    { label: '26–50', min: 26, max: 50 },
+    { label: '51–100', min: 51, max: 100 },
+    { label: '101–200', min: 101, max: 200 },
+    { label: '200+', min: 201, max: 99999 }
+  ];
+
+  function bucketize(data) {
+    var revs = [], rats = [];
+    reviewBuckets.forEach(function(b) {
+      var bucket = data.filter(function(d) { return d.number_of_reviews >= b.min && d.number_of_reviews <= b.max; });
+      if (bucket.length >= 3) {
+        revs.push(Math.round(bucket.reduce(function(a,d){return a+(d.revenue_num||0);},0) / bucket.length));
+        var rated = bucket.filter(function(d) { return d.rating > 0; });
+        rats.push(rated.length ? parseFloat((rated.reduce(function(a,d){return a+d.rating;},0) / rated.length).toFixed(2)) : null);
+      } else {
+        revs.push(null);
+        rats.push(null);
+      }
+    });
+    return { revs: revs, rats: rats };
+  }
+
+  var b1 = bucketize(data1);
+  var bucketLabels = reviewBuckets.map(function(b) { return b.label; });
+  var datasets = [];
+
+  if (hasTwo) {
+    var b2 = bucketize(data2);
+    datasets = [
+      { type: 'bar', label: label1 + ' Revenue', data: b1.revs, backgroundColor: color1, borderRadius: 4, yAxisID: 'y', order: 2 },
+      { type: 'bar', label: label2 + ' Revenue', data: b2.revs, backgroundColor: color2, borderRadius: 4, yAxisID: 'y', order: 2 },
+      { type: 'line', label: label1 + ' Rating', data: b1.rats, borderColor: color1, backgroundColor: '#fff', borderWidth: 2, pointRadius: 5, pointBorderWidth: 2, pointBackgroundColor: '#fff', pointBorderColor: color1, tension: 0.3, fill: false, yAxisID: 'y1', order: 1, borderDash: [4, 2] },
+      { type: 'line', label: label2 + ' Rating', data: b2.rats, borderColor: color2, backgroundColor: '#fff', borderWidth: 2, pointRadius: 5, pointBorderWidth: 2, pointBackgroundColor: '#fff', pointBorderColor: color2, tension: 0.3, fill: false, yAxisID: 'y1', order: 1, borderDash: [4, 2] }
+    ];
+  } else {
+    datasets = [
+      { type: 'bar', label: 'Avg Annual Revenue', data: b1.revs, backgroundColor: color1, borderRadius: 4, yAxisID: 'y', order: 2 },
+      { type: 'line', label: 'Avg Rating', data: b1.rats, borderColor: '#f59e0b', backgroundColor: '#fff', borderWidth: 3, pointRadius: 6, pointBorderWidth: 2, pointBackgroundColor: '#fff', pointBorderColor: '#f59e0b', tension: 0.3, fill: false, yAxisID: 'y1', order: 1 }
+    ];
+  }
+
+  charts['success-explore'] = new Chart(document.getElementById('chart-success-explore'), {
+    type: 'bar',
+    data: { labels: bucketLabels, datasets: datasets },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      hover: { mode: null },
+      plugins: { legend: { position: 'bottom', labels: { font: { size: 11 } } }, tooltip: { enabled: false } },
+      scales: {
+        y: { position: 'left', beginAtZero: true, title: { display: true, text: 'Avg Revenue (€)', font: { size: 12, weight: 'bold' } }, ticks: { callback: function(v) { return '€' + (v >= 1000 ? Math.round(v/1000) + 'K' : v); }, font: { size: 12 }, maxTicksLimit: 5 }, grid: { display: false } },
+        y1: { position: 'right', min: 4, max: 5, title: { display: true, text: 'Avg Rating', font: { size: 12, weight: 'bold' } }, ticks: { font: { size: 12 }, maxTicksLimit: 5 }, grid: { drawOnChartArea: false } },
+        x: { title: { display: true, text: 'Number of Reviews', font: { size: 12, weight: 'bold' } }, ticks: { font: { size: 12, weight: 'bold' } }, grid: { display: false } }
+      },
+      animation: {
+        onComplete: function() {
+          var chart = this;
+          var ctx = chart.ctx;
+          ctx.font = 'bold 10px sans-serif';
+          ctx.textAlign = 'center';
+          var lineStart = hasTwo ? 2 : 1;
+          var lineColors = hasTwo ? [color1, color2] : ['#f59e0b'];
+          for (var li = 0; li < lineColors.length; li++) {
+            var meta = chart.getDatasetMeta(lineStart + li);
+            var dsData = chart.data.datasets[lineStart + li].data;
+            ctx.fillStyle = lineColors[li];
+            meta.data.forEach(function(point, j) {
+              if (dsData[j] != null) ctx.fillText(dsData[j].toFixed(2), point.x, point.y - 12);
+            });
+          }
+        }
+      }
+    }
+  });
+
+  // --- Amenity helpers ---
+  function exploreTopAmenities(entityData, n) {
+    var stats = {};
+    var total = entityData.length;
+    entityData.forEach(function(d) {
+      if (!d.amenities_idx || !d.amenities_idx.length) return;
+      d.amenities_idx.forEach(function(idx) {
+        var a = amenList[idx];
+        if (!a) return;
+        if (!stats[a]) stats[a] = { name: a, rev: 0, rat: 0, count: 0, ratCount: 0 };
+        stats[a].rev += d.revenue_num || 0;
+        stats[a].count += 1;
+        if (d.rating > 0) { stats[a].rat += d.rating; stats[a].ratCount += 1; }
+      });
+    });
+    var minCount = total > 100 ? total * 0.05 : 5;
+    return Object.values(stats)
+      .filter(function(a) { return a.count >= minCount && a.count < total * 0.5 && a.ratCount > 0 && (a.rat / a.ratCount) >= 4.8; })
+      .map(function(a) { return { name: a.name, avg: Math.round(a.rev / a.count), avgRat: (a.rat / a.ratCount).toFixed(2) }; })
+      .sort(function(a,b) { return b.avg - a.avg; })
+      .slice(0, n);
+  }
+
+  function exploreAmenTable(label, top, color) {
+    if (!top.length) return '<div><div class="flex items-center gap-2 mb-3"><div class="w-3 h-3 rounded-full ' + color + '"></div><p class="text-xs font-bold uppercase tracking-widest text-gray-600">' + label + '</p></div><p class="text-sm text-gray-400 italic">Not enough data with current filters</p></div>';
+    var rows = top.map(function(a, i) {
+      return '<tr class="border-t border-gray-100"><td class="py-2 pr-2 text-xs text-gray-400">' + (i+1) + '</td><td class="py-2 text-sm text-gray-700">' + a.name + '</td><td class="py-2 pl-2 text-sm text-center text-gray-500">' + a.avgRat + '</td><td class="py-2 pl-2 text-sm text-right text-gray-500">&euro;' + a.avg.toLocaleString() + '</td></tr>';
+    }).join('');
+    return '<div><div class="flex items-center gap-2 mb-3"><div class="w-3 h-3 rounded-full ' + color + '"></div><p class="text-xs font-bold uppercase tracking-widest text-gray-600">' + label + '</p></div><table class="w-full"><thead><tr><th class="text-left text-[10px] font-bold text-gray-400 uppercase pb-2 pr-2">#</th><th class="text-left text-[10px] font-bold text-gray-400 uppercase pb-2">Amenity</th><th class="text-center text-[10px] font-bold text-gray-400 uppercase pb-2 pl-2">Rating</th><th class="text-right text-[10px] font-bold text-gray-400 uppercase pb-2 pl-2">Revenue</th></tr></thead><tbody>' + rows + '</tbody></table></div>';
+  }
+
+  var top1 = exploreTopAmenities(data1, 5);
+  var tablesHtml = exploreAmenTable(label1, top1, 'bg-[' + color1 + ']');
+  if (hasTwo) {
+    var top2 = exploreTopAmenities(data2, 5);
+    tablesHtml += exploreAmenTable(label2, top2, 'bg-[' + color2 + ']');
+  }
+  document.getElementById('explore-amenity-tables').innerHTML = tablesHtml;
+
+  // --- Bar charts ---
+  function exploreBarChart(canvasId, amenData, label, color) {
+    var reversed = amenData.slice();
+    charts[canvasId] = new Chart(document.getElementById(canvasId), {
+      type: 'bar',
+      data: {
+        labels: reversed.map(function(a) { return a.name; }),
+        datasets: [{ data: reversed.map(function(a) { return a.avg; }), backgroundColor: color, borderRadius: 4, barThickness: 20 }]
+      },
+      options: {
+        indexAxis: 'y', responsive: true, maintainAspectRatio: false,
+        plugins: {
+          title: { display: true, text: label, font: { size: 12, weight: 'bold' }, color: '#6b7280' },
+          legend: { display: false },
+          tooltip: { enabled: false },
+          datalabels: false
+        },
+        scales: { x: { beginAtZero: true, title: { display: true, text: 'Avg Revenue (€)', font: { size: 10 }, color: '#9ca3af' }, ticks: { callback: function(v) { return '€' + (v >= 1000 ? Math.round(v/1000) + 'K' : v); }, font: { size: 10 } }, grid: { display: false } }, y: { grid: { display: false }, ticks: { font: { size: 10 } } } },
+        animation: {
+          onComplete: function() {
+            var chart = this;
+            var ctx = chart.ctx;
+            ctx.font = '10px sans-serif';
+            ctx.fillStyle = '#fff';
+            ctx.textAlign = 'right';
+            ctx.textBaseline = 'middle';
+            chart.data.datasets[0].data.forEach(function(val, i) {
+              var meta = chart.getDatasetMeta(0);
+              var bar = meta.data[i];
+              var lbl = '€' + (val / 1000).toFixed(1) + 'k';
+              var barWidth = bar.width || (bar.x - bar.base);
+              if (barWidth > 40) ctx.fillText(lbl, bar.x - 4, bar.y);
+            });
+          }
+        }
+      }
+    });
+  }
+
+  if (top1.length) exploreBarChart('chart-explore-bar-1', top1, label1, color1);
+  if (hasTwo && top2.length) exploreBarChart('chart-explore-bar-2', top2, label2, color2);
+}
+
 function renderAll() {
   renderKPIs();
   renderNeighborhoods();
@@ -1916,6 +2380,9 @@ function renderAll() {
   } else if (activeTab === 'analysis') {
     renderAnalysisTab();
     renderWordTables();
+  } else if (activeTab === 'exploredata') {
+    populateCompareDropdowns();
+    renderExploreData();
   }
 }
 

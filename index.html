@@ -2139,6 +2139,21 @@ function renderExploreData() {
   var label2 = sel2.value;
   if (!label1) return;
 
+  // Destroy old explore charts
+  ['success-explore', 'chart-explore-bar-1', 'chart-explore-bar-2'].forEach(function(k) { destroyChart(k); });
+
+  // Require two different selections
+  if (!label2 || label2 === label1) {
+    var modeLabel = exploreCompareMode === 'city' ? 'city' : 'neighborhood';
+    document.getElementById('explore-content').innerHTML =
+      '<div class="flex flex-col items-center justify-center py-20 text-center">' +
+      '<svg class="w-12 h-12 text-gray-300 mb-4" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M7.5 21L3 16.5m0 0L7.5 12M3 16.5h13.5m0-13.5L21 7.5m0 0L16.5 12M21 7.5H7.5"/></svg>' +
+      '<p class="text-lg font-bold text-gray-400 mb-2">Select two different ' + modeLabel + ' options to compare</p>' +
+      '<p class="text-sm text-gray-300">Choose a different ' + modeLabel + ' in each dropdown above</p>' +
+      '</div>';
+    return;
+  }
+
   var amenList = window._amenList;
   var isCity = exploreCompareMode === 'city';
   var color1 = '#00A699';
@@ -2149,27 +2164,18 @@ function renderExploreData() {
   });
   var data1 = getFilteredData(raw1);
 
-  var hasTwo = label2 && label2 !== label1;
-  var data2 = null;
-  if (hasTwo) {
-    var raw2 = allData.filter(function(d) {
-      return isCity ? d.cityName === label2 : d.neighbourhood_cleansed === label2;
-    });
-    data2 = getFilteredData(raw2);
-  }
-
-  // Destroy old explore charts
-  ['success-explore', 'chart-explore-bar-1', 'chart-explore-bar-2'].forEach(function(k) { destroyChart(k); });
+  var raw2 = allData.filter(function(d) {
+    return isCity ? d.cityName === label2 : d.neighbourhood_cleansed === label2;
+  });
+  var data2 = getFilteredData(raw2);
 
   // Build HTML dynamically
   var html = '<div class="flex flex-col gap-4 md:gap-8">';
 
   // KPI tiles
-  html += '<div class="grid grid-cols-1 ' + (hasTwo ? 'md:grid-cols-2' : '') + ' gap-4">';
+  html += '<div class="grid grid-cols-1 md:grid-cols-2 gap-4">';
   html += '<div class="bg-white p-4 md:p-6 rounded-2xl shadow-sm border border-gray-100">' + exploreKPICard(label1, data1, 'bg-[' + color1 + ']') + '</div>';
-  if (hasTwo) {
-    html += '<div class="bg-white p-4 md:p-6 rounded-2xl shadow-sm border border-gray-100">' + exploreKPICard(label2, data2, 'bg-[' + color2 + ']') + '</div>';
-  }
+  html += '<div class="bg-white p-4 md:p-6 rounded-2xl shadow-sm border border-gray-100">' + exploreKPICard(label2, data2, 'bg-[' + color2 + ']') + '</div>';
   html += '</div>';
 
   // Revenue & Rating chart
@@ -2179,13 +2185,12 @@ function renderExploreData() {
   html += '</div>';
 
   // Amenity tables
-  var tableSub = hasTwo ? label1 + ' vs. ' + label2 : label1;
   html += '<div class="bg-white p-4 md:p-6 rounded-2xl shadow-sm border border-gray-100">';
   html += '<h3 class="font-bold text-base md:text-lg text-gray-900 tracking-tight">Top Amenities</h3>';
-  html += '<p class="font-bold text-base md:text-lg text-gray-900 tracking-tight mb-4">' + tableSub + '</p>';
+  html += '<p class="font-bold text-base md:text-lg text-gray-900 tracking-tight mb-4">' + label1 + ' vs. ' + label2 + '</p>';
   html += '<div class="bg-gray-50 rounded-xl p-4 mb-4">';
   html += '<p class="text-[11px] text-gray-400 mb-3">Only includes amenities found in highly rated listings (4.8+), sorted by highest earning</p>';
-  html += '<div class="grid grid-cols-1 ' + (hasTwo ? 'md:grid-cols-2' : '') + ' gap-4" id="explore-amenity-tables"></div>';
+  html += '<div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="explore-amenity-tables"></div>';
   html += '</div>';
   html += '<div class="bg-gray-50 rounded-xl p-4">';
   html += '<p class="text-[11px] text-gray-400">Avg Rating: the average rating of all listings that include this amenity.</p>';
@@ -2193,14 +2198,13 @@ function renderExploreData() {
   html += '</div></div>';
 
   // Bar charts
-  var barSub = hasTwo ? label1 + ' vs. ' + label2 : label1;
   html += '<div class="bg-white p-4 md:p-6 rounded-2xl shadow-sm border border-gray-100">';
   html += '<h3 class="font-bold text-base md:text-lg text-gray-900 tracking-tight">Top 5 Amenities</h3>';
-  html += '<p class="font-bold text-base md:text-lg text-gray-900 tracking-tight mb-1">' + barSub + '</p>';
+  html += '<p class="font-bold text-base md:text-lg text-gray-900 tracking-tight mb-1">' + label1 + ' vs. ' + label2 + '</p>';
   html += '<p class="text-[11px] text-gray-400 mb-4">Only includes amenities found in highly rated listings (4.8+), sorted by highest earning</p>';
-  html += '<div class="grid grid-cols-1 ' + (hasTwo ? 'md:grid-cols-2' : '') + ' gap-4">';
+  html += '<div class="grid grid-cols-1 md:grid-cols-2 gap-4">';
   html += '<div class="h-64"><canvas id="chart-explore-bar-1"></canvas></div>';
-  if (hasTwo) html += '<div class="h-64"><canvas id="chart-explore-bar-2"></canvas></div>';
+  html += '<div class="h-64"><canvas id="chart-explore-bar-2"></canvas></div>';
   html += '</div></div>';
 
   html += '</div>';
@@ -2233,23 +2237,14 @@ function renderExploreData() {
   }
 
   var b1 = bucketize(data1);
+  var b2 = bucketize(data2);
   var bucketLabels = reviewBuckets.map(function(b) { return b.label; });
-  var datasets = [];
-
-  if (hasTwo) {
-    var b2 = bucketize(data2);
-    datasets = [
-      { type: 'bar', label: label1 + ' Revenue', data: b1.revs, backgroundColor: color1, borderRadius: 4, yAxisID: 'y', order: 2 },
-      { type: 'bar', label: label2 + ' Revenue', data: b2.revs, backgroundColor: color2, borderRadius: 4, yAxisID: 'y', order: 2 },
-      { type: 'line', label: label1 + ' Rating', data: b1.rats, borderColor: color1, backgroundColor: '#fff', borderWidth: 2, pointRadius: 5, pointBorderWidth: 2, pointBackgroundColor: '#fff', pointBorderColor: color1, tension: 0.3, fill: false, yAxisID: 'y1', order: 1, borderDash: [4, 2] },
-      { type: 'line', label: label2 + ' Rating', data: b2.rats, borderColor: color2, backgroundColor: '#fff', borderWidth: 2, pointRadius: 5, pointBorderWidth: 2, pointBackgroundColor: '#fff', pointBorderColor: color2, tension: 0.3, fill: false, yAxisID: 'y1', order: 1, borderDash: [4, 2] }
-    ];
-  } else {
-    datasets = [
-      { type: 'bar', label: 'Avg Annual Revenue', data: b1.revs, backgroundColor: color1, borderRadius: 4, yAxisID: 'y', order: 2 },
-      { type: 'line', label: 'Avg Rating', data: b1.rats, borderColor: '#f59e0b', backgroundColor: '#fff', borderWidth: 3, pointRadius: 6, pointBorderWidth: 2, pointBackgroundColor: '#fff', pointBorderColor: '#f59e0b', tension: 0.3, fill: false, yAxisID: 'y1', order: 1 }
-    ];
-  }
+  var datasets = [
+    { type: 'bar', label: label1 + ' Revenue', data: b1.revs, backgroundColor: color1, borderRadius: 4, yAxisID: 'y', order: 2 },
+    { type: 'bar', label: label2 + ' Revenue', data: b2.revs, backgroundColor: color2, borderRadius: 4, yAxisID: 'y', order: 2 },
+    { type: 'line', label: label1 + ' Rating', data: b1.rats, borderColor: color1, backgroundColor: '#fff', borderWidth: 2, pointRadius: 5, pointBorderWidth: 2, pointBackgroundColor: '#fff', pointBorderColor: color1, tension: 0.3, fill: false, yAxisID: 'y1', order: 1, borderDash: [4, 2] },
+    { type: 'line', label: label2 + ' Rating', data: b2.rats, borderColor: color2, backgroundColor: '#fff', borderWidth: 2, pointRadius: 5, pointBorderWidth: 2, pointBackgroundColor: '#fff', pointBorderColor: color2, tension: 0.3, fill: false, yAxisID: 'y1', order: 1, borderDash: [4, 2] }
+  ];
 
   charts['success-explore'] = new Chart(document.getElementById('chart-success-explore'), {
     type: 'bar',
@@ -2269,8 +2264,8 @@ function renderExploreData() {
           var ctx = chart.ctx;
           ctx.font = 'bold 10px sans-serif';
           ctx.textAlign = 'center';
-          var lineStart = hasTwo ? 2 : 1;
-          var lineColors = hasTwo ? [color1, color2] : ['#f59e0b'];
+          var lineStart = 2;
+          var lineColors = [color1, color2];
           for (var li = 0; li < lineColors.length; li++) {
             var meta = chart.getDatasetMeta(lineStart + li);
             var dsData = chart.data.datasets[lineStart + li].data;
@@ -2316,12 +2311,10 @@ function renderExploreData() {
   }
 
   var top1 = exploreTopAmenities(data1, 5);
-  var tablesHtml = exploreAmenTable(label1, top1, 'bg-[' + color1 + ']');
-  if (hasTwo) {
-    var top2 = exploreTopAmenities(data2, 5);
-    tablesHtml += exploreAmenTable(label2, top2, 'bg-[' + color2 + ']');
-  }
-  document.getElementById('explore-amenity-tables').innerHTML = tablesHtml;
+  var top2 = exploreTopAmenities(data2, 5);
+  document.getElementById('explore-amenity-tables').innerHTML =
+    exploreAmenTable(label1, top1, 'bg-[' + color1 + ']') +
+    exploreAmenTable(label2, top2, 'bg-[' + color2 + ']');
 
   // --- Bar charts ---
   function exploreBarChart(canvasId, amenData, label, color) {
@@ -2363,7 +2356,7 @@ function renderExploreData() {
   }
 
   if (top1.length) exploreBarChart('chart-explore-bar-1', top1, label1, color1);
-  if (hasTwo && top2.length) exploreBarChart('chart-explore-bar-2', top2, label2, color2);
+  if (top2.length) exploreBarChart('chart-explore-bar-2', top2, label2, color2);
 }
 
 function renderAll() {

@@ -180,39 +180,6 @@
           </div>
         </div>
 
-        <div class="bg-white p-4 md:p-6 rounded-2xl shadow-sm border border-gray-100">
-          <div class="flex flex-col sm:flex-row justify-between items-center gap-3 mb-4">
-            <div>
-              <h3 id="overview-view-title" class="font-bold text-base md:text-lg text-gray-900 tracking-tight">Top Amenities: Berlin vs. Munich</h3>
-              <p id="overview-view-subtitle" class="font-bold text-base md:text-lg text-gray-900 tracking-tight"></p>
-            </div>
-            <div class="bg-gray-50 p-1 rounded-lg border border-gray-200 flex items-center">
-              <button onclick="setOverviewView('city')" data-overviewview="city" class="overview-view-btn px-3 py-1.5 rounded-md text-xs font-bold transition-all bg-gray-900 text-white">By City</button>
-              <button onclick="setOverviewView('neighborhood')" data-overviewview="neighborhood" class="overview-view-btn px-3 py-1.5 rounded-md text-xs font-bold transition-all text-gray-500 hover:bg-gray-100">By Neighborhood</button>
-            </div>
-          </div>
-          <div id="overview-view-city">
-            <div class="bg-gray-50 rounded-xl p-4 mb-4">
-              <p class="text-[11px] text-gray-400 mb-3">Only includes amenities found in highly rated listings (4.8+), sorted by highest earning</p>
-              <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="regional-tables"></div>
-            </div>
-            <div class="bg-gray-50 rounded-xl p-4">
-              <p class="text-[11px] text-gray-400">Avg Rating: the average rating of all listings that include this amenity.</p>
-              <p class="text-[11px] text-gray-400">Avg Revenue: the average annual revenue of all listings that include this amenity.</p>
-            </div>
-          </div>
-          <div id="overview-view-neighborhood" class="hidden">
-            <div class="bg-gray-50 rounded-xl p-4 mb-4">
-              <p class="text-[11px] text-gray-400 mb-3">Only includes amenities found in highly rated listings (4.8+), sorted by highest earning</p>
-              <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="trend-tables-munich"></div>
-            </div>
-            <div class="bg-gray-50 rounded-xl p-4">
-              <p class="text-[11px] text-gray-400">Avg Rating: the average rating of all listings that include this amenity.</p>
-              <p class="text-[11px] text-gray-400">Avg Revenue: the average annual revenue of all listings that include this amenity.</p>
-            </div>
-          </div>
-        </div>
-
       </div>
 
 
@@ -1096,6 +1063,38 @@
                 <tr><td class="px-4 py-3 text-sm text-gray-400">6</td><td class="px-4 py-3 text-sm font-semibold text-gray-800">Optimal Length</td><td class="px-4 py-3 text-sm text-gray-600">Excel</td><td class="px-4 py-3 text-sm text-gray-600">Binned title word counts into ranges and identified the bin with the highest average rating</td></tr>
               </tbody>
             </table>
+          </div>
+        </div>
+        <div class="bg-white p-4 md:p-6 rounded-2xl shadow-sm border border-gray-100">
+          <div class="flex flex-col sm:flex-row justify-between items-center gap-3 mb-4">
+            <div>
+              <h3 id="overview-view-title" class="font-bold text-base md:text-lg text-gray-900 tracking-tight">Top Amenities: Berlin vs. Munich</h3>
+              <p id="overview-view-subtitle" class="font-bold text-base md:text-lg text-gray-900 tracking-tight"></p>
+            </div>
+            <div class="bg-gray-50 p-1 rounded-lg border border-gray-200 flex items-center">
+              <button onclick="setOverviewView('city')" data-overviewview="city" class="overview-view-btn px-3 py-1.5 rounded-md text-xs font-bold transition-all bg-gray-900 text-white">By City</button>
+              <button onclick="setOverviewView('neighborhood')" data-overviewview="neighborhood" class="overview-view-btn px-3 py-1.5 rounded-md text-xs font-bold transition-all text-gray-500 hover:bg-gray-100">By Neighborhood</button>
+            </div>
+          </div>
+          <div id="overview-view-city">
+            <div class="bg-gray-50 rounded-xl p-4 mb-4">
+              <p class="text-[11px] text-gray-400 mb-3">Only includes amenities found in highly rated listings (4.8+), sorted by highest earning</p>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="regional-tables"></div>
+            </div>
+            <div class="bg-gray-50 rounded-xl p-4">
+              <p class="text-[11px] text-gray-400">Avg Rating: the average rating of all listings that include this amenity.</p>
+              <p class="text-[11px] text-gray-400">Avg Revenue: the average annual revenue of all listings that include this amenity.</p>
+            </div>
+          </div>
+          <div id="overview-view-neighborhood" class="hidden">
+            <div class="bg-gray-50 rounded-xl p-4 mb-4">
+              <p class="text-[11px] text-gray-400 mb-3">Only includes amenities found in highly rated listings (4.8+), sorted by highest earning</p>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="trend-tables-munich"></div>
+            </div>
+            <div class="bg-gray-50 rounded-xl p-4">
+              <p class="text-[11px] text-gray-400">Avg Rating: the average rating of all listings that include this amenity.</p>
+              <p class="text-[11px] text-gray-400">Avg Revenue: the average annual revenue of all listings that include this amenity.</p>
+            </div>
           </div>
         </div>
       </div>
@@ -2375,6 +2374,7 @@ function renderAll() {
   } else if (activeTab === 'amenities') {
     renderAmenitiesTab();
     renderTrendsTab();
+    renderRecommendationCharts();
   } else if (activeTab === 'playtext') {
     renderPlayTextTab();
   } else if (activeTab === 'analysis') {
